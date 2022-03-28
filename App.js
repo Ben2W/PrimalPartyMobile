@@ -1,13 +1,33 @@
 import * as React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import { Provider as PaperProvider } from 'react-native-paper';
+import { configureFonts, DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import BottomNavBar from "./components/BottomNavBar";
+
+const customTheme = {
+    dark: false,
+    roundness: 4,
+    animation: {
+        scale: 1.0,
+    },
+    colors: {
+        primary: '#4555F2',
+        accent: '#11B5E4',
+        background: '#F1F7ED',
+        surface: '#F1F7ED',
+        text: '#001021',
+        error: '#B71F0E',
+        disabled: '#BEC6C6',
+        placeholder: '#1481BA',
+        backdrop: '#001021',
+    },
+    fonts: configureFonts(),
+}
 
 export default function App() {
   return (
-      <PaperProvider>
-        <BottomNavBar/>
+      <PaperProvider theme = {customTheme} >
+        <BottomNavBar />
         <StatusBar style="auto" />
       </PaperProvider>
   );
