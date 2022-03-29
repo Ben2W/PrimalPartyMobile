@@ -2,7 +2,7 @@ import * as React from 'react';
 import { BottomNavigation, Text } from 'react-native-paper';
 import Dashboard from "../pages/Dashboard";
 
-const DashboardRoute = () => <Text>Dashboard</Text>;
+const DashboardRoute = () => Dashboard;
 
 const InvitesRoute = () => <Text>Invites</Text>;
 
@@ -21,7 +21,7 @@ const BottomNavBar = () => {
     ]);
 
     const renderScene = BottomNavigation.SceneMap({
-        dashboard: DashboardRoute,
+        dashboard: Dashboard,
         invites: InvitesRoute,
         friends: FriendsRoute,
         myevents: MyEventsRoute,
