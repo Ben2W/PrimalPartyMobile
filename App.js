@@ -3,8 +3,10 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { configureFonts, DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import BottomNavBar from "./components/BottomNavBar";
+import defaultTheme from "react-native-paper/src/styles/DefaultTheme";
 
 const customTheme = {
+    defaultTheme,
     dark: false,
     roundness: 4,
     animation: {
@@ -20,6 +22,7 @@ const customTheme = {
         disabled: '#BEC6C6',
         placeholder: '#1481BA',
         backdrop: '#001021',
+        notification: '#cc614b',
     },
     fonts: configureFonts(),
 }

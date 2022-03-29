@@ -18,7 +18,7 @@ const BottomNavBar = () => {
     const [index, setIndex] = React.useState(0);
     const [routes] = React.useState([
         { key: 'dashboard', title: 'Dashboard', icon: 'home' },
-        { key: 'invites', title: 'Invites', icon: 'mailbox-up-outline' },
+        { key: 'invites', title: 'Invites', icon: 'card-account-mail', badge: "5" },
         { key: 'friends', title: 'Friends', icon: 'account-multiple' },
         { key: 'myevents', title: 'My Events', icon: 'party-popper' },
     ]);

@@ -13,7 +13,7 @@ const MyEvents = () => (
         }
     }>
         <Text>
-            MyEvents
+            My Events
         </Text>
     </View>
 )
