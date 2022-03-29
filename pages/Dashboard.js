@@ -5,9 +5,17 @@ import { Text } from 'react-native-paper';
 
 
 const Dashboard = () => (
-    <Text>
-        Bruh
-    </Text>
+    <View style = {
+        {
+            justifyContent: 'center',
+            alignItems: 'center',
+            top: "50%",
+        }
+    }>
+        <Text>
+            Dashboard
+        </Text>
+    </View>
 )
 
 export default Dashboard
