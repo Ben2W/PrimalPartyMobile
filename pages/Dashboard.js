@@ -4,52 +4,54 @@ import { StyleSheet, View, ScrollView } from 'react-native';
 import { Text, Badge } from 'react-native-paper';
 import CustomCard from "../components/CustomCard";
 
-const Dashboard = () => (
-    <ScrollView style = {
+const Dashboard = ({ navigation, route }) => {
+    return <ScrollView style={
         {
-            flex: "1",
+            flex: 1,
             top: "5%",
             marginLeft: "2%",
             marginRight: "2%",
         }
     }>
+
         <CustomCard
-            title = "BruhBruh Party!"
-            date = "04/19/2022"
-            location = "The Bruh Mansion"
-            desc = "It's a bruhbruh party, say 50 bruh or else bruh."
+            title={route.params.name}
+            date="04/19/2022"
+            location="The Bruh Mansion"
+            desc="It's a bruhbruh party, say 50 bruh or else bruh."
+        />
+
+        <CustomCard
+            title="BruhBruh Party!"
+            date="04/19/2022"
+            location="The Bruh Mansion"
+            desc="It's a bruhbruh party, say 50 bruh or else bruh."
         />
         <CustomCard
-            title = "Factorio Meeting"
-            date = "3/28/2030"
-            location = "Crash Landing Site"
-            desc = "I just thought we needed more storage. "
+            title="Factorio Meeting"
+            date="3/28/2030"
+            location="Crash Landing Site"
+            desc="I just thought we needed more storage. "
         />
         <CustomCard
-            title = "People vs. Everything LAN Party"
-            date = "04/19/2022"
-            location = "Ben's Mom's House"
-            desc = "&quot;Why is there a scooter outside of my mom's house?&quot; -Benjamin Werner's last words"
+            title="People vs. Everything LAN Party"
+            date="04/19/2022"
+            location="Ben's Mom's House"
+            desc="&quot;Why is there a scooter outside of my mom's house?&quot; -Benjamin Werner's last words"
         />
         <CustomCard
-            title = "Smoothie Ruler Crowning"
-            date = "06/20/2022"
-            location = "London, UK"
-            desc = "Find out who's gonna be Smoothie King, or Queen!"
+            title="Smoothie Ruler Crowning"
+            date="06/20/2022"
+            location="London, UK"
+            desc="Find out who's gonna be Smoothie King, or Queen!"
         />
         <CustomCard
-            title = "PowerSmoking Session"
-            date = "04/20/2022"
-            location = "Colorado Lake"
-            desc = "So what we get drunk
-                    So what we smoke weed
-                    We're just having fun
-                    We don't care who sees
-                    So what we go out
-                    That's how its supposed to be
-                    Living young and wild and free"
+            title="PowerSmoking Session"
+            date="04/20/2022"
+            location="Colorado Lake"
+            desc="So what we get drunk ..."
         />
     </ScrollView>
-)
+}
 
 export default Dashboard
