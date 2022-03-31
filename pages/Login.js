@@ -8,8 +8,10 @@ import {
     Linking, Image
 } from 'react-native';
 
-import { Text, Badge } from 'react-native-paper';
-
+import { Text, Badge, Button as PaperButton } from 'react-native-paper';
+import ViewabilityHelper from "react-native-web/dist/vendor/react-native/ViewabilityHelper";
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Login = ({ navigation }) => {
 
@@ -27,6 +29,22 @@ const Login = ({ navigation }) => {
         <KeyboardAvoidingView behavior='position' style={styles.container}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
                 <ImageBackground source={require('../HomeBackground.png')} resizeMode="cover" style={styles.image}>
+
+                    {/*Placeholder Navigation Buttons*/}
+                    <View>
+                        <PaperButton
+                            title = "Dashboard"
+                            mode="contained"
+                            onPress={() => navigation.navigate("Dashboard",
+                                {
+                                    name: "Passed Route Parameter",
+                                    date: "03/31/2022",
+                                    location: "HEC Building",
+                                    desc: "This is a demo route to dashboard."
+                                })}>
+                            Dashboard
+                        </PaperButton>
+                    </View>
 
                     <View style={styles.login_container}>
                         <View style={styles.switches}>

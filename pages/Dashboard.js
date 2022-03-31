@@ -16,9 +16,9 @@ const Dashboard = ({ navigation, route }) => {
 
         <CustomCard
             title={route.params.name}
-            date="04/19/2022"
-            location="The Bruh Mansion"
-            desc="It's a bruhbruh party, say 50 bruh or else bruh."
+            date={route.params.date}
+            location={route.params.location}
+            desc={route.params.desc}
         />
 
         <CustomCard
