@@ -50,7 +50,8 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="Login" component={Login} options={{ title: "" }} />
-          <Stack.Screen name="Dashboard" component={Dashboard} />
+          {/*<Stack.Screen name="Dashboard" component={Dashboard} />*/}
+          <Stack.Screen name="BottomNavBar" component={BottomNavBar} />
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>
