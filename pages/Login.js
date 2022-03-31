@@ -2,14 +2,13 @@ import { setStatusBarStyle } from 'expo-status-bar';
 import React, { useState } from 'react'
 
 import {
-    StyleSheet, View, SafeAreaView, Button,
+    StyleSheet, View, ScrollView, Button,
     ImageBackground, TextInput, Keyboard,
     TouchableWithoutFeedback, KeyboardAvoidingView,
     Linking, Image
 } from 'react-native';
 
 import { Text, Badge } from 'react-native-paper';
-import ColorPropType from 'react-native/Libraries/DeprecatedPropTypes/DeprecatedColorPropType';
 
 
 const Login = ({ navigation }) => {
@@ -17,20 +16,22 @@ const Login = ({ navigation }) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
-    const handleLogin = () => {
+    const [page, setPage] = useState('login')
 
+
+    const handleLogin = () => {
+        // make an API request and store the session
     }
 
     return (
-        <View style={styles.container}>
+        <KeyboardAvoidingView behavior='position' style={styles.container}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
                 <ImageBackground source={require('../HomeBackground.png')} resizeMode="cover" style={styles.image}>
 
                     <View style={styles.login_container}>
-
                         <View style={styles.switches}>
-                            <Text>Sign In</Text>
-                            <Text>Sign up</Text>
+                            <View style={{ flexDirection: 'row', justifyContent: 'center', width: "50%", borderBottomColor: '#3f51b5', borderBottomWidth: 1 }}><Text style={{ paddingBottom: 10, fontSize: 15, color: "#3f51b5", fontWeight: "500" }}>Sign In</Text></View>
+                            <View style={{ flexDirection: 'row', justifyContent: 'center', width: "50%", borderBottomColor: '#3f51b5', borderBottomWidth: 0 }}><Text style={{ paddingBottom: 10, fontSize: 15, fontWeight: "500" }}>Sign up</Text></View>
                         </View>
 
 
@@ -67,19 +68,15 @@ const Login = ({ navigation }) => {
                                 </Button>
                             </View>
 
-                            <View style={styles.links}>
-                                <Text>
-                                    Forgot password?
-                                </Text>
-                                <Text>
-                                    Do you have an account? Sign Up
-                                </Text>
+                            <View style={styles.links_list}>
+                                <Text style={styles.links}>Forgot password?</Text>
+                                <Text>Do you have an account? <Text style={styles.links}>Sign Up</Text></Text>
                             </View>
                         </View>
-                    </View>
+                    </View >
                 </ImageBackground>
             </TouchableWithoutFeedback>
-        </View >
+        </KeyboardAvoidingView >
     );
 }
 
@@ -99,38 +96,45 @@ const styles = StyleSheet.create({
     login_container: {
         flexDirection: "column",
         alignItems: "center",
-        justifyContent: "space-around",
+        justifyContent: "space-between",
         backgroundColor: 'white',
         width: "70%",
-        height: "50%"
+        height: "60%"
     },
     form: {
         flexDirection: "column",
+        flexGrow: 1.2,
         alignItems: "center",
+        justifyContent: 'space-around',
         width: "100%"
     },
     input: {
         paddingTop: 20,
-        height: 40,
+        height: 50,
         width: "95%",
         margin: 12,
         borderBottomWidth: 1,
         padding: 10,
+        fontSize: 15
     },
     button: {
         width: "95%",
         backgroundColor: "#3f51b5",
     },
+    links_list: {
+        marginTop: "10%",
+        width: "95%",
+    },
     links: {
-        marginTop: "5%",
+        paddingBottom: "3%",
+        color: "#3f51b5"
     },
     switches: {
         flexDirection: 'row',
         justifyContent: 'space-around',
         width: "100%",
-        paddingBottom: 15,
-        borderBottomWidth: 1,
-        borderBottomColor: "#3f51b5"
+        marginTop: 15,
+        marginBottom: 25,
     },
     icon: {
         flexDirection: 'column',
@@ -140,9 +144,10 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         marginBottom: "5%",
         height: 40,
-        width: 40
+        width: 40,
     },
     header: {
+        flex: 1,
         flexDirection: 'column',
         alignItems: 'center',
     }
