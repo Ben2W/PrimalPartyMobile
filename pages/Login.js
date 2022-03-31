@@ -84,20 +84,20 @@ const Login = ({ navigation }) => {
                 <ImageBackground source={require('../HomeBackground.png')} resizeMode="cover" style={styles.image}>
 
                     {/*Placeholder Navigation Buttons*/}
-                    <View>
-                        <PaperButton
-                            title = "Dashboard"
-                            mode="contained"
-                            onPress={() => navigation.navigate("BottomNavBar",
-                                {
-                                    name: "Passed Route Parameter",
-                                    date: "03/31/2022",
-                                    location: "HEC Building",
-                                    desc: "This is a demo route to dashboard."
-                                })}>
-                            Dashboard
-                        </PaperButton>
-                    </View>
+                    {/*<View>*/}
+                    {/*    <PaperButton*/}
+                    {/*        title = "Dashboard"*/}
+                    {/*        mode="contained"*/}
+                    {/*        onPress={() => navigation.navigate("BottomNavBar",*/}
+                    {/*            {*/}
+                    {/*                name: "Passed Route Parameter",*/}
+                    {/*                date: "03/31/2022",*/}
+                    {/*                location: "HEC Building",*/}
+                    {/*                desc: "This is a demo route to dashboard."*/}
+                    {/*            })}>*/}
+                    {/*        Dashboard*/}
+                    {/*    </PaperButton>*/}
+                    {/*</View>*/}
 
                     <View style={styles.login_container}>
                         <View style={styles.switches}>
