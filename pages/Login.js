@@ -35,7 +35,7 @@ const Login = ({ navigation }) => {
                         <PaperButton
                             title = "Dashboard"
                             mode="contained"
-                            onPress={() => navigation.navigate("Dashboard",
+                            onPress={() => navigation.navigate("BottomNavBar",
                                 {
                                     name: "Passed Route Parameter",
                                     date: "03/31/2022",
