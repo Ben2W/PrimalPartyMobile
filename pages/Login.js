@@ -1,5 +1,5 @@
-import { setStatusBarStyle } from 'expo-status-bar';
 import React, { useState } from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {
     StyleSheet, View, ScrollView, Button,
@@ -18,9 +18,62 @@ const Login = ({ navigation }) => {
 
     const [page, setPage] = useState('login')
 
+    const storeData = async (value) => {
+        try {
+            const jsonValue = JSON.stringify(value)
+            await AsyncStorage.setItem('@storage_Key', jsonValue)
+        } catch (e) {
+            // saving error
+        }
+    }
 
-    const handleLogin = () => {
-        // make an API request and store the session
+    const getData = async () => {
+        try {
+            const jsonValue = await AsyncStorage.getItem('@storage_Key')
+            return jsonValue != null ? JSON.parse(jsonValue) : null;
+        } catch (e) {
+            // error reading value
+        }
+    }
+
+    const details = {
+        'username': username,
+        'password': password
+    };
+
+    const handleLogin = async () => {
+        const url = 'http://localhost:8080/login'
+
+        if (username && password) {
+
+            var formBody = [];
+            for (var property in details) {
+                var encodedKey = encodeURIComponent(property);
+                var encodedValue = encodeURIComponent(details[property]);
+                formBody.push(encodedKey + "=" + encodedValue);
+            }
+            formBody = formBody.join("&");
+
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+                },
+                credentials: 'include',
+                body: formBody
+            })
+
+            const data = await response.json()
+
+            await storeData(data)
+
+            navigation.navigate('Dashboard', { username: username })
+
+
+        } else {
+            //handle empty input
+            console.log("missing input")
+        }
     }
 
     return (
@@ -46,12 +99,14 @@ const Login = ({ navigation }) => {
 
                         <View style={styles.form}>
                             <TextInput
+                                autoCapitalize='none'
                                 style={styles.input}
                                 onChangeText={username => setUsername(username)}
                                 defaultValue={username}
                                 placeholder="Enter Username*"
                             />
                             <TextInput
+                                autoCapitalize='none'
                                 style={styles.input}
                                 onChangeText={password => setPassword(password)}
                                 defaultValue={password}

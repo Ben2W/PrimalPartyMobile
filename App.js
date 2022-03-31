@@ -49,7 +49,7 @@ export default function App() {
     <PaperProvider theme={customTheme}>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="Login" component={Login} options={{ title: "" }} />
+          <Stack.Screen name="Login" component={Login} options={{ title: "Login" }} />
           <Stack.Screen name="Dashboard" component={Dashboard} />
         </Stack.Navigator>
       </NavigationContainer>
