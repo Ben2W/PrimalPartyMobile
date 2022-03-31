@@ -14,13 +14,13 @@ const Dashboard = () => {
         }
     }>
 
-        {/*<CustomCard*/}
-        {/*    title={route.params.name}*/}
-        {/*    date={route.params.date}*/}
-        {/*    location={route.params.location}*/}
-        {/*    desc={route.params.desc}*/}
-        {/*/>*/}
-
+        <CustomCard
+            title={route.params.username}
+            date="04/19/2022"
+            location="The Bruh Mansion"
+            desc="It's a bruhbruh party, say 50 bruh or else bruh."
+        />
+              
         <CustomCard
             title="BruhBruh Party!"
             date="04/19/2022"
