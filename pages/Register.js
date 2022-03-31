@@ -11,16 +11,22 @@ import {
 import { Text, Badge } from 'react-native-paper';
 
 
-const Login = ({ navigation }) => {
+const Register = ({ navigation }) => {
 
+    const [firstname, setFirstname] = useState("");
+    const [lastname, setLastname] = useState("");
+    const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
-    const [page, setPage] = useState('login')
+    const [page, setPage] = useState('Register')
 
 
-    const handleLogin = () => {
+    const handleRegister = (e) => {
         // make an API request and store the session
+        e.preventDefault();
+        const userInfo = { firstname, lastname, email, phone, username, password }
     }
 
     return (
@@ -28,13 +34,10 @@ const Login = ({ navigation }) => {
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
                 <ImageBackground source={require('../HomeBackground.png')} resizeMode="cover" style={styles.image}>
 
-                    <View style={styles.login_container}>
+                    <View style={styles.register_container}>
                         <View style={styles.switches}>
                             <View style={{ flexDirection: 'row', justifyContent: 'center', width: "50%", borderBottomColor: '#3f51b5', borderBottomWidth: 1 }}><Text style={{ paddingBottom: 10, fontSize: 15, color: "#3f51b5", fontWeight: "500" }}>Sign In</Text></View>
                             <View style={{ flexDirection: 'row', justifyContent: 'center', width: "50%", borderBottomColor: '#3f51b5', borderBottomWidth: 0 }}>
-                                <Button 
-                                title="Sign up"
-                                onPress={() => navigation.navigate('Register')} />
                             </View>
                         </View>
 
@@ -45,37 +48,63 @@ const Login = ({ navigation }) => {
                                 <Image source={require('../lock-outline.png')} />
                             </View>
 
-                            <Text style={{ fontWeight: 'bold', fontSize: 24 }}>Sign In</Text>
+                            <Text style={{ fontWeight: 'bold', fontSize: 24 }}>Sign up</Text>
                         </View>
 
                         <View style={styles.form}>
                             <TextInput
                                 style={styles.input}
+                                onChangeText={firstname => setFirstname(firstname)}
+                                defaultValue={firstname}
+                                placeholder="Enter first name*"
+                            />
+                            <TextInput
+                                style={styles.input}
+                                onChangeText={lastname => setLastname(lastname)}
+                                defaultValue={lastname}
+                                placeholder="Enter last name*"
+                            />
+
+                            <TextInput
+                                style={styles.input}
                                 onChangeText={username => setUsername(username)}
                                 defaultValue={username}
-                                placeholder="Enter Username*"
+                                placeholder="Enter username*"
                             />
+
+                            <TextInput
+                                style={styles.input}
+                                onChangeText={email => setEmail(email)}
+                                defaultValue={email}
+                                placeholder="Enter email*"
+                            />
+
+                            <TextInput
+                                style={styles.input}
+                                onChangeText={phone => setPhone(phone)}
+                                defaultValue={phone}
+                                placeholder="Enter phone*"
+                            />
+
                             <TextInput
                                 style={styles.input}
                                 onChangeText={password => setPassword(password)}
                                 defaultValue={password}
-                                secureTextEntry={true}
-                                placeholder="Enter Password*"
+                                placeholder="Enter password*"
                             />
 
                             <View style={styles.button}>
                                 <Button
                                     title='Sign In'
                                     color="white"
-                                    onPress={handleLogin}
+                                    onPress={handleRegister}
                                 >
                                 </Button>
                             </View>
-
-                            <View style={styles.links_list}>
-                                <Text style={styles.links}>Forgot password?</Text>
-                                <Text>Do you have an account? <Text style={styles.links}>Sign Up</Text></Text>
+                            <View style={{height: 10}}>
+                                
                             </View>
+                            
                         </View>
                     </View >
                 </ImageBackground>
@@ -97,17 +126,17 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center"
     },
-    login_container: {
+    register_container: {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "space-between",
         backgroundColor: 'white',
         width: "70%",
-        height: "60%"
+        height: "80%"
     },
     form: {
         flexDirection: "column",
-        flexGrow: 1.2,
+        flexGrow: 0,
         alignItems: "center",
         justifyContent: 'space-around',
         width: "100%"
@@ -157,4 +186,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Login
+export default Register
