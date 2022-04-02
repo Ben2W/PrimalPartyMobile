@@ -23,10 +23,53 @@ const Register = ({ navigation }) => {
     const [page, setPage] = useState('Register')
 
 
-    const handleRegister = (e) => {
+    const handleRegister = async (e) => {
         // make an API request and store the session
-        e.preventDefault();
-        const userInfo = { firstname, lastname, email, phone, username, password }
+        const details = {
+            'username': username,
+            'password': password,
+            'email': email,
+            'firstName': firstname,
+            'lastName': lastname,
+            'phone': phone
+        };
+
+        const url = 'https://primalpartybackend.azurewebsites.net/login'
+
+        //setIsPending(true);
+
+        var formBody = [];
+        for (var property in details) {
+            var encodedKey = encodeURIComponent(property);
+            var encodedValue = encodeURIComponent(details[property]);
+            formBody.push(encodedKey + "=" + encodedValue);
+        }
+        formBody = formBody.join("&");
+        console.log(formBody);
+
+       await fetch('http://localhost:8080/register', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+            },
+            credentials: 'include',
+            body: formBody,
+        })
+        .then(response => {
+            console.log(response.status);
+            if(!response.ok) {
+                throw Error('could not fetch the data for that resource')
+            }
+            return response.json();
+        })
+        .then((data) => {
+            console.log(data);
+            setIsPending(false);
+            navigate('/verify');
+        })
+        .catch(err => {
+            console.log(err.message);
+        })
     }
 
     return (
