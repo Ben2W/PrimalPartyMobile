@@ -41,6 +41,8 @@ const Welcome = ({ navigation }) => {
     }
 
 
+    // TESTING
+
     const goToAccount = () => {
         fetch('http://localhost:8080/account',
             {
@@ -58,6 +60,8 @@ const Welcome = ({ navigation }) => {
             .catch(e => {
                 console.log(e)
             })
+
+        //TESTING
     }
 
     return (
