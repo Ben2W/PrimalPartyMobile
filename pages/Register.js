@@ -1,5 +1,5 @@
+import { setStatusBarStyle } from 'expo-status-bar';
 import React, { useState } from 'react'
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {
     StyleSheet, View, ScrollView, Button,
@@ -8,74 +8,68 @@ import {
     Linking, Image
 } from 'react-native';
 
-import { Text, Badge, Button as PaperButton } from 'react-native-paper';
-import ViewabilityHelper from "react-native-web/dist/vendor/react-native/ViewabilityHelper";
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Text, Badge } from 'react-native-paper';
 
-const Login = ({ navigation }) => {
 
+const Register = ({ navigation }) => {
+
+    const [firstname, setFirstname] = useState("");
+    const [lastname, setLastname] = useState("");
+    const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
-    const [page, setPage] = useState('login')
+    const [page, setPage] = useState('Register')
 
-    const storeData = async (value) => {
-        try {
-            const jsonValue = JSON.stringify(value)
-            await AsyncStorage.setItem('@storage_Key', jsonValue)
-        } catch (e) {
-            // saving error
+
+    const handleRegister = async (e) => {
+        // make an API request and store the session
+        const details = {
+            'username': username,
+            'password': password,
+            'email': email,
+            'firstName': firstname,
+            'lastName': lastname,
+            'phone': phone
+        };
+
+        const url = 'https://primalpartybackend.azurewebsites.net/register'
+
+        //setIsPending(true);
+
+        var formBody = [];
+        for (var property in details) {
+            var encodedKey = encodeURIComponent(property);
+            var encodedValue = encodeURIComponent(details[property]);
+            formBody.push(encodedKey + "=" + encodedValue);
         }
-    }
+        formBody = formBody.join("&");
+        console.log(formBody);
 
-    const getData = async () => {
-        try {
-            const jsonValue = await AsyncStorage.getItem('@storage_Key')
-            return jsonValue != null ? JSON.parse(jsonValue) : null;
-        } catch (e) {
-            // error reading value
-        }
-    }
-
-    const details = {
-        'username': username,
-        'password': password
-    };
-
-    const handleLogin = async () => {
-        const url = 'http://localhost:8080/login'
-
-        if (username && password) {
-
-            var formBody = [];
-            for (var property in details) {
-                var encodedKey = encodeURIComponent(property);
-                var encodedValue = encodeURIComponent(details[property]);
-                formBody.push(encodedKey + "=" + encodedValue);
+       await fetch(url, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+            },
+            credentials: 'include',
+            body: formBody,
+        })
+        .then(response => {
+            console.log(response.status);
+            if(!response.ok) {
+                throw Error('could not fetch the data for that resource')
             }
-            formBody = formBody.join("&");
-
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
-                },
-                credentials: 'include',
-                body: formBody
-            })
-
-            const data = await response.json()
-
-            await storeData(data)
-
-            navigation.navigate('Dashboard', { username: username })
-
-
-        } else {
-            //handle empty input
-            console.log("missing input")
-        }
+            return response.json();
+        })
+        .then((data) => {
+            console.log(data);
+            //setIsPending(false);
+            //navigate('/verify');
+        })
+        .catch(err => {
+            console.log(err.message);
+        })
     }
 
     return (
@@ -83,29 +77,10 @@ const Login = ({ navigation }) => {
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
                 <ImageBackground source={require('../HomeBackground.png')} resizeMode="cover" style={styles.image}>
 
-                    {/*Placeholder Navigation Buttons*/}
-                    <View>
-                        <PaperButton
-                            title = "Dashboard"
-                            mode="contained"
-                            onPress={() => navigation.navigate("BottomNavBar",
-                                {
-                                    name: "Passed Route Parameter",
-                                    date: "03/31/2022",
-                                    location: "HEC Building",
-                                    desc: "This is a demo route to dashboard."
-                                })}>
-                            Dashboard
-                        </PaperButton>
-                    </View>
-
-                    <View style={styles.login_container}>
+                    <View style={styles.register_container}>
                         <View style={styles.switches}>
                             <View style={{ flexDirection: 'row', justifyContent: 'center', width: "50%", borderBottomColor: '#3f51b5', borderBottomWidth: 1 }}><Text style={{ paddingBottom: 10, fontSize: 15, color: "#3f51b5", fontWeight: "500" }}>Sign In</Text></View>
                             <View style={{ flexDirection: 'row', justifyContent: 'center', width: "50%", borderBottomColor: '#3f51b5', borderBottomWidth: 0 }}>
-                                <Button 
-                                title="Sign up"
-                                onPress={() => navigation.navigate('Register')} />
                             </View>
                         </View>
 
@@ -116,39 +91,63 @@ const Login = ({ navigation }) => {
                                 <Image source={require('../lock-outline.png')} />
                             </View>
 
-                            <Text style={{ fontWeight: 'bold', fontSize: 24 }}>Sign In</Text>
+                            <Text style={{ fontWeight: 'bold', fontSize: 24 }}>Sign up</Text>
                         </View>
 
                         <View style={styles.form}>
                             <TextInput
-                                autoCapitalize='none'
+                                style={styles.input}
+                                onChangeText={firstname => setFirstname(firstname)}
+                                defaultValue={firstname}
+                                placeholder="Enter first name*"
+                            />
+                            <TextInput
+                                style={styles.input}
+                                onChangeText={lastname => setLastname(lastname)}
+                                defaultValue={lastname}
+                                placeholder="Enter last name*"
+                            />
+
+                            <TextInput
                                 style={styles.input}
                                 onChangeText={username => setUsername(username)}
                                 defaultValue={username}
-                                placeholder="Enter Username*"
+                                placeholder="Enter username*"
                             />
+
                             <TextInput
-                                autoCapitalize='none'
+                                style={styles.input}
+                                onChangeText={email => setEmail(email)}
+                                defaultValue={email}
+                                placeholder="Enter email*"
+                            />
+
+                            <TextInput
+                                style={styles.input}
+                                onChangeText={phone => setPhone(phone)}
+                                defaultValue={phone}
+                                placeholder="Enter phone*"
+                            />
+
+                            <TextInput
                                 style={styles.input}
                                 onChangeText={password => setPassword(password)}
                                 defaultValue={password}
-                                secureTextEntry={true}
-                                placeholder="Enter Password*"
+                                placeholder="Enter password*"
                             />
 
                             <View style={styles.button}>
                                 <Button
                                     title='Sign In'
                                     color="white"
-                                    onPress={handleLogin}
+                                    onPress={handleRegister}
                                 >
                                 </Button>
                             </View>
-
-                            <View style={styles.links_list}>
-                                <Text style={styles.links}>Forgot password?</Text>
-                                <Text>Do you have an account? <Text style={styles.links}>Sign Up</Text></Text>
+                            <View style={{height: 10}}>
+                                
                             </View>
+                            
                         </View>
                     </View >
                 </ImageBackground>
@@ -170,17 +169,17 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center"
     },
-    login_container: {
+    register_container: {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "space-between",
         backgroundColor: 'white',
         width: "70%",
-        height: "60%"
+        height: "80%"
     },
     form: {
         flexDirection: "column",
-        flexGrow: 1.2,
+        flexGrow: 0,
         alignItems: "center",
         justifyContent: 'space-around',
         width: "100%"
@@ -230,4 +229,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Login
+export default Register

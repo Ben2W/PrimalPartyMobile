@@ -9,6 +9,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login'
+import Register from './pages/Register'
 
 const Stack = createNativeStackNavigator();
 
@@ -49,7 +50,8 @@ export default function App() {
     <PaperProvider theme={customTheme}>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="Login" component={Login} options={{ title: "Login" }} />
+          <Stack.Screen name="Login" component={Login} options={{ title: "" }} />
+          <Stack.Screen name="Register" component={Register} options={{ title: "" }} />
           <Stack.Screen name="Dashboard" component={Dashboard} />
         </Stack.Navigator>
       </NavigationContainer>
