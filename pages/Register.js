@@ -34,7 +34,7 @@ const Register = ({ navigation }) => {
             'phone': phone
         };
 
-        const url = 'https://primalpartybackend.azurewebsites.net/login'
+        const url = 'https://primalpartybackend.azurewebsites.net/register'
 
         //setIsPending(true);
 
@@ -47,7 +47,7 @@ const Register = ({ navigation }) => {
         formBody = formBody.join("&");
         console.log(formBody);
 
-       await fetch('http://localhost:8080/register', {
+       await fetch(url, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
@@ -64,8 +64,8 @@ const Register = ({ navigation }) => {
         })
         .then((data) => {
             console.log(data);
-            setIsPending(false);
-            navigate('/verify');
+            //setIsPending(false);
+            //navigate('/verify');
         })
         .catch(err => {
             console.log(err.message);
