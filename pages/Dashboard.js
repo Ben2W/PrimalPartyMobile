@@ -4,7 +4,7 @@ import { StyleSheet, View, ScrollView } from 'react-native';
 import { Text, Badge } from 'react-native-paper';
 import CustomCard from "../components/CustomCard";
 
-const Dashboard = ({ navigation, route }) => {
+const Dashboard = () => {
     return <ScrollView style={
         {
             flex: 1,
@@ -15,12 +15,12 @@ const Dashboard = ({ navigation, route }) => {
     }>
 
         <CustomCard
-            title={route.params.name}
+            title={route.params.username}
             date="04/19/2022"
             location="The Bruh Mansion"
             desc="It's a bruhbruh party, say 50 bruh or else bruh."
         />
-
+              
         <CustomCard
             title="BruhBruh Party!"
             date="04/19/2022"
