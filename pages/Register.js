@@ -1,11 +1,12 @@
-import { setStatusBarStyle } from 'expo-status-bar';
+//import { setStatusBarStyle } from 'expo-status-bar';
 import React, { useState } from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {
-    StyleSheet, View, ScrollView, Button,
+    StyleSheet, View, Button,
     ImageBackground, TextInput, Keyboard,
-    TouchableWithoutFeedback, KeyboardAvoidingView,
-    Linking, Image
+    TouchableWithoutFeedback, KeyboardAvoidingView, 
+    Image
 } from 'react-native';
 
 import { Text, Badge } from 'react-native-paper';
@@ -22,54 +23,80 @@ const Register = ({ navigation }) => {
 
     const [page, setPage] = useState('Register')
 
+    const storeData = async (value) => {
+        try {
+            const jsonValue = JSON.stringify(value)
+            await AsyncStorage.setItem('@storage_Key', jsonValue)
+        } catch (e) {
+            // saving error
+        }
+    }
+
+    const getData = async () => {
+        try {
+            const jsonValue = await AsyncStorage.getItem('@storage_Key')
+            return jsonValue != null ? JSON.parse(jsonValue) : null;
+        } catch (e) {
+            // error reading value
+        }
+    }
+
+    // make an API request and store the session
+    const details = {
+        'username': username,
+        'password': password,
+        'email': email,
+        'firstName': firstname,
+        'lastName': lastname,
+        'phone': phone
+    };
 
     const handleRegister = async (e) => {
-        // make an API request and store the session
-        const details = {
-            'username': username,
-            'password': password,
-            'email': email,
-            'firstName': firstname,
-            'lastName': lastname,
-            'phone': phone
-        };
 
-        const url = 'https://primalpartybackend.azurewebsites.net/register'
+        const url = 'http://primalpartybackend.azurewebsites.net/register'
 
         //setIsPending(true);
 
-        var formBody = [];
-        for (var property in details) {
-            var encodedKey = encodeURIComponent(property);
-            var encodedValue = encodeURIComponent(details[property]);
-            formBody.push(encodedKey + "=" + encodedValue);
-        }
-        formBody = formBody.join("&");
-        console.log(formBody);
+        //Checking for emptiness
+        if(username && password && email && firstname && lastname && phone){
 
-       await fetch(url, {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
-            },
-            credentials: 'include',
-            body: formBody,
-        })
-        .then(response => {
-            console.log(response.status);
-            if(!response.ok) {
-                throw Error('could not fetch the data for that resource')
+            var formBody = [];
+            for (var property in details) {
+                var encodedKey = encodeURIComponent(property);
+                var encodedValue = encodeURIComponent(details[property]);
+                formBody.push(encodedKey + "=" + encodedValue);
             }
-            return response.json();
-        })
-        .then((data) => {
-            console.log(data);
-            //setIsPending(false);
-            //navigate('/verify');
-        })
-        .catch(err => {
-            console.log(err.message);
-        })
+            formBody = formBody.join("&");
+            console.log(formBody);
+
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {"Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"},
+                credentials: 'include',
+                body: formBody,
+            })
+            //.then(res => {
+             //   console.log(res.status);
+            //    if(!res.ok) {
+            //        throw Error('could not fetch the data for that resource')
+            //    }
+            //    return res.json();
+           // })
+            .catch(err => {
+                console.log(err.message);
+            })
+
+            const data = await response.json();
+
+            await storeData(data);
+
+            navigation.navigate('Login');
+
+
+        } else {
+            //Handle empty input
+            console.log("missing input");
+        }
     }
 
     return (
