@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, Image, TextInput, TouchableOpacity, ImageBackground, KeyboardAvoidingView } from 'react-native'
 import Constants from 'expo-constants'
 
 const StatusBarHeight = Constants.statusBarHeight
@@ -24,10 +24,21 @@ export const StyledContainer = styled.View`
     padding-top: ${StatusBarHeight + 10}px;
 `
 
-export const InnerContainer = styled.View`
+export const StyledImageContainer = styled.ImageBackground`
     flex: 1;
-    width: 100%;
+    height:100%;
+    flexDirection: column;
+    justifyContent:center;
+    alignItems: center;
+    padding-top: ${StatusBarHeight + 5}px;
+`
+
+export const InnerContainer = styled.View`
+    border-radius: 5px;
+    width: 90%;
+    height: 90%;
     align-items: center;
+    background-color: ${primary};
 `
 
 export const PageLogo = styled.Image`
@@ -101,11 +112,13 @@ export const StyledButton = styled.TouchableOpacity`
 export const ButtonText = styled.Text`
     color: ${primary};
     font-size: 16px;
+    font-weight: bold
 `
 
 export const MsgBox = styled.Text`
     text-align: center;
     font-size: 13px;
+    color: ${props => props.type == 'SUCCESS' ? green : red}
 `
 
 export const Line = styled.View`
