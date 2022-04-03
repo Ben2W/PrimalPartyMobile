@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { BottomNavigation, Text } from 'react-native-paper';
-import Dashboard from "../pages/Dashboard";
+import DisplayCards from "../pages/DisplayCards";
 import Friends from "../pages/Friends";
 import Invites from "../pages/Invites";
 import MyEvents from "../pages/MyEvents";
 
-const DashboardRoute = () => Dashboard();
+const DashboardRoute = () => DisplayCards();
 
 const InvitesRoute = () => Invites();
 
@@ -17,7 +17,7 @@ const MyEventsRoute = () => MyEvents();
 const BottomNavBar = () => {
     const [index, setIndex] = React.useState(0);
     const [routes] = React.useState([
-        { key: 'dashboard', title: 'Dashboard', icon: 'home' },
+        { key: 'dashboard', title: 'DisplayCards', icon: 'home' },
         { key: 'invites', title: 'Invites', icon: 'card-account-mail', badge: "5" },
         { key: 'friends', title: 'Friends', icon: 'account-multiple' },
         { key: 'myevents', title: 'My Events', icon: 'party-popper' },

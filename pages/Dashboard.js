@@ -1,65 +1,64 @@
 import * as React from 'react';
-import { Button } from 'react-native-paper';
-import { StyleSheet, View, ScrollView } from 'react-native';
-import { Text, Badge } from 'react-native-paper';
-import CustomCard from "../components/CustomCard";
+import {View} from "react-native";
+import Home from "../components/Home"
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import {MaterialCommunityIcons} from "@expo/vector-icons";
+import Tasks from "./Tasks"
+import Inbox from "./Inbox";
+const Tab = createMaterialBottomTabNavigator();
 
-const Dashboard = ( { route }) => {
-    return <ScrollView style={
-        {
-            flex: 1,
-            top: "5%",
-            marginLeft: "2%",
-            marginRight: "2%",
-        }
-    }>
-        <Text style={
-                        {
-                            fontSize: 40,
-                            fontFamily: "TimesNewRomanPS-BoldItalicMT",
-                        }
-                    }>
-                Welcome {route.params.username}!
-        </Text>
-
-        {/*<CustomCard*/}
-        {/*    title={route.params.username}*/}
-        {/*    date="04/19/2022"*/}
-        {/*    location="The Bruh Mansion"*/}
-        {/*    desc="It's a bruhbruh party, say 50 bruh or else bruh."*/}
-        {/*/>*/}
-              
-        <CustomCard
-            title="BruhBruh Party!"
-            date="04/19/2022"
-            location="The Bruh Mansion"
-            desc="It's a bruhbruh party, say 50 bruh or else bruh."
-        />
-        <CustomCard
-            title="Factorio Meeting"
-            date="3/28/2030"
-            location="Crash Landing Site"
-            desc="I just thought we needed more storage. "
-        />
-        <CustomCard
-            title="People vs. Everything LAN Party"
-            date="04/19/2022"
-            location="Ben's Mom's House"
-            desc="&quot;Why is there a scooter outside of my mom's house?&quot; -Benjamin Werner's last words"
-        />
-        <CustomCard
-            title="Smoothie Ruler Crowning"
-            date="06/20/2022"
-            location="London, UK"
-            desc="Find out who's gonna be Smoothie King, or Queen!"
-        />
-        <CustomCard
-            title="PowerSmoking Session"
-            date="04/20/2022"
-            location="Colorado Lake"
-            desc="So what we get drunk ..."
-        />
-    </ScrollView>
+const Dashboard = ({ navigation, route }) => {
+    return(
+        <View style={{
+            flex:1,
+        }}>
+            <Tab.Navigator
+                initialRouteName="Home"
+                shifting={true}
+            >
+                <Tab.Screen
+                    name="Inbox"
+                    component={Inbox}
+                    options={{
+                        tabBarLabel: 'Inbox',
+                        tabBarColor: "#66001d",
+                        tabBarIcon: ({ color }) => (
+                            <MaterialCommunityIcons name="inbox" color={color} size={26} />
+                        ),
+                    }}
+                />
+                <Tab.Screen
+                    name="Home"
+                    children={() => (
+                        <Home
+                            navigation={navigation}
+                            route = {route}
+                        />)}
+                    options={{
+                        tabBarLabel: 'Home',
+                        tabBarColor: "#1F44EA",
+                        tabBarIcon: ({ color }) => (
+                            <MaterialCommunityIcons name="home" color={color} size={26} />
+                        ),
+                    }}
+                />
+                <Tab.Screen
+                    name="Tasks"
+                    children={() => (
+                        <Tasks
+                            route = {route}
+                        />)}
+                    options={{
+                        tabBarLabel: 'Tasks',
+                        tabBarColor: "#397367",
+                        tabBarIcon: ({ color }) => (
+                            <MaterialCommunityIcons name="format-list-checks" color={color} size={26} />
+                        ),
+                    }}
+                />
+            </Tab.Navigator>
+        </View>
+    )
 }
 
-export default Dashboard
+export default Dashboard;

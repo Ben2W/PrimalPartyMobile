@@ -1,14 +1,16 @@
 import * as React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import { configureFonts, DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import {configureFonts, Provider as PaperProvider} from 'react-native-paper';
 import BottomNavBar from "./components/BottomNavBar";
 import defaultTheme from "react-native-paper/src/styles/DefaultTheme";
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Dashboard from './pages/Dashboard';
+import DisplayCards from './pages/DisplayCards';
 import Login from './pages/Login'
+import Dashboard from "./pages/Dashboard"
+import ViewEvent from "./pages/ViewEvent";
 
 const Stack = createNativeStackNavigator();
 
@@ -21,10 +23,10 @@ const customTheme = {
   },
   colors: {
     primary: '#4555F2',
-    accent: '#11B5E4',
+    accent: '#001021',
     background: '#F1F7ED',
     surface: '#F1F7ED',
-    text: '#001021',
+    text: '#F1F7ED',
     error: '#B71F0E',
     disabled: '#BEC6C6',
     placeholder: '#1481BA',
@@ -50,7 +52,9 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="Login" component={Login} options={{ title: "Login" }} />
+          <Stack.Screen name="Display Cards" component={DisplayCards} />
           <Stack.Screen name="Dashboard" component={Dashboard} />
+          <Stack.Screen name="ViewEvent" component={ViewEvent} />
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>
