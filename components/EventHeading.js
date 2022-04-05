@@ -11,6 +11,7 @@ const EventHeading = ({props}) => {
                     <Text size = "md" marginLeft="2%" fontWeight="medium">
                         Location: {props.location} {"\n"}
                         Date: {props.date} {"\n"}
+                        Guests: {props.guests.length} {"\n"}
                         Desc: {props.desc}
                     </Text>
                 </Box>
