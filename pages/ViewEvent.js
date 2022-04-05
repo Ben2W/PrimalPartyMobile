@@ -9,9 +9,6 @@ import Tasks from "./Tasks";
 const Tab = createMaterialBottomTabNavigator();
 
 const ViewEvent = ({navigation, route}) => {
-
-    console.log("bruh");
-    console.log(route.params);
     const props = route.params;
 
     return (

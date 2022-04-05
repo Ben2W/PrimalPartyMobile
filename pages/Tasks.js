@@ -1,14 +1,51 @@
 import * as React from 'react';
 import {Box, Container, Heading, ScrollView, VStack, Text, View} from "native-base";
+import EventHeading from "../components/EventHeading"
+import GuestTasksList from "../components/GuestTasksList";
 
 const Tasks = ({navigation, route}) => {
     const props = route.params;
-    const guestsMap = props.guests.map((item, index) =>
-        <Text key={index}>
-            {item.firstName} {item.lastName} {": "}
-            {item.tasks.join(", ")} {"\n"}
-        </Text>
-    );
+    const guestsMap = props.guests.map((item, index) => {
+        if (item.tasks.length > 1){
+            return(
+                <Box flexDirection={"row"} marginLeft="5%" borderBottomWidth={"1"} marginRight={"5%"} pb={"1%"} pt={"1%"} borderColor={"gray.300"}>
+                    <Text key={index} textAlign = "left" width={"50%"} marginLeft="5%">
+                        {item.firstName} {item.lastName} {": "}
+                    </Text>
+                    <Text key={index} textAlign={"left"} width={"50%"} marginLeft="5%">
+                        {item.tasks.slice(0,-1).join("\n") + "\n" + item.tasks.slice(-1)}
+                    </Text>
+                </Box>
+            );
+        }
+        else if (item.tasks.length === 1){
+            return(
+                <Box flexDirection={"row"} marginLeft="5%" borderBottomWidth={"1"} marginRight={"5%"} pb={"1%"} pt={"1%"} borderColor={"gray.300"}>
+                    <Text key={index} textAlign = "left" width={"50%"} marginLeft="5%">
+                        {item.firstName} {item.lastName} {": "}
+                    </Text>
+                    <Text key={index} textAlign={"left"} width={"50%"} marginLeft="5%">
+                        {item.tasks[0]}
+                    </Text>
+                </Box>
+            );
+        }
+        else{
+            return(
+                <Box flexDirection={"row"} marginLeft="5%" borderBottomWidth={"1"} marginRight={"5%"} pb={"1%"} pt={"1%"} borderColor={"gray.300"}>
+                    <Text key={index} textAlign = "left" width={"50%"} marginLeft="5%">
+                    {item.firstName} {item.lastName} {": "}
+                    </Text>
+                    <Text key={index} textAlign={"left"} width={"50%"} marginLeft="5%">
+                        {"*No Tasks!*"}
+                    </Text>
+                </Box>
+            );
+        }
+    });
+
+
+
 
     return (
         <View style={{
@@ -20,24 +57,8 @@ const Tasks = ({navigation, route}) => {
             flexDirection: "column",
         }}>
             <VStack space={"2%"} flex={1}>
-                <Container maxW={"100%"} maxH="20%" bg="indigo.300" rounded="md" shadow={3} >
-                    <Heading pb="1" size="lg" marginLeft="2%">
-                        Event: {props.title}
-                    </Heading>
-                    <Text size = "md" marginLeft="2%" fontWeight="medium">
-                        Location: {props.location} {"\n"}
-                        Date: {props.date} {"\n"}
-                        Desc: {props.desc}
-                    </Text>
-                </Container>
-                <Box flexGrow={1} maxW="100%" maxH={"70%"} bg="indigo.100" rounded="md" shadow={3} >
-                    <Heading pb="3" size="lg">
-                        Tasks
-                    </Heading>
-                    <ScrollView showsVerticalScrollIndicator={true} borderColor={"black"} maxH={"100%"}>
-                        {guestsMap}
-                    </ScrollView>
-                </Box>
+                <EventHeading props={props}/>
+                <GuestTasksList guestsMap={guestsMap} heading = {"Task List"}/>
             </VStack>
         </View>
     );

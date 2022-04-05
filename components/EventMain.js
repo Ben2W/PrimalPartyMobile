@@ -1,13 +1,20 @@
 import * as React from 'react';
 import {NativeBaseProvider, Box, Center, Heading, ScrollView, Flex, VStack, ZStack, Container, View, Text} from "native-base";
+import EventHeading from "./EventHeading";
+import GuestTasksList from "./GuestTasksList";
 
 
 const EventMain = ({ navigation, route }) => {
     const props = route.params;
     const guestsMap = props.guests.map((item, index) =>
-        <Text key={index}>
-            {item.firstName} {item.lastName} {"\n"}
-        </Text>
+        <Box flexDirection={"row"} marginLeft="5%" pb={"1%"} pt={"1%"}>
+            <Text key={index} textAlign={"left"} width={"50%"}>
+            {item.firstName} {item.lastName}
+            </Text>
+            <Text key={index} textAlign={"center"} width={"50%"} marginLeft="5%">
+                {" (" + item.tasks.length + " tasks)"}
+            </Text>
+        </Box>
     );
 
     return (
@@ -20,24 +27,8 @@ const EventMain = ({ navigation, route }) => {
             flexDirection: "column",
         }}>
             <VStack space={"2%"} flex={1}>
-                <Container maxW={"100%"} maxH="20%" bg="indigo.300" rounded="md" shadow={3} >
-                    <Heading pb="1" size="lg" marginLeft="2%">
-                        Event: {props.title}
-                    </Heading>
-                    <Text size = "md" marginLeft="2%" fontWeight="medium">
-                        Location: {props.location} {"\n"}
-                        Date: {props.date} {"\n"}
-                        Desc: {props.desc}
-                    </Text>
-                </Container>
-                <Box flexGrow={1} maxW="100%" maxH={"70%"} bg="indigo.100" rounded="md" shadow={3} >
-                    <Heading pb="3" size="lg">
-                        Guests
-                    </Heading>
-                    <ScrollView showsVerticalScrollIndicator={true} borderColor={"black"} maxH={"100%"}>
-                        {guestsMap}
-                    </ScrollView>
-                </Box>
+                <EventHeading props={props}/>
+                <GuestTasksList guestsMap={guestsMap} heading={"Guest List"}/>
             </VStack>
         </View>
     );
