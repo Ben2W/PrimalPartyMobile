@@ -111,7 +111,7 @@ const Login = ({ navigation }) => {
         tasks: [tasksDemo[2]],
     }
 
-    for (let i = 0; i < 900; i++){
+    for (let i = 0; i < 100; i++){
         let LoopItem = {
             firstName: "LoopFirst ".concat(i.toString()),
             lastName: "LoopLast ".concat(i.toString()),
