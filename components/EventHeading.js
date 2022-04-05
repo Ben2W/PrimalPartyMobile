@@ -3,8 +3,8 @@ import {Box, Container, Heading, ScrollView, VStack, Text, View} from "native-ba
 
 const EventHeading = ({props}) => {
     return(
-            <Container maxW={"100%"} maxH="17%" bg="indigo.300" rounded="md" shadow={3}>
-                <Box>
+            <Container maxW={"100%"} maxH="20%" bg="indigo.300" rounded="md" shadow={3} flexGrow="1">
+                <Box flexGrow="1">
                     <Heading pb="1" size="lg" marginLeft="2%" >
                         {props.title}
                     </Heading>

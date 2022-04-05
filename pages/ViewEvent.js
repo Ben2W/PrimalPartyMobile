@@ -3,8 +3,8 @@ import {View} from "react-native";
 import {Headline, Paragraph, Text} from "react-native-paper";
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import {MaterialCommunityIcons} from "@expo/vector-icons";
-import EventMain from "../components/EventMain"
-import Tasks from "./Tasks";
+import EventMain from "./EventMain"
+import TasksView from "./TasksView";
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -34,14 +34,14 @@ const ViewEvent = ({navigation, route}) => {
                         ),
                 }}/>
                 <Tab.Screen
-                    name = "Tasks"
+                    name = "TasksView"
                     children={() => (
-                        <Tasks
+                        <TasksView
                             navigation={navigation}
                             route = {route}
                         />)}
                     options={{
-                        tabBarLabel: 'Tasks',
+                        tabBarLabel: 'TasksView',
                         tabBarColor: "#1F44EA",
                         tabBarIcon: ({ color }) => (
                             <MaterialCommunityIcons name="format-list-checks" color={color} size={26} />

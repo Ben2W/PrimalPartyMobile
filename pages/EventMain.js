@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {NativeBaseProvider, Box, Center, Heading, ScrollView, Flex, VStack, ZStack, Container, View, Text} from "native-base";
-import EventHeading from "./EventHeading";
-import GuestTasksList from "./GuestTasksList";
+import EventHeading from "../components/EventHeading";
+import GuestTasksList from "../components/GuestTasksList";
 
 
 const EventMain = ({ navigation, route }) => {

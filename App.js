@@ -12,8 +12,9 @@ import DisplayCards from './pages/DisplayCards';
 import Login from './pages/Login'
 import Dashboard from "./pages/Dashboard"
 import ViewEvent from "./pages/ViewEvent";
-import EventMain from "./components/EventMain";
-import Tasks from "./pages/Tasks";
+import EventMain from "./pages/EventMain";
+import TasksView from "./pages/TasksView";
+import MyTasks from "./pages/MyTasks";
 
 const Stack = createNativeStackNavigator();
 
@@ -60,7 +61,8 @@ export default function App() {
             <Stack.Screen name="Dashboard" component={Dashboard} />
             <Stack.Screen name="ViewEvent" component={ViewEvent} />
             <Stack.Screen name="EventMain" component={EventMain} />
-            <Stack.Screen name="Tasks" component={Tasks} />
+            <Stack.Screen name="TasksView" component={TasksView} />
+            <Stack.Screen name="MyTasks" component={MyTasks} />
           </Stack.Navigator>
         </NavigationContainer>
       </PaperProvider>
