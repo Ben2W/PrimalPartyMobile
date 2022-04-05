@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import {configureFonts, Provider as PaperProvider} from 'react-native-paper';
 import BottomNavBar from "./components/BottomNavBar";
 import defaultTheme from "react-native-paper/src/styles/DefaultTheme";
+import { NativeBaseProvider, Box } from "native-base";
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -11,6 +12,8 @@ import DisplayCards from './pages/DisplayCards';
 import Login from './pages/Login'
 import Dashboard from "./pages/Dashboard"
 import ViewEvent from "./pages/ViewEvent";
+import EventMain from "./components/EventMain";
+import Tasks from "./pages/Tasks";
 
 const Stack = createNativeStackNavigator();
 
@@ -48,16 +51,20 @@ const customTheme = {
 export default function App() {
 
   return (
-    <PaperProvider theme={customTheme}>
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="Login" component={Login} options={{ title: "Login" }} />
-          <Stack.Screen name="Display Cards" component={DisplayCards} />
-          <Stack.Screen name="Dashboard" component={Dashboard} />
-          <Stack.Screen name="ViewEvent" component={ViewEvent} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </PaperProvider>
+      <NativeBaseProvider>
+        <PaperProvider theme={customTheme}>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen name="Login" component={Login} options={{ title: "Login" }} />
+            <Stack.Screen name="Display Cards" component={DisplayCards} />
+            <Stack.Screen name="Dashboard" component={Dashboard} />
+            <Stack.Screen name="ViewEvent" component={ViewEvent} />
+            <Stack.Screen name="EventMain" component={EventMain} />
+            <Stack.Screen name="Tasks" component={Tasks} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </PaperProvider>
+    </NativeBaseProvider>
   );
 }
 

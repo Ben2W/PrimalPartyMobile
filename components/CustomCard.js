@@ -3,14 +3,26 @@ import {View} from "react-native";
 import { Avatar, Button, Card, Title, Paragraph, FAB } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 import ListItem from "react-native-paper/src/components/List/ListItem";
+import {useCallback} from "react";
+import ViewEvent from "../pages/ViewEvent";
 
 const CustomCard = ({navigation, props}) => {
-    const eventDetails = {props};
 
-    const handleClick = ({navigation, eventDetails}) =>{
+    const [title, setTitle] = React.useState(props.title);
+    const [location, setLocation] = React.useState(props.location);
+    const [date, setDate] = React.useState(props.date);
+    const [desc, setDesc] = React.useState(props.desc);
+    const [id, setID] = React.useState(props.id);
+
+    const [eventArray, setEventArray] = React.useState({props});
+
+    const handleClick = (eventDetails) => {
+        console.log(eventDetails)
         navigation.navigate("ViewEvent", {
-            navigation: navigation,
-            props: eventDetails,
+            title: eventDetails.title,
+            location: eventDetails.location,
+            date: eventDetails.date,
+            desc: eventDetails.desc,
         })
     }
 
@@ -29,16 +41,16 @@ const CustomCard = ({navigation, props}) => {
             >
             {/*<Card.Title title={props.title} subtitle="Card Subtitle" left={(props) => <Avatar.Icon {...props} icon="party-popper" />} />*/}
             <LinearGradient
-                colors={['#4555F2', '#6675F4']}
+                colors={['#4555F2', '#878af7']}
             >
             <Card.Content style={{
                 alignItems:"left",
                 justifyContent: 'center',
             }}>
-                <Title>{props.title}</Title>
-                <Paragraph>Location: {props.location}</Paragraph>
-                <Paragraph>Date: {props.date}</Paragraph>
-                <Paragraph>Desc: {props.desc}</Paragraph>
+                <Title>{title}</Title>
+                <Paragraph>Location: {location}</Paragraph>
+                <Paragraph>Date: {date}</Paragraph>
+                <Paragraph>Desc: {desc}</Paragraph>
             </Card.Content>
             {/*<Card.Cover source={{ uri: 'https://picsum.photos/700' }} />*/}
             <Card.Actions style={{
@@ -50,7 +62,7 @@ const CustomCard = ({navigation, props}) => {
                     style={{
                         width: "100%",
                     }}
-                    onPress={() => handleClick({navigation, eventDetails})}
+                    onPress={() => handleClick(eventArray)}
                 />
             </Card.Actions>
         </LinearGradient>

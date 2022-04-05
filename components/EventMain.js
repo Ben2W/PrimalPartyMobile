@@ -1,12 +1,12 @@
 import * as React from 'react';
-import {Box, Container, Heading, ScrollView, VStack, Text, View} from "native-base";
+import {NativeBaseProvider, Box, Center, Heading, ScrollView, Flex, VStack, ZStack, Container, View, Text} from "native-base";
 
-const Tasks = ({navigation, route}) => {
+
+const EventMain = ({ navigation, route }) => {
     const props = route.params;
     const guestsMap = props.guests.map((item, index) =>
         <Text key={index}>
-            {item.firstName} {item.lastName} {": "}
-            {item.tasks.join(", ")} {"\n"}
+            {item.firstName} {item.lastName} {"\n"}
         </Text>
     );
 
@@ -32,7 +32,7 @@ const Tasks = ({navigation, route}) => {
                 </Container>
                 <Box flexGrow={1} maxW="100%" maxH={"70%"} bg="indigo.100" rounded="md" shadow={3} >
                     <Heading pb="3" size="lg">
-                        Tasks
+                        Guests
                     </Heading>
                     <ScrollView showsVerticalScrollIndicator={true} borderColor={"black"} maxH={"100%"}>
                         {guestsMap}
@@ -43,4 +43,4 @@ const Tasks = ({navigation, route}) => {
     );
 }
 
-export default Tasks
+export default EventMain;

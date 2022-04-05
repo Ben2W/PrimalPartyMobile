@@ -77,6 +77,48 @@ const Login = ({ navigation }) => {
             console.log("missing input")
         }
     }
+    const tasksDemo = ["Mop Floors", "Bring Chips", "Rent Scooter", "Underage Drinking"];
+
+    const Aldrich = {
+        firstName: "Aldrich",
+        lastName: "Agabin",
+        tasks: [tasksDemo[3], tasksDemo[1]],
+    }
+
+    const Amelia = {
+        firstName: "Amelia",
+        lastName: "Fontenot",
+        tasks: [tasksDemo[1]],
+    }
+
+    const Benjamin = {
+        firstName: "Benjamin",
+        lastName: "Werner",
+        tasks: [],
+    }
+
+    const Emin = {
+        firstName: "Emin",
+        lastName: "Mammadzada",
+        tasks: [tasksDemo[0], tasksDemo[1], tasksDemo[2], tasksDemo[3]],
+    }
+
+    const guestsDemo = [Aldrich, Amelia, Benjamin, Emin];
+
+    const LoopItem ={
+        firstName:"",
+        lastName:"",
+        tasks: [tasksDemo[2]],
+    }
+
+    for (let i = 0; i < 900; i++){
+        let LoopItem = {
+            firstName: "LoopFirst ".concat(i.toString()),
+            lastName: "LoopLast ".concat(i.toString()),
+            tasks: [tasksDemo[2]],
+        }
+        guestsDemo.push(LoopItem);
+    }
 
     return (
         <KeyboardAvoidingView behavior='position' style={styles.container}>
@@ -109,6 +151,25 @@ const Login = ({ navigation }) => {
                                     ],
                                 })}>
                             DisplayCards
+                        </PaperButton>
+                    </View>
+
+                    <View>
+                        <PaperButton
+                            title = "ViewEvent"
+                            mode="contained"
+                            onPress={() => navigation.navigate("ViewEvent",
+                                {
+                                    username: "starlaser52",
+                                    title: "Native-Base Party",
+                                    date: "03/31/2022",
+                                    location: "HEC Building",
+                                    desc: "This is a demo route to ViewEvent.",
+                                    id: 1,
+                                    guests: guestsDemo,
+                                    tasks: tasksDemo,
+                                })}>
+                            ViewEvent
                         </PaperButton>
                     </View>
 
