@@ -15,6 +15,10 @@ import ViewEvent from "./pages/ViewEvent";
 import EventMain from "./pages/EventMain";
 import TasksView from "./pages/TasksView";
 import MyTasks from "./pages/MyTasks";
+import {ApplicationProvider, IconRegistry} from "@ui-kitten/components";
+import * as eva from '@eva-design/eva';
+import {mapping} from "@eva-design/eva";
+import {EvaIconsPack} from "@ui-kitten/eva-icons";
 
 const Stack = createNativeStackNavigator();
 
@@ -52,22 +56,26 @@ const customTheme = {
 export default function App() {
 
   return (
-      <NativeBaseProvider>
-        <PaperProvider theme={customTheme}>
-        <NavigationContainer>
-          <Stack.Navigator>
-            <Stack.Screen name="Login" component={Login} options={{ title: "Login" }} />
-            <Stack.Screen name="Display Cards" component={DisplayCards} />
-            <Stack.Screen name="Dashboard" component={Dashboard} />
-            <Stack.Screen name="ViewEvent" component={ViewEvent} />
-            <Stack.Screen name="EventMain" component={EventMain} />
-            <Stack.Screen name="TasksView" component={TasksView} />
-            <Stack.Screen name="MyTasks" component={MyTasks} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </PaperProvider>
-    </NativeBaseProvider>
-  );
+      <ApplicationProvider {...eva} theme={eva.light}>
+      <IconRegistry icons={EvaIconsPack} />
+        <NativeBaseProvider>
+            <PaperProvider theme={customTheme}>
+            <NavigationContainer>
+              <Stack.Navigator>
+                <Stack.Screen name="Login" component={Login} options={{ title: "Login" }} />
+                <Stack.Screen name="Display Cards" component={DisplayCards} />
+                <Stack.Screen name="Dashboard" component={Dashboard} />
+                <Stack.Screen name="ViewEvent" component={ViewEvent} />
+                <Stack.Screen name="EventMain" component={EventMain} />
+                <Stack.Screen name="TasksView" component={TasksView} />
+                <Stack.Screen name="MyTasks" component={MyTasks} />
+              </Stack.Navigator>
+            </NavigationContainer>
+          </PaperProvider>
+      </NativeBaseProvider>
+  </ApplicationProvider>
+
+);
 }
 
 

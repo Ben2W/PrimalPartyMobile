@@ -6,6 +6,7 @@ import {Text} from "react-native";
 import {ScrollView} from "react-native";
 import {Title} from "react-native-paper";
 import {Box, Button, FormControl, Heading, Input, Modal, VStack} from "native-base";
+import DatePicker from "./DatePicker";
 
 const Home = ({ navigation, route }) => {
     const [showModal, setShowModal] = useState(false);
@@ -47,7 +48,7 @@ const Home = ({ navigation, route }) => {
                                 </FormControl>
                                 <FormControl mt="3">
                                     <FormControl.Label>Date</FormControl.Label>
-                                    <Input />
+                                    <DatePicker />
                                 </FormControl>
                                 <FormControl mt="3">
                                     <FormControl.Label>Location</FormControl.Label>
