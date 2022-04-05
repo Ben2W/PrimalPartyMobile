@@ -19,6 +19,7 @@ import {ApplicationProvider, IconRegistry} from "@ui-kitten/components";
 import * as eva from '@eva-design/eva';
 import {mapping} from "@eva-design/eva";
 import {EvaIconsPack} from "@ui-kitten/eva-icons";
+import {SSRProvider} from '@react-aria/ssr'
 
 const Stack = createNativeStackNavigator();
 
@@ -56,25 +57,26 @@ const customTheme = {
 export default function App() {
 
   return (
-      <ApplicationProvider {...eva} theme={eva.light}>
-      <IconRegistry icons={EvaIconsPack} />
-        <NativeBaseProvider>
-            <PaperProvider theme={customTheme}>
-            <NavigationContainer>
-              <Stack.Navigator>
-                <Stack.Screen name="Login" component={Login} options={{ title: "Login" }} />
-                <Stack.Screen name="Display Cards" component={DisplayCards} />
-                <Stack.Screen name="Dashboard" component={Dashboard} />
-                <Stack.Screen name="ViewEvent" component={ViewEvent} />
-                <Stack.Screen name="EventMain" component={EventMain} />
-                <Stack.Screen name="TasksView" component={TasksView} />
-                <Stack.Screen name="MyTasks" component={MyTasks} />
-              </Stack.Navigator>
-            </NavigationContainer>
-          </PaperProvider>
-      </NativeBaseProvider>
-  </ApplicationProvider>
-
+      <SSRProvider>
+        <ApplicationProvider {...eva} theme={eva.light}>
+        <IconRegistry icons={EvaIconsPack} />
+          <NativeBaseProvider>
+              <PaperProvider theme={customTheme}>
+              <NavigationContainer>
+                <Stack.Navigator>
+                    <Stack.Screen name="Login" component={Login} options={{ title: "Login" }} />
+                    <Stack.Screen name="Display Cards" component={DisplayCards} />
+                    <Stack.Screen name="Dashboard" component={Dashboard} />
+                    <Stack.Screen name="ViewEvent" component={ViewEvent} />
+                    <Stack.Screen name="EventMain" component={EventMain} />
+                    <Stack.Screen name="TasksView" component={TasksView} />
+                    <Stack.Screen name="MyTasks" component={MyTasks} />
+                  </Stack.Navigator>
+                </NavigationContainer>
+              </PaperProvider>
+          </NativeBaseProvider>
+      </ApplicationProvider>
+  </SSRProvider>
 );
 }
 

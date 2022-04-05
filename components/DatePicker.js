@@ -4,7 +4,8 @@ import { Datepicker, Layout, Text } from '@ui-kitten/components';
 
 export const DatePicker = () => {
 
-    const [date, setDate] = React.useState(new Date());
+    const initDate = new Date();
+    const [date, setDate] = React.useState(initDate);
 
     return (
         <Layout style={styles.container} level='1'>
@@ -15,7 +16,7 @@ export const DatePicker = () => {
 
             <Datepicker
                 placement={"left"}
-                min={date}
+                min={initDate}
                 date={date}
                 onSelect={nextDate => setDate(nextDate)}
             />
