@@ -1,20 +1,19 @@
 import React, { useState, useContext } from 'react'
-import { View, ActivityIndicator } from 'react-native'
+import { ActivityIndicator } from 'react-native'
 import { StatusBar } from 'expo-status-bar';
 
 import { Formik } from 'formik'
 
-import { Octicons, Ionicons } from '@expo/vector-icons'
-
-import { StyledImageContainer, InnerContainer, PageLogo, PageTitle, StyledFormArea, Subtitle, LeftIcon, RightIcon, StyledInputLabel, StyledTextInput, Colors, StyledButton, ButtonText, MsgBox, ExtraView, ExtraText, TextLink, TextLinkContent } from '../components/styles'
+import { StyledImageContainer, InnerContainer, PageLogo, PageTitle, StyledFormArea, Subtitle, Colors, StyledButton, ButtonText, MsgBox, ExtraView, ExtraText, TextLink, TextLinkContent } from '../components/styles'
 
 import KeyboardAvoidingViewWrapper from '../components/KeyboardAvoidingWrapper';
+import MyTextInput from '../components/MyTextInput';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { CredentialsContext } from '../components/CredentialsContext'
 
-const { brand, darkLight, primary } = Colors;
+const { darkLight, primary } = Colors;
 
 const Login = ({ navigation }) => {
 
@@ -67,7 +66,7 @@ const Login = ({ navigation }) => {
                 })
                 .catch(err => {
                     setIsSubmitting(false)
-                    handleMessage(err.message, 'FAILED')
+                    handleMessage(err.message)
                 })
 
         }
@@ -75,7 +74,7 @@ const Login = ({ navigation }) => {
         // missing credentials
         else {
             setIsSubmitting(false)
-            handleMessage('Missing username or password', 'FAILED')
+            handleMessage('Missing username or password')
         }
     }
 
@@ -117,7 +116,7 @@ const Login = ({ navigation }) => {
                 <InnerContainer>
                     <PageLogo resizeMode="contain" source={require('../assets/PartyHatDinoLogo.png')} />
                     <PageTitle>Primal Party</PageTitle>
-                    <Subtitle>Login</Subtitle>
+                    <Subtitle>LOGIN</Subtitle>
 
 
                     <Formik
@@ -130,18 +129,18 @@ const Login = ({ navigation }) => {
                     >
                         {({ handleChange, handleBlur, handleSubmit, values }) => (<StyledFormArea>
                             <MyTextInput
-                                label="Username"
+                                label="USERNAME*"
                                 icon="person"
                                 placeholder="johndoe"
                                 placeholderTextColor={darkLight}
                                 onChangeText={handleChange('username')}
                                 onBlur={handleBlur('username')}
-                                value={values.email}
+                                value={values.username}
                                 autoCapitalize="none"
                             />
 
                             <MyTextInput
-                                label="Password"
+                                label="PASSWORD*"
                                 icon="lock"
                                 placeholder="* * * * * * * *"
                                 placeholderTextColor={darkLight}
@@ -158,7 +157,7 @@ const Login = ({ navigation }) => {
                             <MsgBox type={messageType}>{message}</MsgBox>
                             {!isSubmitting && (<StyledButton onPress={handleSubmit}>
                                 <ButtonText>
-                                    Sign In
+                                    SIGN IN
                                 </ButtonText>
                             </StyledButton>)
                             }
@@ -192,23 +191,6 @@ const Login = ({ navigation }) => {
                 </InnerContainer>
             </StyledImageContainer >
         </KeyboardAvoidingViewWrapper>
-    )
-}
-
-const MyTextInput = ({ label, icon, isPassword, hidePassword, setHidePassword, ...props }) => {
-    return (
-        <View>
-            <LeftIcon>
-                <Octicons name={icon} size={30} color={brand} />
-            </LeftIcon>
-            <StyledInputLabel>{label}</StyledInputLabel>
-            <StyledTextInput {...props} />
-            {isPassword && (
-                <RightIcon onPress={() => setHidePassword(!hidePassword)}>
-                    <Ionicons name={hidePassword ? 'md-eye-off' : 'md-eye'} size={30} color={darkLight} />
-                </RightIcon>
-            )}
-        </View>
     )
 }
 

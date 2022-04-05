@@ -39,6 +39,7 @@ export const InnerContainer = styled.View`
     height: 90%;
     align-items: center;
     background-color: ${primary};
+    flex: ${props => props.isRegister == true ? 1 : 0}
 `
 
 export const PageLogo = styled.Image`
@@ -133,6 +134,7 @@ export const ExtraView = styled.View`
     flex-direction: row;
     align-items: center;
     padding: 10px;
+    padding-bottom: 15px;
 `
 
 export const ExtraText = styled.Text`

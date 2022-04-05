@@ -7,13 +7,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { CredentialsContext } from '../components/CredentialsContext'
 
+import { NavigationActions } from '@react-navigation/native';
 
 
 const Welcome = ({ navigation }) => {
 
     const { storedCredentials, setStoredCredentials } = useContext(CredentialsContext)
     const { firstName, lastName, email, username } = storedCredentials
-
 
     const logout = () => {
         AsyncStorage.removeItem('ppcredentials')
@@ -28,7 +28,10 @@ const Welcome = ({ navigation }) => {
                     }
                 )
                     .then((data) => {
-                        console.log('logged out')
+                        navigation.reset({
+                            index: 0,
+                            routes: [{ name: 'Login' }],
+                        });
                     })
                     .catch(e => {
                         console.log(e)
@@ -39,7 +42,6 @@ const Welcome = ({ navigation }) => {
                 console.log(err)
             })
     }
-
 
     // TESTING
 
