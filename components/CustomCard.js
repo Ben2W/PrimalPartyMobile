@@ -48,8 +48,8 @@ const CustomCard = ({navigation, props}) => {
                 justifyContent: 'center',
             }}>
                 <Title>{title}</Title>
-                <Paragraph>Location: {location}</Paragraph>
                 <Paragraph>Date: {date}</Paragraph>
+                <Paragraph>Location: {location}</Paragraph>
                 <Paragraph>Desc: {desc}</Paragraph>
             </Card.Content>
             {/*<Card.Cover source={{ uri: 'https://picsum.photos/700' }} />*/}

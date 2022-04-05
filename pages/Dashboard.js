@@ -7,6 +7,7 @@ import Tasks from "./Tasks"
 import Inbox from "./Inbox";
 const Tab = createMaterialBottomTabNavigator();
 
+
 const Dashboard = ({ navigation, route }) => {
     return(
         <View style={{

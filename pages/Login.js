@@ -148,6 +148,27 @@ const Login = ({ navigation }) => {
                                             desc: "This is a second array item.",
                                             id: 2,
                                         },
+                                        {
+                                            title: "Third Route Parameter",
+                                            date: "03/31/2022",
+                                            location: "HEC Building",
+                                            desc: "This is a demo route to dashboard.",
+                                            id: 3,
+                                        },
+                                        {
+                                            title: "Fourth Route Parameter",
+                                            date: "03/31/2022",
+                                            location: "HEC Building",
+                                            desc: "This is a demo route to dashboard.",
+                                            id: 4,
+                                        },
+                                        {
+                                            title: "Fifth Route Parameter",
+                                            date: "03/31/2022",
+                                            location: "HEC Building",
+                                            desc: "This is a demo route to dashboard.",
+                                            id: 5,
+                                        },
                                     ],
                                 })}>
                             DisplayCards

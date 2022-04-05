@@ -9,8 +9,8 @@ const EventHeading = ({props}) => {
                         {props.title}
                     </Heading>
                     <Text size = "md" marginLeft="2%" fontWeight="medium">
-                        Location: {props.location} {"\n"}
                         Date: {props.date} {"\n"}
+                        Location: {props.location} {"\n"}
                         Guests: {props.guests.length} {"\n"}
                         Desc: {props.desc}
                     </Text>
