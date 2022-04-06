@@ -51,9 +51,7 @@ const VerifyEmail = ({ navigation }) => {
     const persistRegister = (credentials) => {
         AsyncStorage.setItem('ppcredentials', JSON.stringify(credentials))
             .then(() => {
-                console.log(storedCredentials)
                 setStoredCredentials(credentials)
-                console.log(storedCredentials)
             })
             .catch(err => {
                 handleMessage('Persisting Register information failed')

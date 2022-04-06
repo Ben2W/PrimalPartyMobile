@@ -198,16 +198,6 @@ const Register = ({ navigation }) => {
                                 <ActivityIndicator size='large' color={primary}></ActivityIndicator>
                             </StyledButton>)
                             }
-
-
-                            {/* TESTING */}
-                            {/* <StyledButton onPress={goToProtected}>
-                                <ButtonText>
-                                    /protected
-                                </ButtonText>
-                            </StyledButton> */}
-                            {/* TESTING */}
-
                             <ExtraView>
                                 <ExtraText>Already have an account? </ExtraText>
                                 <TextLink onPress={() => navigation.navigate('Login')}><TextLinkContent>Sign in</TextLinkContent></TextLink>

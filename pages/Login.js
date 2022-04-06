@@ -93,22 +93,6 @@ const Login = ({ navigation }) => {
                 handleMessage('Persisting Login information failed')
             })
     }
-
-    const goToProtected = () => {
-        fetch('http://localhost:8080/protected')
-            .then(res => {
-                console.log('tried going to protected')
-                return res.json()
-            })
-            .then(data => {
-                console.log(data)
-            })
-            .catch(e => {
-                console.log(e)
-            })
-    }
-
-
     return (
         <KeyboardAvoidingViewWrapper>
             <StyledImageContainer resizeMode="cover" source={require('../assets/HomeBackground.png')}>
@@ -166,16 +150,6 @@ const Login = ({ navigation }) => {
                                 <ActivityIndicator size='large' color={primary}></ActivityIndicator>
                             </StyledButton>)
                             }
-
-
-                            {/* TESTING */}
-                            <StyledButton onPress={goToProtected}>
-                                <ButtonText>
-                                    /protected
-                                </ButtonText>
-                            </StyledButton>
-                            {/* TESTING */}
-
                             <ExtraView>
                                 <TextLink><TextLinkContent>Forgot Password?</TextLinkContent></TextLink>
                             </ExtraView>
