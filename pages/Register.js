@@ -1,250 +1,215 @@
-//import { setStatusBarStyle } from 'expo-status-bar';
 import React, { useState } from 'react'
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ActivityIndicator } from 'react-native'
+import { StatusBar } from 'expo-status-bar';
 
-import {
-    StyleSheet, View, Button,
-    ImageBackground, TextInput, Keyboard,
-    TouchableWithoutFeedback, KeyboardAvoidingView, 
-    Image
-} from 'react-native';
+import { Formik } from 'formik'
 
-import { Text, Badge } from 'react-native-paper';
+import { StyledImageContainer, InnerContainer, PageTitle, StyledFormArea, Subtitle, Colors, StyledButton, ButtonText, MsgBox, ExtraView, ExtraText, TextLink, TextLinkContent } from '../components/styles'
 
+import KeyboardAvoidingViewWrapper from '../components/KeyboardAvoidingWrapper';
+import MyTextInput from '../components/MyTextInput';
+
+const { darkLight, primary } = Colors;
 
 const Register = ({ navigation }) => {
 
-    const [firstname, setFirstname] = useState("");
-    const [lastname, setLastname] = useState("");
-    const [email, setEmail] = useState("");
-    const [phone, setPhone] = useState("");
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+    const [hidePassword, setHidePassword] = useState(true)
+    const [message, setMessage] = useState('')
+    const [messageType, setMessageType] = useState()
+    const [isSubmitting, setIsSubmitting] = useState(false)
 
-    const [page, setPage] = useState('Register')
+    const handleRegister = async (credentials) => {
+        handleMessage(null)
 
-    const storeData = async (value) => {
-        try {
-            const jsonValue = JSON.stringify(value)
-            await AsyncStorage.setItem('@storage_Key', jsonValue)
-        } catch (e) {
-            // saving error
-        }
-    }
+        const { username, password, phone, email, firstName, lastName } = { ...credentials }
 
-    const getData = async () => {
-        try {
-            const jsonValue = await AsyncStorage.getItem('@storage_Key')
-            return jsonValue != null ? JSON.parse(jsonValue) : null;
-        } catch (e) {
-            // error reading value
-        }
-    }
+        const url = 'http://localhost:8080/register'
 
-    // make an API request and store the session
-    const details = {
-        'username': username,
-        'password': password,
-        'email': email,
-        'firstName': firstname,
-        'lastName': lastname,
-        'phone': phone
-    };
+        if (username && password && phone && email && firstName && lastName) {
 
-    const handleRegister = async (e) => {
-
-        const url = 'http://primalpartybackend.azurewebsites.net/register'
-
-        //Checking for emptiness
-        if(username && password && email && firstname && lastname && phone){
-
-            var formBody = [];
-            for (var property in details) {
-                var encodedKey = encodeURIComponent(property);
-                var encodedValue = encodeURIComponent(details[property]);
+            let formBody = [];
+            for (let property in credentials) {
+                let encodedKey = encodeURIComponent(property);
+                let encodedValue = encodeURIComponent(credentials[property]);
                 formBody.push(encodedKey + "=" + encodedValue);
             }
             formBody = formBody.join("&");
-            console.log(formBody);
 
-            const response = await fetch(url, {
+            await fetch(url, {
                 method: 'POST',
-                headers: {"Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"},
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+                },
                 credentials: 'include',
-                body: formBody,
+                body: formBody
             })
-            .catch(err => {
-                console.log(err.message);
-            })
+                .then(res => {
+                    if (res.status == 500) {
+                        throw Error('Unexpected error happened on the server')
+                    }
 
-            const data = await response.json();
+                    if (res.status == 503) {
+                        throw Error('Unable to send the verification email')
+                    }
 
-            await storeData(data);
+                    if (res.status == 410) {
+                        throw Error('Username and email already taken')
+                    }
 
-            navigation.navigate('Login');
+                    if (res.status == 411) {
+                        throw Error('Username already taken')
+                    }
 
+                    if (res.status == 412) {
+                        throw Error('Email already taken')
+                    }
 
-        } else {
-            //Handle empty input
-            console.log("missing input");
+                    return res.json();
+                })
+                .then(data => {
+                    setIsSubmitting(false)
+                    navigation.navigate('VerifyEmail', { credentials })
+                })
+                .catch(err => {
+                    setIsSubmitting(false)
+                    handleMessage(err.message)
+                })
+
+        }
+
+        // missing credentials
+        else {
+            setIsSubmitting(false)
+            handleMessage('Missing fields')
         }
     }
 
-    return (
-        <KeyboardAvoidingView behavior='position' style={styles.container}>
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-                <ImageBackground source={require('../HomeBackground.png')} resizeMode="cover" style={styles.image}>
 
-                    <View style={styles.register_container}>
-                        <View style={styles.switches}>
-                            <View style={{ flexDirection: 'row', justifyContent: 'center', width: "50%", borderBottomColor: '#3f51b5', borderBottomWidth: 1 }}><Text style={{ paddingBottom: 10, fontSize: 15, color: "#3f51b5", fontWeight: "500" }}>Sign In</Text></View>
-                            <View style={{ flexDirection: 'row', justifyContent: 'center', width: "50%", borderBottomColor: '#3f51b5', borderBottomWidth: 0 }}>
-                            </View>
-                        </View>
-
-
-                        <View style={styles.header}>
-
-                            <View style={styles.icon}>
-                                <Image source={require('../lock-outline.png')} />
-                            </View>
-
-                            <Text style={{ fontWeight: 'bold', fontSize: 24 }}>Sign up</Text>
-                        </View>
-
-                        <View style={styles.form}>
-                            <TextInput
-                                style={styles.input}
-                                onChangeText={firstname => setFirstname(firstname)}
-                                defaultValue={firstname}
-                                placeholder="Enter first name*"
-                            />
-                            <TextInput
-                                style={styles.input}
-                                onChangeText={lastname => setLastname(lastname)}
-                                defaultValue={lastname}
-                                placeholder="Enter last name*"
-                            />
-
-                            <TextInput
-                                style={styles.input}
-                                onChangeText={username => setUsername(username)}
-                                defaultValue={username}
-                                placeholder="Enter username*"
-                            />
-
-                            <TextInput
-                                style={styles.input}
-                                onChangeText={email => setEmail(email)}
-                                defaultValue={email}
-                                placeholder="Enter email*"
-                            />
-
-                            <TextInput
-                                style={styles.input}
-                                onChangeText={phone => setPhone(phone)}
-                                defaultValue={phone}
-                                placeholder="Enter phone*"
-                            />
-
-                            <TextInput
-                                style={styles.input}
-                                onChangeText={password => setPassword(password)}
-                                defaultValue={password}
-                                placeholder="Enter password*"
-                            />
-
-                            <View style={styles.button}>
-                                <Button
-                                    title='Sign In'
-                                    color="white"
-                                    onPress={handleRegister}
-                                >
-                                </Button>
-                            </View>
-                            <View style={{height: 10}}>
-                                
-                            </View>
-                            
-                        </View>
-                    </View >
-                </ImageBackground>
-            </TouchableWithoutFeedback>
-        </KeyboardAvoidingView >
-    );
-}
-
-//push everything when keyboard pops up
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1
-    },
-    image: {
-        flexDirection: "column",
-        height: "100%",
-        width: "100%",
-        justifyContent: "center",
-        alignItems: "center"
-    },
-    register_container: {
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "space-between",
-        backgroundColor: 'white',
-        width: "70%",
-        height: "80%"
-    },
-    form: {
-        flexDirection: "column",
-        flexGrow: 0,
-        alignItems: "center",
-        justifyContent: 'space-around',
-        width: "100%"
-    },
-    input: {
-        paddingTop: 20,
-        height: 50,
-        width: "95%",
-        margin: 12,
-        borderBottomWidth: 1,
-        padding: 10,
-        fontSize: 15
-    },
-    button: {
-        width: "95%",
-        backgroundColor: "#3f51b5",
-    },
-    links_list: {
-        marginTop: "10%",
-        width: "95%",
-    },
-    links: {
-        paddingBottom: "3%",
-        color: "#3f51b5"
-    },
-    switches: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        width: "100%",
-        marginTop: 15,
-        marginBottom: 25,
-    },
-    icon: {
-        flexDirection: 'column',
-        alignItems: "center",
-        justifyContent: 'center',
-        backgroundColor: 'black',
-        borderRadius: 25,
-        marginBottom: "5%",
-        height: 40,
-        width: 40,
-    },
-    header: {
-        flex: 1,
-        flexDirection: 'column',
-        alignItems: 'center',
+    const handleMessage = (message, type = 'FAILED') => {
+        setMessage(message)
+        setMessageType(type)
     }
-});
+
+    return (
+        <KeyboardAvoidingViewWrapper>
+            <StyledImageContainer resizeMode="cover" source={require('../assets/HomeBackground.png')}>
+                <StatusBar style="dark" />
+                <InnerContainer isRegister={true}>
+                    <PageTitle>Primal Party</PageTitle>
+                    <Subtitle>REGISTER</Subtitle>
+
+
+                    <Formik
+                        initialValues={{
+                            firstName: 'Emin', lastName: 'Mammadzada', username: 'eminem', email: 'eminmammadzada.b@gmail.com', phone: '+14077574245', password: 'ben'
+                        }}
+                        onSubmit={(values) => {
+                            setIsSubmitting(true)
+                            handleRegister(values)
+                            values.password = ''
+                            values.firstName = ''
+                            values.lastName = ''
+                            values.username = ''
+                            values.email = ''
+                            values.phone = ''
+
+                        }}
+                    >
+                        {({ handleChange, handleBlur, handleSubmit, values }) => (<StyledFormArea>
+                            <MyTextInput
+                                label="FIRST NAME*"
+                                icon="person"
+                                placeholder="John"
+                                placeholderTextColor={darkLight}
+                                onChangeText={handleChange('firstName')}
+                                onBlur={handleBlur('firstName')}
+                                value={values.firstName}
+                            />
+
+                            <MyTextInput
+                                label="LAST NAME*"
+                                icon="person"
+                                placeholder="Doe"
+                                placeholderTextColor={darkLight}
+                                onChangeText={handleChange('lastName')}
+                                onBlur={handleBlur('lastName')}
+                                value={values.lastName}
+                            />
+
+                            <MyTextInput
+                                label="USERNAME*"
+                                icon="person"
+                                placeholder="johndoe"
+                                placeholderTextColor={darkLight}
+                                onChangeText={handleChange('username')}
+                                onBlur={handleBlur('username')}
+                                value={values.username}
+                                autoCapitalize="none"
+                            />
+
+                            <MyTextInput
+                                label="EMAIL ADDRESS*"
+                                icon="mail"
+                                placeholder="johndoe@gmail.com"
+                                placeholderTextColor={darkLight}
+                                onChangeText={handleChange('email')}
+                                onBlur={handleBlur('email')}
+                                value={values.email}
+                                autoCapitalize="none"
+                                keyboardType='email-address'
+                            />
+
+                            <MyTextInput
+                                label="PHONE*"
+                                icon="device-mobile"
+                                placeholder="+14077574245"
+                                placeholderTextColor={darkLight}
+                                onChangeText={handleChange('phone')}
+                                onBlur={handleBlur('phone')}
+                                value={values.phone}
+                                autoCapitalize="none"
+                                keyboardType={Platform.OS ? "number-pad" : "numberic"}
+                            />
+
+                            <MyTextInput
+                                label="PASSWORD*"
+                                icon="lock"
+                                placeholder="* * * * * * * *"
+                                placeholderTextColor={darkLight}
+                                onChangeText={handleChange('password')}
+                                onBlur={handleBlur('password')}
+                                value={values.password}
+                                secureTextEntry={hidePassword}
+                                autoCapitalize="none"
+                                isPassword={true}
+                                hidePassword={hidePassword}
+                                setHidePassword={setHidePassword}
+                            />
+
+                            <MsgBox type={messageType}>{message}</MsgBox>
+                            {!isSubmitting && (<StyledButton onPress={handleSubmit}>
+                                <ButtonText>
+                                    REGISTER
+                                </ButtonText>
+                            </StyledButton>)
+                            }
+
+                            {isSubmitting && (<StyledButton disabled={true}>
+                                <ActivityIndicator size='large' color={primary}></ActivityIndicator>
+                            </StyledButton>)
+                            }
+                            <ExtraView>
+                                <ExtraText>Already have an account? </ExtraText>
+                                <TextLink onPress={() => navigation.navigate('Login')}><TextLinkContent>Sign in</TextLinkContent></TextLink>
+                            </ExtraView>
+
+                        </StyledFormArea>)}
+
+                    </Formik>
+                </InnerContainer>
+            </StyledImageContainer >
+        </KeyboardAvoidingViewWrapper>
+    )
+}
 
 export default Register
