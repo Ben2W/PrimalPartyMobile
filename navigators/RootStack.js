@@ -26,6 +26,7 @@ import { EvaIconsPack } from "@ui-kitten/eva-icons";
 
 //colors
 import { Colors } from '../components/styles'
+import DashboardFriendsList from "../pages/DashboardFriendsList";
 const { tertiary } = Colors
 
 const customTheme = {
@@ -69,11 +70,13 @@ const RootStack = () => {
                                             <Stack.Screen name='Register' component={Register} />
                                             <Stack.Screen name='VerifyEmail' component={VerifyEmail} />
                                             <Stack.Screen name="Display Cards" component={TestingDisplayCards} />
-                                            <Stack.Screen name="Dashboard" component={DashboardNavigation} />
-                                            <Stack.Screen name="ViewEvent" component={EventGuestNavigation} />
-                                            <Stack.Screen name="EventMain" component={EventGuestGuestsListView} />
-                                            <Stack.Screen name="TasksView" component={EventGuestTasksView} />
-                                            <Stack.Screen name="MyTasks" component={DashboardTasksList} />
+                                            <Stack.Screen name="DashboardNavigation" component={DashboardNavigation} />
+                                            <Stack.Screen name="DashboardTasksList" component={DashboardTasksList} />
+                                            <Stack.Screen name="DashboardFriendsList" component={DashboardFriendsList} />
+                                            <Stack.Screen name="EventGuestNavigation" component={EventGuestNavigation} />
+                                            <Stack.Screen name="EventGuestGuestsListView" component={EventGuestGuestsListView} />
+                                            <Stack.Screen name="EventGuestTasksView" component={EventGuestTasksView} />
+
                                         </>)
                                     }
                                 </Stack.Navigator>

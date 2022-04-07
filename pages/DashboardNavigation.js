@@ -60,13 +60,13 @@ const DashboardNavigation = ({ navigation }) => {
                 shifting={true}
             >
                 <Tab.Screen
-                    name="FriendsList"
+                    name="DashboardFriendsList"
                     children={() => (
                         <DashboardFriendsList
                             navigation={navigation}
                         />)}
                     options={{
-                        tabBarLabel: 'FriendsList',
+                        tabBarLabel: 'DashboardFriendsList',
                         tabBarColor: "#397367",
                         tabBarIcon: ({ color }) => (
                             <MaterialCommunityIcons name="account-group" color={color} size={26} />

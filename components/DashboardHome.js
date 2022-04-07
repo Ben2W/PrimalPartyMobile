@@ -1,17 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useLayoutEffect, useState} from 'react';
 import { SectionList } from "react-native";
 import CustomCard from "./CustomCard";
 import { View } from "react-native";
 import { Text } from "react-native";
 import { ScrollView } from "react-native";
 import { Title } from "react-native-paper";
-import { Box, Button, FormControl, Heading, Input, Modal, VStack } from "native-base";
+import {Box, Button, Center, FormControl, Heading, Input, Modal, Spinner, VStack} from "native-base";
 import DatePicker from "./DatePicker";
+import {CredentialsContext} from "./CredentialsContext";
+import FetchEventData from "./FetchEventData";
 
 const DashboardHome = ({ navigation }) => {
 
     const [showModal, setShowModal] = useState(false);
     const [userEvents, setUserEvents] = useState([])
+    const [loading, setLoading] = useState(true)
+    const [eventCards, setEventCards] = useState([])
 
     const fetchEvents = async () => {
         const url = 'http://localhost:8080/events'
@@ -28,22 +32,34 @@ const DashboardHome = ({ navigation }) => {
             const events = await res.json()
             // console.log(events.events)
             setUserEvents(events.events)
+            return events.events
         } catch (e) {
             return e
         }
     }
 
-    useEffect(() => {
+    const setDisplayCards = async (curUserEvents) => {
+        let tempEvents = []
+        for (let event of curUserEvents){
+            await FetchEventData(event._id)
+                .then((data) => {
+                    console.log(data)
+                    tempEvents.push(<CustomCard navigation={navigation} data={data} key={event._id}/>);
+                })
+            }
+        setEventCards(tempEvents);
+    }
+
+    useLayoutEffect(() => {
         fetchEvents()
-    }, [])
-
-    const eventCards = [];
-
-    if (userEvents) {
-        console.log("PRINTING ROUTE")
-        for (let event of userEvents) {
-            eventCards.push(<CustomCard navigation={navigation} eventID={event._id} key={event._id} />);
-        }
+            .then((curUserEvents) => {
+                setDisplayCards(curUserEvents)
+                    .then(() => {
+                    setLoading(false);
+                    }
+                )
+            }
+    )}, [])
 
 
         return (
@@ -53,6 +69,16 @@ const DashboardHome = ({ navigation }) => {
                 marginLeft: "2%",
                 marginRight: "2%",
             }}>
+                {loading ?
+                    <Center h="100%">
+                        <Spinner>
+                            <Heading color="primary.500" fontSize="md">
+                                Loading
+                            </Heading>
+                        </Spinner>
+                    </Center>
+                    :
+                <>
                 <Box maxH={"80%"} flexGrow={1} borderWidth={"2"} borderColor={"indigo.100"} >
                     <Heading textAlign={"center"}>
                         Upcoming Events
@@ -106,19 +132,10 @@ const DashboardHome = ({ navigation }) => {
                         </Modal>
                     </View>
                 </Box>
+                </>
+                }
             </View>
         )
-    } else {
-        return (
-            <View>
-                <View>
-                    <Text>
-                        FUCK ME IT IS EMPTY
-                    </Text>
-                </View>
-            </View>
-        )
-    }
 }
 
 export default DashboardHome

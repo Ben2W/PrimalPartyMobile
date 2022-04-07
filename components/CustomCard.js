@@ -5,44 +5,18 @@ import { LinearGradient } from 'expo-linear-gradient';
 import ListItem from "react-native-paper/src/components/List/ListItem";
 import {useCallback, useEffect} from "react";
 import EventGuestNavigation from "../pages/EventGuestNavigation";
+import FetchEventData from "./FetchEventData";
 
-const CustomCard = ({eventID}) => {
+const CustomCard = ({data}) => {
+    console.log(data)
 
-    const [title, setTitle] = React.useState();
-    const [location, setLocation] = React.useState();
-    const [date, setDate] = React.useState();
-    const [desc, setDesc] = React.useState();
-    const [curEventID, setCurEventID] = React.useState(eventID);
+    const [title, setTitle] = React.useState(data.currEvent.name);
+    const [location, setLocation] = React.useState(data.currEvent.location);
+    const [date, setDate] = React.useState(data.currEvent.date);
+    const [desc, setDesc] = React.useState(data.currEvent.description);
+    // const [curEventID, setCurEventID] = React.useState(eventID);
 
-    const fetchEventData = async() =>{
-        const url = 'http://localhost:8080/events/' + curEventID
-        try {
-            const res = await fetch(url,
-                {
-                    method: 'GET',
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
-                    },
-                    credentials: 'include'
-                })
-             return await res.json()
-        } catch (e) {
-            return e
-        }
-    }
-
-    useEffect(() =>{
-        fetchEventData()
-            .then((event) => {
-                setTitle(event.currEvent.name);
-                setLocation(event.currEvent.location);
-                setDate(event.currEvent.date);
-                setDesc(event.currEvent.description);
-        })
-    }, [])
-
-
-    const handleClick = (eventID) => {
+    const handleClick = () => {
         // console.log(eventID);
     }
 
@@ -82,7 +56,7 @@ const CustomCard = ({eventID}) => {
                     style={{
                         width: "100%",
                     }}
-                    onPress={() => handleClick(eventID)}
+                    // onPress={() => handleClick(eventID)}
                 />
             </Card.Actions>
         </LinearGradient>
