@@ -4,7 +4,7 @@ import EventHeading from "../components/EventHeading";
 import GuestTasksList from "../components/GuestTasksList";
 
 
-const EventMain = ({ navigation, route }) => {
+const EventGuestGuestsListView = ({ navigation, route }) => {
     const props = route.params;
     const guestsMap = props.guests.map((item, index) =>
         <Box flexDirection={"row"} marginLeft="5%" pb={"1%"} pt={"1%"}>
@@ -34,4 +34,4 @@ const EventMain = ({ navigation, route }) => {
     );
 }
 
-export default EventMain;
+export default EventGuestGuestsListView;

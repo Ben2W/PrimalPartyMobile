@@ -5,6 +5,7 @@ import { CredentialsContext } from '../components/CredentialsContext'
 import { configureFonts, Provider as PaperProvider } from 'react-native-paper';
 import defaultTheme from "react-native-paper/src/styles/DefaultTheme";
 import { NativeBaseProvider } from "native-base";
+import {SSRProvider} from '@react-aria/ssr'
 
 
 const Stack = createNativeStackNavigator()
@@ -13,18 +14,19 @@ const Stack = createNativeStackNavigator()
 import Login from '../pages/Login'
 import Register from '../pages/Register'
 import VerifyEmail from '../pages/VerifyEmail'
-import DisplayCards from '../pages/DisplayCards';
-import Dashboard from "../pages/Dashboard"
-import ViewEvent from "../pages/ViewEvent";
-import EventMain from "../pages/EventMain";
-import TasksView from "../pages/TasksView";
-import MyTasks from "../pages/MyTasks";
+import TestingDisplayCards from '../pages/TestingDisplayCards';
+import DashboardNavigation from "../pages/DashboardNavigation"
+import EventGuestNavigation from "../pages/EventGuestNavigation";
+import EventGuestGuestsListView from "../pages/EventGuestGuestsListView";
+import EventGuestTasksView from "../pages/EventGuestTasksView";
+import DashboardTasksList from "../pages/DashboardTasksList";
 import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
 import * as eva from '@eva-design/eva';
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 
 //colors
 import { Colors } from '../components/styles'
+import DashboardFriendsList from "../pages/DashboardFriendsList";
 const { tertiary } = Colors
 
 const customTheme = {
@@ -54,6 +56,7 @@ const RootStack = () => {
     return (
         <CredentialsContext.Consumer>
             {({ storedCredentials }) => (
+            <SSRProvider>
                 <ApplicationProvider {...eva} theme={eva.light}>
                     <IconRegistry icons={EvaIconsPack} />
                     <NativeBaseProvider>
@@ -61,17 +64,19 @@ const RootStack = () => {
                             <NavigationContainer>
                                 <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: 'transparent' }, headerTintColor: tertiary, headerTransparent: true, headerTitle: '' }} initialRouteName='Login'>
 
-                                    {storedCredentials ? <Stack.Screen name='Dashboard' component={Dashboard} />
+                                    {storedCredentials ? <Stack.Screen name='Dashboard' component={DashboardNavigation} />
                                         : (<>
                                             <Stack.Screen name='Login' component={Login} />
                                             <Stack.Screen name='Register' component={Register} />
                                             <Stack.Screen name='VerifyEmail' component={VerifyEmail} />
-                                            <Stack.Screen name="Display Cards" component={DisplayCards} />
-                                            <Stack.Screen name="Dashboard" component={Dashboard} />
-                                            <Stack.Screen name="ViewEvent" component={ViewEvent} />
-                                            <Stack.Screen name="EventMain" component={EventMain} />
-                                            <Stack.Screen name="TasksView" component={TasksView} />
-                                            <Stack.Screen name="MyTasks" component={MyTasks} />
+                                            <Stack.Screen name="Display Cards" component={TestingDisplayCards} />
+                                            <Stack.Screen name="DashboardNavigation" component={DashboardNavigation} />
+                                            <Stack.Screen name="DashboardTasksList" component={DashboardTasksList} />
+                                            <Stack.Screen name="DashboardFriendsList" component={DashboardFriendsList} />
+                                            <Stack.Screen name="EventGuestNavigation" component={EventGuestNavigation} />
+                                            <Stack.Screen name="EventGuestGuestsListView" component={EventGuestGuestsListView} />
+                                            <Stack.Screen name="EventGuestTasksView" component={EventGuestTasksView} />
+
                                         </>)
                                     }
                                 </Stack.Navigator>
@@ -80,6 +85,7 @@ const RootStack = () => {
                         </PaperProvider>
                     </NativeBaseProvider>
                 </ApplicationProvider>
+            </SSRProvider>
             )}
         </CredentialsContext.Consumer>
     )

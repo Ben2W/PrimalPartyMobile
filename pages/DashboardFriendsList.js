@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { Button } from 'react-native-paper';
-import { StyleSheet, View } from 'react-native';
-import { Text } from 'react-native-paper';
+import { StyleSheet, View, Text } from 'react-native';
 
 
-const MyEvents = () => (
+const DashboardFriendsList = () => (
     <View style = {
         {
             justifyContent: 'center',
@@ -13,9 +12,9 @@ const MyEvents = () => (
         }
     }>
         <Text>
-            My Events
+            Friends
         </Text>
     </View>
 )
 
-export default MyEvents
+export default DashboardFriendsList

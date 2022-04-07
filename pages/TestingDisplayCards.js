@@ -4,7 +4,7 @@ import { StyleSheet, View, ScrollView } from 'react-native';
 import { Text, Badge } from 'react-native-paper';
 import CustomCard from "../components/CustomCard";
 
-const DisplayCards = ({ route }) => {
+const TestingDisplayCards = ({ route }) => {
 
     return <ScrollView style={
         {
@@ -63,4 +63,4 @@ const DisplayCards = ({ route }) => {
     </ScrollView>
 }
 
-export default DisplayCards;
+export default TestingDisplayCards;

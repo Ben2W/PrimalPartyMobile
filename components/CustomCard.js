@@ -3,27 +3,21 @@ import {View} from "react-native";
 import { Avatar, Button, Card, Title, Paragraph, FAB } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 import ListItem from "react-native-paper/src/components/List/ListItem";
-import {useCallback} from "react";
-import ViewEvent from "../pages/ViewEvent";
+import {useCallback, useEffect} from "react";
+import EventGuestNavigation from "../pages/EventGuestNavigation";
+import FetchEventData from "./FetchEventData";
 
-const CustomCard = ({navigation, props}) => {
+const CustomCard = ({data}) => {
+    console.log(data)
 
-    const [title, setTitle] = React.useState(props.title);
-    const [location, setLocation] = React.useState(props.location);
-    const [date, setDate] = React.useState(props.date);
-    const [desc, setDesc] = React.useState(props.desc);
-    const [id, setID] = React.useState(props.id);
+    const [title, setTitle] = React.useState(data.currEvent.name);
+    const [location, setLocation] = React.useState(data.currEvent.location);
+    const [date, setDate] = React.useState(data.currEvent.date);
+    const [desc, setDesc] = React.useState(data.currEvent.description);
+    const [curEventID, setCurEventID] = React.useState(data.currEvent._id);
 
-    const [eventArray, setEventArray] = React.useState({props});
-
-    const handleClick = (eventDetails) => {
-        console.log(eventDetails)
-        navigation.navigate("ViewEvent", {
-            title: eventDetails.title,
-            location: eventDetails.location,
-            date: eventDetails.date,
-            desc: eventDetails.desc,
-        })
+    const handleClick = () => {
+        console.log(curEventID);
     }
 
     return (
@@ -62,7 +56,7 @@ const CustomCard = ({navigation, props}) => {
                     style={{
                         width: "100%",
                     }}
-                    onPress={() => handleClick(eventArray)}
+                    onPress={() => handleClick()}
                 />
             </Card.Actions>
         </LinearGradient>

@@ -1,21 +1,23 @@
 import React, { useContext, useState } from 'react';
 import { View, Text } from "react-native";
-import Home from "../components/Home"
+import DashboardHome from "../components/DashboardHome"
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import MyTasks from "./MyTasks";
+import DashboardTasksList from "./DashboardTasksList";
 
 
 //TESTING
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { CredentialsContext } from '../components/CredentialsContext'
+import DashboardFriendsList from "./DashboardFriendsList";
+import DashboardAccount from "./DashboardAccount";
 
 
 const Tab = createMaterialBottomTabNavigator();
 
 
-const Dashboard = ({ navigation }) => {
+const DashboardNavigation = ({ navigation }) => {
     const { storedCredentials, setStoredCredentials } = useContext(CredentialsContext)
 
     // //TEST PURPOSES
@@ -55,17 +57,17 @@ const Dashboard = ({ navigation }) => {
             flex: 1,
         }}>
             <Tab.Navigator
-                initialRouteName="Home"
+                initialRouteName="DashboardHome"
                 shifting={true}
             >
                 <Tab.Screen
                     name="Home"
                     children={() => (
-                        <Home
+                        <DashboardHome
                             navigation={navigation}
                         />)}
                     options={{
-                        tabBarLabel: 'Home',
+                        tabBarLabel: 'DashboardHome',
                         tabBarColor: "#1F44EA",
                         tabBarIcon: ({ color }) => (
                             <MaterialCommunityIcons name="home" color={color} size={26} />
@@ -74,13 +76,41 @@ const Dashboard = ({ navigation }) => {
                     on
                 />
                 <Tab.Screen
-                    name="MyTasks"
+                    name="DashboardAccount"
                     children={() => (
-                        <MyTasks
+                        <DashboardAccount
                             navigation={navigation}
                         />)}
                     options={{
-                        tabBarLabel: 'MyTasks',
+                        tabBarLabel: 'DashboardAccount',
+                        tabBarColor: "#397367",
+                        tabBarIcon: ({ color }) => (
+                            <MaterialCommunityIcons name="account" color={color} size={26} />
+                        ),
+                    }}
+                />
+                <Tab.Screen
+                    name="DashboardFriendsList"
+                    children={() => (
+                        <DashboardFriendsList
+                            navigation={navigation}
+                        />)}
+                    options={{
+                        tabBarLabel: 'DashboardFriendsList',
+                        tabBarColor: "#397367",
+                        tabBarIcon: ({ color }) => (
+                            <MaterialCommunityIcons name="account-group" color={color} size={26} />
+                        ),
+                    }}
+                />
+                <Tab.Screen
+                    name="DashboardTasksList"
+                    children={() => (
+                        <DashboardTasksList
+                            navigation={navigation}
+                        />)}
+                    options={{
+                        tabBarLabel: 'DashboardTasksList',
                         tabBarColor: "#397367",
                         tabBarIcon: ({ color }) => (
                             <MaterialCommunityIcons name="format-list-checks" color={color} size={26} />
@@ -91,4 +121,4 @@ const Dashboard = ({ navigation }) => {
         </View>
     )
 }
-export default Dashboard
+export default DashboardNavigation

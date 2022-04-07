@@ -3,12 +3,12 @@ import {View} from "react-native";
 import {Headline, Paragraph, Text} from "react-native-paper";
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import {MaterialCommunityIcons} from "@expo/vector-icons";
-import EventMain from "./EventMain"
-import TasksView from "./TasksView";
+import EventGuestGuestsListView from "./EventGuestGuestsListView"
+import EventGuestTasksView from "./EventGuestTasksView";
 
 const Tab = createMaterialBottomTabNavigator();
 
-const ViewEvent = ({navigation, route}) => {
+const EventGuestNavigation = ({navigation, route}) => {
     const props = route.params;
 
     return (
@@ -16,18 +16,18 @@ const ViewEvent = ({navigation, route}) => {
             flex: 1,
         }}>
             <Tab.Navigator
-                initialRouteName="EventMain"
+                initialRouteName="EventGuestGuestsListView"
                 shifting={true}
             >
                 <Tab.Screen
                     name="EventMain"
                     children={() => (
-                        <EventMain
+                        <EventGuestGuestsListView
                             navigation={navigation}
                             route = {route}
                         />)}
                     options={{
-                        tabBarLabel: 'EventMain',
+                        tabBarLabel: 'EventGuestGuestsListView',
                         tabBarColor: "#1F44EA",
                         tabBarIcon: ({ color }) => (
                             <MaterialCommunityIcons name="party-popper" color={color} size={26} />
@@ -36,12 +36,12 @@ const ViewEvent = ({navigation, route}) => {
                 <Tab.Screen
                     name = "TasksView"
                     children={() => (
-                        <TasksView
+                        <EventGuestTasksView
                             navigation={navigation}
                             route = {route}
                         />)}
                     options={{
-                        tabBarLabel: 'TasksView',
+                        tabBarLabel: 'EventGuestTasksView',
                         tabBarColor: "#1F44EA",
                         tabBarIcon: ({ color }) => (
                             <MaterialCommunityIcons name="format-list-checks" color={color} size={26} />
@@ -52,4 +52,4 @@ const ViewEvent = ({navigation, route}) => {
     );
 }
 
-export default ViewEvent;
+export default EventGuestNavigation;
