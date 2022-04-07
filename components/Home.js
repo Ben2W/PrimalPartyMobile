@@ -9,39 +9,34 @@ import { Box, Button, FormControl, Heading, Input, Modal, VStack } from "native-
 import DatePicker from "./DatePicker";
 
 const Home = ({ navigation }) => {
-    const url = 'http://localhost:8080/events'
-    const fetchEvents = () => {
-        fetch(url,
-            {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
-                },
-                credentials: 'include'
-            }
-        ).then(res => {
-            if (res.status == 401) {
-                throw Error('you are not authenticated')
-            } else if (res.status == 500) {
-                throw Error('unexpected error happened on the server')
-            } else if (res.status == 200) {
-                return res.json()
-            }
-        })
-            .then(res => {
-                console.log(res)
-                return res
-            })
 
-            .catch(e => {
-                console.log(e)
-            })
-    }
     const [showModal, setShowModal] = useState(false);
-    const userEvents = fetchEvents()
-    console.log("************ABOUT TO LOG THE USEREVENTS ***************************")
-    console.log(userEvents)
-    console.log("************LOGGED THE USEREVENTS ***************************")
+    const [userEvents, setUserEvents] = useState([])
+
+    const fetchEvents = async () => {
+        const url = 'http://localhost:8080/events'
+
+        try {
+            const res = await fetch(url,
+                {
+                    method: 'GET',
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+                    },
+                    credentials: 'include'
+                })
+            const events = await res.json()
+            console.log(events)
+            setUserEvents(events.events)
+        } catch (e) {
+            return e
+        }
+    }
+
+    useEffect(() => {
+        fetchEvents()
+    }, [])
+
     const eventCards = [];
 
     if (userEvents) {

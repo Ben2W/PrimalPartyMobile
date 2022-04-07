@@ -7,7 +7,6 @@ import MyTasks from "./MyTasks";
 
 
 //TESTING
-import { StyledButton, ButtonText } from '../components/styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { CredentialsContext } from '../components/CredentialsContext'
@@ -17,8 +16,7 @@ const Tab = createMaterialBottomTabNavigator();
 
 
 const Dashboard = ({ navigation }) => {
-    const [events, setEvents] = useState([])
-    // const { storedCredentials, setStoredCredentials } = useContext(CredentialsContext)
+    const { storedCredentials, setStoredCredentials } = useContext(CredentialsContext)
 
     // //TEST PURPOSES
     // const logout = () => {
@@ -52,10 +50,6 @@ const Dashboard = ({ navigation }) => {
 
     // logout()
 
-    const url = 'http://localhost:8080/events'
-
-
-
     return (
         <View style={{
             flex: 1,
@@ -83,8 +77,7 @@ const Dashboard = ({ navigation }) => {
                     name="MyTasks"
                     children={() => (
                         <MyTasks
-                            // needs to be fixed to task data
-                            data={data}
+                            navigation={navigation}
                         />)}
                     options={{
                         tabBarLabel: 'MyTasks',
