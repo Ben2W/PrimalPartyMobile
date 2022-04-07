@@ -1,11 +1,11 @@
-import React, {useEffect, useLayoutEffect, useState} from 'react';
+import React, {useContext, useEffect, useLayoutEffect, useState} from 'react';
 import { SectionList } from "react-native";
 import CustomCard from "./CustomCard";
 import { View } from "react-native";
 import { Text } from "react-native";
 import { ScrollView } from "react-native";
 import { Title } from "react-native-paper";
-import {Box, Button, Center, FormControl, Heading, Input, Modal, Spinner, VStack} from "native-base";
+import {Box, Button, Center, FormControl, Heading, HStack, Input, Modal, Spinner, VStack} from "native-base";
 import DatePicker from "./DatePicker";
 import {CredentialsContext} from "./CredentialsContext";
 import FetchEventData from "./FetchEventData";
@@ -16,6 +16,7 @@ const DashboardHome = ({ navigation }) => {
     const [userEvents, setUserEvents] = useState([])
     const [loading, setLoading] = useState(true)
     const [eventCards, setEventCards] = useState([])
+    const [firstName, setFirstName] = useState(useContext(CredentialsContext).storedCredentials.firstName)
 
     const fetchEvents = async () => {
         const url = 'http://localhost:8080/events'
@@ -71,11 +72,12 @@ const DashboardHome = ({ navigation }) => {
             }}>
                 {loading ?
                     <Center h="100%">
-                        <Spinner>
+                        <Box>
+                            <Spinner size="lg"/>
                             <Heading color="primary.500" fontSize="md">
-                                Loading
+                            Welcome to {firstName}'s dashboard!
                             </Heading>
-                        </Spinner>
+                        </Box>
                     </Center>
                     :
                 <>

@@ -60,20 +60,6 @@ const DashboardNavigation = ({ navigation }) => {
                 shifting={true}
             >
                 <Tab.Screen
-                    name="DashboardFriendsList"
-                    children={() => (
-                        <DashboardFriendsList
-                            navigation={navigation}
-                        />)}
-                    options={{
-                        tabBarLabel: 'DashboardFriendsList',
-                        tabBarColor: "#397367",
-                        tabBarIcon: ({ color }) => (
-                            <MaterialCommunityIcons name="account-group" color={color} size={26} />
-                        ),
-                    }}
-                />
-                <Tab.Screen
                     name="Home"
                     children={() => (
                         <DashboardHome
@@ -87,6 +73,20 @@ const DashboardNavigation = ({ navigation }) => {
                         ),
                     }}
                     on
+                />
+                <Tab.Screen
+                    name="DashboardFriendsList"
+                    children={() => (
+                        <DashboardFriendsList
+                            navigation={navigation}
+                        />)}
+                    options={{
+                        tabBarLabel: 'DashboardFriendsList',
+                        tabBarColor: "#397367",
+                        tabBarIcon: ({ color }) => (
+                            <MaterialCommunityIcons name="account-group" color={color} size={26} />
+                        ),
+                    }}
                 />
                 <Tab.Screen
                     name="MyTasks"
