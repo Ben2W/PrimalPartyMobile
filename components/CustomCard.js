@@ -14,10 +14,10 @@ const CustomCard = ({data}) => {
     const [location, setLocation] = React.useState(data.currEvent.location);
     const [date, setDate] = React.useState(data.currEvent.date);
     const [desc, setDesc] = React.useState(data.currEvent.description);
-    // const [curEventID, setCurEventID] = React.useState(eventID);
+    const [curEventID, setCurEventID] = React.useState(data.currEvent._id);
 
     const handleClick = () => {
-        // console.log(eventID);
+        console.log(curEventID);
     }
 
     return (
@@ -56,7 +56,7 @@ const CustomCard = ({data}) => {
                     style={{
                         width: "100%",
                     }}
-                    // onPress={() => handleClick(eventID)}
+                    onPress={() => handleClick()}
                 />
             </Card.Actions>
         </LinearGradient>

@@ -11,6 +11,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { CredentialsContext } from '../components/CredentialsContext'
 import DashboardFriendsList from "./DashboardFriendsList";
+import DashboardAccount from "./DashboardAccount";
 
 
 const Tab = createMaterialBottomTabNavigator();
@@ -75,6 +76,20 @@ const DashboardNavigation = ({ navigation }) => {
                     on
                 />
                 <Tab.Screen
+                    name="DashboardAccount"
+                    children={() => (
+                        <DashboardAccount
+                            navigation={navigation}
+                        />)}
+                    options={{
+                        tabBarLabel: 'DashboardAccount',
+                        tabBarColor: "#397367",
+                        tabBarIcon: ({ color }) => (
+                            <MaterialCommunityIcons name="account" color={color} size={26} />
+                        ),
+                    }}
+                />
+                <Tab.Screen
                     name="DashboardFriendsList"
                     children={() => (
                         <DashboardFriendsList
@@ -89,7 +104,7 @@ const DashboardNavigation = ({ navigation }) => {
                     }}
                 />
                 <Tab.Screen
-                    name="MyTasks"
+                    name="DashboardTasksList"
                     children={() => (
                         <DashboardTasksList
                             navigation={navigation}
