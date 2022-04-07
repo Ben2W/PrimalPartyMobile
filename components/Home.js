@@ -26,7 +26,7 @@ const Home = ({ navigation }) => {
                     credentials: 'include'
                 })
             const events = await res.json()
-            console.log(events)
+            // console.log(events.events)
             setUserEvents(events.events)
         } catch (e) {
             return e
@@ -42,7 +42,7 @@ const Home = ({ navigation }) => {
     if (userEvents) {
         console.log("PRINTING ROUTE")
         for (let event of userEvents) {
-            eventCards.push(<CustomCard navigation={navigation} props={event} key={event.id} />);
+            eventCards.push(<CustomCard navigation={navigation} eventID={event._id} key={event._id} />);
         }
 
 

@@ -5,6 +5,7 @@ import { CredentialsContext } from '../components/CredentialsContext'
 import { configureFonts, Provider as PaperProvider } from 'react-native-paper';
 import defaultTheme from "react-native-paper/src/styles/DefaultTheme";
 import { NativeBaseProvider } from "native-base";
+import {SSRProvider} from '@react-aria/ssr'
 
 
 const Stack = createNativeStackNavigator()
@@ -54,6 +55,7 @@ const RootStack = () => {
     return (
         <CredentialsContext.Consumer>
             {({ storedCredentials }) => (
+            <SSRProvider>
                 <ApplicationProvider {...eva} theme={eva.light}>
                     <IconRegistry icons={EvaIconsPack} />
                     <NativeBaseProvider>
@@ -80,6 +82,7 @@ const RootStack = () => {
                         </PaperProvider>
                     </NativeBaseProvider>
                 </ApplicationProvider>
+            </SSRProvider>
             )}
         </CredentialsContext.Consumer>
     )

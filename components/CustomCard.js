@@ -3,27 +3,47 @@ import {View} from "react-native";
 import { Avatar, Button, Card, Title, Paragraph, FAB } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 import ListItem from "react-native-paper/src/components/List/ListItem";
-import {useCallback} from "react";
+import {useCallback, useEffect} from "react";
 import EventGuestNavigation from "../pages/EventGuestNavigation";
 
-const CustomCard = ({navigation, props}) => {
+const CustomCard = ({eventID}) => {
 
-    const [title, setTitle] = React.useState(props.title);
-    const [location, setLocation] = React.useState(props.location);
-    const [date, setDate] = React.useState(props.date);
-    const [desc, setDesc] = React.useState(props.desc);
-    const [id, setID] = React.useState(props.id);
+    const [title, setTitle] = React.useState();
+    const [location, setLocation] = React.useState();
+    const [date, setDate] = React.useState();
+    const [desc, setDesc] = React.useState();
+    const [curEventID, setCurEventID] = React.useState(eventID);
 
-    const [eventArray, setEventArray] = React.useState({props});
+    const fetchEventData = async() =>{
+        const url = 'http://localhost:8080/events/' + curEventID
+        try {
+            const res = await fetch(url,
+                {
+                    method: 'GET',
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+                    },
+                    credentials: 'include'
+                })
+             return await res.json()
+        } catch (e) {
+            return e
+        }
+    }
 
-    const handleClick = (eventDetails) => {
-        console.log(eventDetails)
-        navigation.navigate("EventGuestNavigation", {
-            title: eventDetails.title,
-            location: eventDetails.location,
-            date: eventDetails.date,
-            desc: eventDetails.desc,
+    useEffect(() =>{
+        fetchEventData()
+            .then((event) => {
+                setTitle(event.currEvent.name);
+                setLocation(event.currEvent.location);
+                setDate(event.currEvent.date);
+                setDesc(event.currEvent.description);
         })
+    }, [])
+
+
+    const handleClick = (eventID) => {
+        // console.log(eventID);
     }
 
     return (
@@ -62,7 +82,7 @@ const CustomCard = ({navigation, props}) => {
                     style={{
                         width: "100%",
                     }}
-                    onPress={() => handleClick(eventArray)}
+                    onPress={() => handleClick(eventID)}
                 />
             </Card.Actions>
         </LinearGradient>
