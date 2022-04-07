@@ -8,7 +8,7 @@ import { Title } from "react-native-paper";
 import { Box, Button, FormControl, Heading, Input, Modal, VStack } from "native-base";
 import DatePicker from "./DatePicker";
 
-const Home = ({ navigation }) => {
+const DashboardHome = ({ navigation }) => {
 
     const [showModal, setShowModal] = useState(false);
     const [userEvents, setUserEvents] = useState([])
@@ -121,4 +121,4 @@ const Home = ({ navigation }) => {
     }
 }
 
-export default Home
+export default DashboardHome

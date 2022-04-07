@@ -4,7 +4,7 @@ import { StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-paper';
 
 
-const DashboardFriends = () => (
+const DashboardFriendsList = () => (
     <View style = {
         {
             justifyContent: 'center',
@@ -18,4 +18,4 @@ const DashboardFriends = () => (
     </View>
 )
 
-export default DashboardFriends
+export default DashboardFriendsList

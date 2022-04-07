@@ -1,15 +1,16 @@
 import React, { useContext, useState } from 'react';
 import { View, Text } from "react-native";
-import Home from "../components/Home"
+import DashboardHome from "../components/DashboardHome"
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import MyTasks from "./MyTasks";
+import DashboardTasksList from "./DashboardTasksList";
 
 
 //TESTING
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { CredentialsContext } from '../components/CredentialsContext'
+import DashboardFriendsList from "./DashboardFriendsList";
 
 
 const Tab = createMaterialBottomTabNavigator();
@@ -55,17 +56,31 @@ const DashboardNavigation = ({ navigation }) => {
             flex: 1,
         }}>
             <Tab.Navigator
-                initialRouteName="Home"
+                initialRouteName="DashboardHome"
                 shifting={true}
             >
                 <Tab.Screen
-                    name="Home"
+                    name="FriendsList"
                     children={() => (
-                        <Home
+                        <DashboardFriendsList
                             navigation={navigation}
                         />)}
                     options={{
-                        tabBarLabel: 'Home',
+                        tabBarLabel: 'FriendsList',
+                        tabBarColor: "#397367",
+                        tabBarIcon: ({ color }) => (
+                            <MaterialCommunityIcons name="account-group" color={color} size={26} />
+                        ),
+                    }}
+                />
+                <Tab.Screen
+                    name="Home"
+                    children={() => (
+                        <DashboardHome
+                            navigation={navigation}
+                        />)}
+                    options={{
+                        tabBarLabel: 'DashboardHome',
                         tabBarColor: "#1F44EA",
                         tabBarIcon: ({ color }) => (
                             <MaterialCommunityIcons name="home" color={color} size={26} />
@@ -76,11 +91,11 @@ const DashboardNavigation = ({ navigation }) => {
                 <Tab.Screen
                     name="MyTasks"
                     children={() => (
-                        <MyTasks
+                        <DashboardTasksList
                             navigation={navigation}
                         />)}
                     options={{
-                        tabBarLabel: 'MyTasks',
+                        tabBarLabel: 'DashboardTasksList',
                         tabBarColor: "#397367",
                         tabBarIcon: ({ color }) => (
                             <MaterialCommunityIcons name="format-list-checks" color={color} size={26} />

@@ -19,7 +19,7 @@ import DashboardNavigation from "../pages/DashboardNavigation"
 import EventGuestNavigation from "../pages/EventGuestNavigation";
 import EventGuestGuestsListView from "../pages/EventGuestGuestsListView";
 import EventGuestTasksView from "../pages/EventGuestTasksView";
-import MyTasks from "../pages/MyTasks";
+import DashboardTasksList from "../pages/DashboardTasksList";
 import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
 import * as eva from '@eva-design/eva';
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
@@ -73,7 +73,7 @@ const RootStack = () => {
                                             <Stack.Screen name="ViewEvent" component={EventGuestNavigation} />
                                             <Stack.Screen name="EventMain" component={EventGuestGuestsListView} />
                                             <Stack.Screen name="TasksView" component={EventGuestTasksView} />
-                                            <Stack.Screen name="MyTasks" component={MyTasks} />
+                                            <Stack.Screen name="MyTasks" component={DashboardTasksList} />
                                         </>)
                                     }
                                 </Stack.Navigator>

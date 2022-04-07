@@ -2,7 +2,7 @@ import {List, Text, View} from "native-base";
 import ListItem from "native-base/src/components/primitives/List/ListItem";
 
 
-const MyTasks = () =>{
+const DashboardTasksList = () =>{
     return(
         <View>
             <List>
@@ -16,4 +16,4 @@ const MyTasks = () =>{
     );
 }
 
-export default MyTasks
+export default DashboardTasksList
