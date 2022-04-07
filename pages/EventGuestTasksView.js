@@ -3,7 +3,7 @@ import {Box, Container, Heading, ScrollView, VStack, Text, View} from "native-ba
 import EventHeading from "../components/EventHeading"
 import GuestTasksList from "../components/GuestTasksList";
 
-const TasksView = ({navigation, route}) => {
+const EventGuestTasksView = ({navigation, route}) => {
     const props = route.params;
     const guestsMap = props.guests.map((item, index) => {
         if (item.tasks.length > 1){
@@ -64,4 +64,4 @@ const TasksView = ({navigation, route}) => {
     );
 }
 
-export default TasksView
+export default EventGuestTasksView

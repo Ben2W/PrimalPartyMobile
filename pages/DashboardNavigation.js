@@ -15,7 +15,7 @@ import { CredentialsContext } from '../components/CredentialsContext'
 const Tab = createMaterialBottomTabNavigator();
 
 
-const Dashboard = ({ navigation }) => {
+const DashboardNavigation = ({ navigation }) => {
     const { storedCredentials, setStoredCredentials } = useContext(CredentialsContext)
 
     // //TEST PURPOSES
@@ -91,4 +91,4 @@ const Dashboard = ({ navigation }) => {
         </View>
     )
 }
-export default Dashboard
+export default DashboardNavigation

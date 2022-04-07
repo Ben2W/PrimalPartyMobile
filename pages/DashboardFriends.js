@@ -4,7 +4,7 @@ import { StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-paper';
 
 
-const MyEvents = () => (
+const DashboardFriends = () => (
     <View style = {
         {
             justifyContent: 'center',
@@ -13,9 +13,9 @@ const MyEvents = () => (
         }
     }>
         <Text>
-            My Events
+            Friends
         </Text>
     </View>
 )
 
-export default MyEvents
+export default DashboardFriends

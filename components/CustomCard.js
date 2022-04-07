@@ -4,7 +4,7 @@ import { Avatar, Button, Card, Title, Paragraph, FAB } from 'react-native-paper'
 import { LinearGradient } from 'expo-linear-gradient';
 import ListItem from "react-native-paper/src/components/List/ListItem";
 import {useCallback} from "react";
-import ViewEvent from "../pages/ViewEvent";
+import EventGuestNavigation from "../pages/EventGuestNavigation";
 
 const CustomCard = ({navigation, props}) => {
 
@@ -18,7 +18,7 @@ const CustomCard = ({navigation, props}) => {
 
     const handleClick = (eventDetails) => {
         console.log(eventDetails)
-        navigation.navigate("ViewEvent", {
+        navigation.navigate("EventGuestNavigation", {
             title: eventDetails.title,
             location: eventDetails.location,
             date: eventDetails.date,

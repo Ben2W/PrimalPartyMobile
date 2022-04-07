@@ -13,11 +13,11 @@ const Stack = createNativeStackNavigator()
 import Login from '../pages/Login'
 import Register from '../pages/Register'
 import VerifyEmail from '../pages/VerifyEmail'
-import DisplayCards from '../pages/DisplayCards';
-import Dashboard from "../pages/Dashboard"
-import ViewEvent from "../pages/ViewEvent";
-import EventMain from "../pages/EventMain";
-import TasksView from "../pages/TasksView";
+import TestingDisplayCards from '../pages/TestingDisplayCards';
+import DashboardNavigation from "../pages/DashboardNavigation"
+import EventGuestNavigation from "../pages/EventGuestNavigation";
+import EventGuestGuestsListView from "../pages/EventGuestGuestsListView";
+import EventGuestTasksView from "../pages/EventGuestTasksView";
 import MyTasks from "../pages/MyTasks";
 import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
 import * as eva from '@eva-design/eva';
@@ -61,16 +61,16 @@ const RootStack = () => {
                             <NavigationContainer>
                                 <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: 'transparent' }, headerTintColor: tertiary, headerTransparent: true, headerTitle: '' }} initialRouteName='Login'>
 
-                                    {storedCredentials ? <Stack.Screen name='Dashboard' component={Dashboard} />
+                                    {storedCredentials ? <Stack.Screen name='Dashboard' component={DashboardNavigation} />
                                         : (<>
                                             <Stack.Screen name='Login' component={Login} />
                                             <Stack.Screen name='Register' component={Register} />
                                             <Stack.Screen name='VerifyEmail' component={VerifyEmail} />
-                                            <Stack.Screen name="Display Cards" component={DisplayCards} />
-                                            <Stack.Screen name="Dashboard" component={Dashboard} />
-                                            <Stack.Screen name="ViewEvent" component={ViewEvent} />
-                                            <Stack.Screen name="EventMain" component={EventMain} />
-                                            <Stack.Screen name="TasksView" component={TasksView} />
+                                            <Stack.Screen name="Display Cards" component={TestingDisplayCards} />
+                                            <Stack.Screen name="Dashboard" component={DashboardNavigation} />
+                                            <Stack.Screen name="ViewEvent" component={EventGuestNavigation} />
+                                            <Stack.Screen name="EventMain" component={EventGuestGuestsListView} />
+                                            <Stack.Screen name="TasksView" component={EventGuestTasksView} />
                                             <Stack.Screen name="MyTasks" component={MyTasks} />
                                         </>)
                                     }
