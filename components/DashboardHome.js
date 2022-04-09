@@ -6,9 +6,10 @@ import { Text } from "react-native";
 import { ScrollView } from "react-native";
 import { Title } from "react-native-paper";
 import {Box, Button, Center, FormControl, Heading, HStack, Input, Modal, Spinner, VStack} from "native-base";
-import DatePicker from "./DatePicker";
 import {CredentialsContext} from "./CredentialsContext";
 import FetchEventData from "./FetchEventData";
+import {Datepicker, NativeDateService} from "@ui-kitten/components";
+import CreateNewEvent from "./CreateNewEvent";
 
 const DashboardHome = ({ navigation }) => {
 
@@ -17,6 +18,8 @@ const DashboardHome = ({ navigation }) => {
     const [loading, setLoading] = useState(true)
     const [eventCards, setEventCards] = useState([])
     const [firstName, setFirstName] = useState(useContext(CredentialsContext).storedCredentials.firstName)
+
+// Start of DisplayCards Logic
 
     const fetchEvents = async () => {
         const url = 'http://localhost:8080/events'
@@ -59,8 +62,40 @@ const DashboardHome = ({ navigation }) => {
                     }
                 )
             }
-    )}, [])
+    )}, [userEvents])
+// End of DisplayCards Logic
 
+// Start of CreateEventModal Logic
+    const initDate = new Date();
+    const formatDateService = new NativeDateService('en', { format: 'MM-DD-YYYY' });
+
+    const [formData, setData] = useState({date: initDate, location: "TBD", description: "TBD"});
+    const [errors, setErrors] = useState({});
+
+    const validate = ({formData}) => {
+        if (formData.name === undefined || formData.name === "") {
+            setErrors({
+                ...errors,
+                name: 'Name is required'
+            });
+            return false;
+        }
+        else {
+            CreateNewEvent({formData})
+                .then()
+            return true;
+        }
+    };
+
+    useEffect(() => {
+        if (showModal) return; // If shown, do nothing
+
+        // Else, clear form
+        setData({date: initDate, location: "", description: ""});
+        setErrors({});
+    }, [showModal]);
+
+// End of CreateEventModal Logic
 
         return (
             <View style={{
@@ -98,36 +133,64 @@ const DashboardHome = ({ navigation }) => {
                                 <Modal.CloseButton />
                                 <Modal.Header>Create Event</Modal.Header>
                                 <Modal.Body>
-                                    <FormControl>
+                                    <FormControl isRequired isInvalid={'name' in errors}>
                                         <FormControl.Label>Title</FormControl.Label>
-                                        <Input />
+                                        <Input
+                                            size="md"
+                                            placeholder = "Javascript Party"
+                                            value = {formData.name}
+                                            onChangeText={value => setData({ ...formData,
+                                                name: value})
+                                        }
+                                        />
+                                        {'name' in errors ? <FormControl.ErrorMessage>Required</FormControl.ErrorMessage> : <FormControl.HelperText>
+                                        </FormControl.HelperText>}
                                     </FormControl>
                                     <FormControl mt="3">
                                         <FormControl.Label>Date</FormControl.Label>
-                                        <DatePicker />
-                                    </FormControl>
+                                        <Datepicker
+                                            placement={"left"}
+                                            min={initDate}
+                                            date={formData.date}
+                                            dateService={formatDateService}
+                                            onSelect={nextDate => setData({
+                                                name : formData.name,
+                                                date: nextDate, location:
+                                                formData.location,
+                                                description: formData.description})}
+                                        />
+                                    </FormControl >
                                     <FormControl mt="3">
                                         <FormControl.Label>Location</FormControl.Label>
-                                        <Input />
+                                        <Input
+                                            size="md"
+                                            placeholder = "VS Code"
+                                            value = {formData.location}
+                                            onChangeText={value => setData({ ...formData,
+                                                    location: value})}
+                                        />
                                     </FormControl>
                                     <FormControl mt="3">
                                         <FormControl.Label>Description</FormControl.Label>
-                                        <Input />
+                                        <Input
+                                            size="md"
+                                            placeholder = "Let's code collaboratively!"
+                                            value = {formData.description}
+                                            onChangeText={value => setData({ ...formData,
+                                                description: value})}
+                                        />
                                     </FormControl>
                                 </Modal.Body>
                                 <Modal.Footer>
-                                    <Button.Group space={2}>
-                                        <Button variant="ghost" colorScheme="blueGray" onPress={() => {
+                                    <Button onPress={() => {
+                                        if (validate({formData})){
                                             setShowModal(false);
-                                        }}>
-                                            Cancel
-                                        </Button>
-                                        <Button onPress={() => {
-                                            setShowModal(false);
-                                        }}>
-                                            Save
-                                        </Button>
-                                    </Button.Group>
+                                        }
+                                        else
+                                            console.log("bruh");
+                                    }}>
+                                        Save
+                                    </Button>
                                 </Modal.Footer>
                             </Modal.Content>
                         </Modal>
