@@ -44,7 +44,6 @@ const DashboardHome = ({ navigation }) => {
         for (let event of curUserEvents){
             await FetchEventData(event._id)
                 .then((data) => {
-                    console.log(data)
                     tempEvents.push(<CustomCard navigation={navigation} data={data} key={event._id}/>);
                 })
             }

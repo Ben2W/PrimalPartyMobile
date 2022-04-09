@@ -12,6 +12,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CredentialsContext } from '../components/CredentialsContext'
 import DashboardFriendsList from "./DashboardFriendsList";
 import DashboardAccount from "./DashboardAccount";
+import TestingViewMore from "./TestingViewMore";
 
 
 const Tab = createMaterialBottomTabNavigator();
@@ -117,6 +118,13 @@ const DashboardNavigation = ({ navigation }) => {
                         ),
                     }}
                 />
+                <Tab.Screen
+                    name="TestingViewMore"
+                    children={() => (
+                        <TestingViewMore
+                            navigation={navigation}
+                        />)}
+                    />
             </Tab.Navigator>
         </View>
     )
