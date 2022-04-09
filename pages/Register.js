@@ -101,7 +101,7 @@ const Register = ({ navigation }) => {
 
                     <Formik
                         initialValues={{
-                            firstName: 'Emin', lastName: 'Mammadzada', username: 'eminem', email: 'eminmammadzada.b@gmail.com', phone: '+14077574245', password: 'ben'
+                            firstName: '', lastName: '', username: '', email: '', phone: '', password: ''
                         }}
                         onSubmit={(values) => {
                             setIsSubmitting(true)

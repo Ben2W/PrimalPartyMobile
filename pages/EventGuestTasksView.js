@@ -2,9 +2,11 @@ import * as React from 'react';
 import {Box, Container, Heading, ScrollView, VStack, Text, View} from "native-base";
 import EventHeading from "../components/EventHeading"
 import GuestTasksList from "../components/GuestTasksList";
+import {useState} from "react";
 
-const EventGuestTasksView = ({navigation, route}) => {
-    const props = route.params;
+const EventGuestTasksView = ({navigation, data}) => {
+    const [props, setProps] = useState({data})
+
     const guestsMap = props.guests.map((item, index) => {
         if (item.tasks.length > 1){
             return(
