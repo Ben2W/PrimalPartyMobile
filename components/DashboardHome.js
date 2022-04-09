@@ -73,7 +73,7 @@ const DashboardHome = ({ navigation }) => {
     const [errors, setErrors] = useState({});
 
     const validate = ({formData}) => {
-        if (formData.name === undefined) {
+        if (formData.name === undefined || formData.name === "") {
             setErrors({
                 ...errors,
                 name: 'Name is required'

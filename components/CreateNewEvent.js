@@ -1,7 +1,6 @@
 
 const CreateNewEvent = async ({formData}) => {
     const url = 'http://localhost:8080/events'
-    console.log(formData);
 
     const details = {
         name: formData.name,
@@ -18,8 +17,6 @@ const CreateNewEvent = async ({formData}) => {
         formBody.push(encodedKey + "=" + encodedValue);
     }
     formBody = formBody.join("&");
-
-    console.log(formBody)
 
     try {
         const res = await fetch(url,
