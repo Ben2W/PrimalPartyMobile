@@ -5,11 +5,13 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import {MaterialCommunityIcons} from "@expo/vector-icons";
 import EventGuestGuestsListView from "./EventGuestGuestsListView"
 import EventGuestTasksView from "./EventGuestTasksView";
+import {useState} from "react";
 
 const Tab = createMaterialBottomTabNavigator();
 
 const EventGuestNavigation = ({navigation, route}) => {
-    const props = route.params;
+    let data = route.params.data.curData;
+    const [event, setEvent] = useState({data});
 
     return (
         <View style={{
@@ -20,11 +22,11 @@ const EventGuestNavigation = ({navigation, route}) => {
                 shifting={true}
             >
                 <Tab.Screen
-                    name="EventMain"
+                    name="EventGuestGuestsListView"
                     children={() => (
                         <EventGuestGuestsListView
                             navigation={navigation}
-                            route = {route}
+                            data = {event}
                         />)}
                     options={{
                         tabBarLabel: 'EventGuestGuestsListView',
@@ -34,11 +36,11 @@ const EventGuestNavigation = ({navigation, route}) => {
                         ),
                 }}/>
                 <Tab.Screen
-                    name = "TasksView"
+                    name = "EventGuestTasksView"
                     children={() => (
                         <EventGuestTasksView
                             navigation={navigation}
-                            route = {route}
+                            data = {event}
                         />)}
                     options={{
                         tabBarLabel: 'EventGuestTasksView',

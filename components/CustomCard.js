@@ -1,24 +1,57 @@
-import * as React from 'react';
 import {View} from "react-native";
 import { Avatar, Button, Card, Title, Paragraph, FAB } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 import ListItem from "react-native-paper/src/components/List/ListItem";
-import {useCallback, useEffect} from "react";
+import {useCallback, useContext, useEffect, useState} from "react";
 import EventGuestNavigation from "../pages/EventGuestNavigation";
 import FetchEventData from "./FetchEventData";
+import EventGuestGuestsListView from "../pages/EventGuestGuestsListView";
+import TestingViewMore from "../pages/TestingViewMore";
+import {shouldThrowAnErrorOutsideOfExpo} from "expo/build/environment/validatorState";
+import {CredentialsContext} from "./CredentialsContext";
 
-const CustomCard = ({data}) => {
-    console.log(data)
+const CustomCard = ({navigation, data}) => {
 
-    const [title, setTitle] = React.useState(data.currEvent.name);
-    const [location, setLocation] = React.useState(data.currEvent.location);
-    const [date, setDate] = React.useState(data.currEvent.date);
-    const [desc, setDesc] = React.useState(data.currEvent.description);
-    const [curEventID, setCurEventID] = React.useState(data.currEvent._id);
+    const [title, setTitle] = useState(data.currEvent.name);
+    const [address, setAddress] = useState(data.currEvent.address);
+    const [date, setDate] = useState(data.currEvent.date);
+    const [desc, setDesc] = useState(data.currEvent.description);
+    const [curData, setCurData] = useState(data.currEvent);
+    const [adminID, setAdminID] = useState(data.currEvent.admin._id);
+    const [userID, setUserID] = useState(useContext(CredentialsContext).storedCredentials._id)
+    const [isAdmin, setIsAdmin] = useState(() => {return adminID === userID});
 
-    const handleClick = () => {
-        console.log(curEventID);
+    const [curEventID, setCurEventID] = useState(data.currEvent._id);
+
+    const handleClick = ({navigation}) => {
+        navigation.navigate("EventGuestNavigation", {data: {curData}});
+        // navigation.navigate("TestingViewMore")
+        // navigation.navigate("EventGuestNavigation", {data:{curData}} )
     }
+
+    let AdminButton;
+    if (isAdmin){
+        AdminButton =
+            <FAB
+                label={"Edit/View More"}
+                style={{
+                    width: "100%",
+                }}
+                onPress={() => handleClick({navigation})}
+            />
+    }
+    else{
+        AdminButton =
+            <FAB
+                label={"View More"}
+                style={{
+                    width: "100%",
+                }}
+                onPress={() => handleClick({navigation})}
+            />
+        ;
+    }
+
 
     return (
     <View style={{
@@ -43,7 +76,7 @@ const CustomCard = ({data}) => {
             }}>
                 <Title>{title}</Title>
                 <Paragraph>Date: {date}</Paragraph>
-                <Paragraph>Location: {location}</Paragraph>
+                <Paragraph>Location: {address}</Paragraph>
                 <Paragraph>Desc: {desc}</Paragraph>
             </Card.Content>
             {/*<Card.Cover source={{ uri: 'https://picsum.photos/700' }} />*/}
@@ -51,13 +84,7 @@ const CustomCard = ({data}) => {
                 alignItems:"center",
                 justifyContent: 'center',
             }}>
-                <FAB
-                    label={"View More"}
-                    style={{
-                        width: "100%",
-                    }}
-                    onPress={() => handleClick()}
-                />
+                {AdminButton}
             </Card.Actions>
         </LinearGradient>
         </Card>

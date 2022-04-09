@@ -2,20 +2,29 @@ import * as React from 'react';
 import {NativeBaseProvider, Box, Center, Heading, ScrollView, Flex, VStack, ZStack, Container, View, Text} from "native-base";
 import EventHeading from "../components/EventHeading";
 import GuestTasksList from "../components/GuestTasksList";
+import {useState} from "react";
 
 
-const EventGuestGuestsListView = ({ navigation, route }) => {
-    const props = route.params;
-    const guestsMap = props.guests.map((item, index) =>
-        <Box flexDirection={"row"} marginLeft="5%" pb={"1%"} pt={"1%"}>
-            <Text key={index} textAlign={"left"} width={"50%"}>
-            {item.firstName} {item.lastName}
-            </Text>
-            <Text key={index} textAlign={"center"} width={"50%"} marginLeft="5%">
-                {" (" + item.tasks.length + " tasks)"}
-            </Text>
-        </Box>
-    );
+const EventGuestGuestsListView = ({ navigation, data }) => {
+    const userData = data.data
+
+    const [props, setProps] = useState(userData)
+    const [guestsMap, setGuestsMap] = useState(userData.guests)
+
+    // console.log(guestsMap);
+    // const [guestsMap, setGuestsMap] = useState({data.guests})
+
+
+    // const setGuestsMap() = props.guests.map((item, index) =>
+    //     <Box flexDirection={"row"} marginLeft="5%" pb={"1%"} pt={"1%"}>
+    //         <Text key={index} textAlign={"left"} width={"50%"}>
+    //         {item.firstName} {item.lastName}
+    //         </Text>
+    //         <Text key={index} textAlign={"center"} width={"50%"} marginLeft="5%">
+    //             {" (" + item.tasks.length + " tasks)"}
+    //         </Text>
+    //     </Box>
+    // );
 
     return (
         <View style={{
