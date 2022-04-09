@@ -69,7 +69,7 @@ const DashboardHome = ({ navigation }) => {
     const initDate = new Date();
     const formatDateService = new NativeDateService('en', { format: 'MM-DD-YYYY' });
 
-    const [formData, setData] = useState({date: initDate, location: "", description: ""});
+    const [formData, setData] = useState({date: initDate, location: "TBD", description: "TBD"});
     const [errors, setErrors] = useState({});
 
     const validate = ({formData}) => {
