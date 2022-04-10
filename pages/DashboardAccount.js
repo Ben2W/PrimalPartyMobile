@@ -29,11 +29,11 @@ const DashboardAccount = () => {
     const handleRegister = async (credentials) => {
         handleMessage(null)
 
-        const { username, password, phone, email, firstName, lastName } = { ...credentials }
+        const { username, phone, email, firstName, lastName } = { ...credentials }
 
         const url = 'https://primalpartybackend.azurewebsites.net/register'
 
-        if (username && password && phone && email && firstName && lastName) {
+        if (username && phone && email && firstName && lastName) {
 
             let formBody = [];
             for (let property in credentials) {
@@ -138,17 +138,16 @@ return (
                 <StatusBar style="dark" />
                 <InnerContainer isRegister={true}>
                     <PageTitle>Primal Party</PageTitle>
-                    <Subtitle>REGISTER</Subtitle>
+                    <Subtitle>Edit Your Account</Subtitle>
 
 
                     <Formik
                         initialValues={{
-                            firstName: '', lastName: '', username: '', email: '', phone: '', password: ''
+                            firstName: '', lastName: '', username: '', email: '', phone: ''
                         }}
                         onSubmit={(values) => {
                             setIsSubmitting(true)
                             handleRegister(values)
-                            values.password = ''
                             values.firstName = ''
                             values.lastName = ''
                             values.username = ''
@@ -213,20 +212,6 @@ return (
                                 keyboardType={Platform.OS ? "number-pad" : "numberic"}
                             />
 
-                            <MyTextInput
-                                label="PASSWORD*"
-                                icon="lock"
-                                placeholder="* * * * * * * *"
-                                placeholderTextColor={darkLight}
-                                onChangeText={handleChange('password')}
-                                onBlur={handleBlur('password')}
-                                value={values.password}
-                                secureTextEntry={hidePassword}
-                                autoCapitalize="none"
-                                isPassword={true}
-                                hidePassword={hidePassword}
-                                setHidePassword={setHidePassword}
-                            />
 
                             <MsgBox type={messageType}>{message}</MsgBox>
                             {!isSubmitting && (<StyledButton onPress={handleSubmit}>
