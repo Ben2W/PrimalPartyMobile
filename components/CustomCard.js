@@ -11,7 +11,6 @@ import {shouldThrowAnErrorOutsideOfExpo} from "expo/build/environment/validatorS
 import {CredentialsContext} from "./CredentialsContext";
 
 const CustomCard = ({navigation, data}) => {
-
     const [title, setTitle] = useState(data.currEvent.name);
     const [address, setAddress] = useState(data.currEvent.address);
     const [date, setDate] = useState(data.currEvent.date);
@@ -29,9 +28,16 @@ const CustomCard = ({navigation, data}) => {
         // navigation.navigate("EventGuestNavigation", {data:{curData}} )
     }
 
+
+
     let AdminButton;
     if (isAdmin){
         AdminButton =
+        <View
+            style={{
+                width: "100%",
+        }}
+        >
             <FAB
                 label={"Edit/View More"}
                 style={{
@@ -39,16 +45,19 @@ const CustomCard = ({navigation, data}) => {
                 }}
                 onPress={() => handleClick({navigation})}
             />
+        </View>
     }
     else{
         AdminButton =
-            <FAB
-                label={"View More"}
-                style={{
-                    width: "100%",
-                }}
-                onPress={() => handleClick({navigation})}
-            />
+            <View>
+                <FAB
+                    label={"View More"}
+                    style={{
+                        width: "100%",
+                    }}
+                    onPress={() => handleClick({navigation})}
+                />
+            </View>
         ;
     }
 

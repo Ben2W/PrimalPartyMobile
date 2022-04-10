@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useLayoutEffect, useState} from 'react';
-import { SectionList } from "react-native";
+import {FlatList, SectionList} from "react-native";
 import CustomCard from "./CustomCard";
 import { View } from "react-native";
 import { Text } from "react-native";
@@ -10,6 +10,7 @@ import {CredentialsContext} from "./CredentialsContext";
 import FetchEventData from "./FetchEventData";
 import {Datepicker, NativeDateService} from "@ui-kitten/components";
 import CreateNewEvent from "./CreateNewEvent";
+import {shouldThrowAnErrorOutsideOfExpo} from "expo/build/environment/validatorState";
 
 const DashboardHome = ({ navigation }) => {
 
@@ -17,6 +18,8 @@ const DashboardHome = ({ navigation }) => {
     const [userEvents, setUserEvents] = useState([])
     const [loading, setLoading] = useState(true)
     const [eventCards, setEventCards] = useState([])
+    const [eventData, setEventData] = useState([])
+    const [loadNewCard, setLoadNewCard] = useState(false)
     const [firstName, setFirstName] = useState(useContext(CredentialsContext).storedCredentials.firstName)
 
 // Start of DisplayCards Logic
@@ -34,7 +37,6 @@ const DashboardHome = ({ navigation }) => {
                     credentials: 'include'
                 })
             const events = await res.json()
-            // console.log(events.events)
             setUserEvents(events.events)
             return events.events
         } catch (e) {
@@ -44,12 +46,15 @@ const DashboardHome = ({ navigation }) => {
 
     const setDisplayCards = async (curUserEvents) => {
         let tempEvents = []
+        let tempEventData = []
         for (let event of curUserEvents){
             await FetchEventData(event._id)
                 .then((data) => {
+                    tempEventData.push(data);
                     tempEvents.push(<CustomCard navigation={navigation} data={data} key={event._id}/>);
                 })
             }
+        setEventData(tempEventData);
         setEventCards(tempEvents);
     }
 
@@ -59,10 +64,11 @@ const DashboardHome = ({ navigation }) => {
                 setDisplayCards(curUserEvents)
                     .then(() => {
                     setLoading(false);
+                    setLoadNewCard(false);
                     }
                 )
             }
-    )}, [userEvents])
+    )}, [userEvents.length])
 // End of DisplayCards Logic
 
 // Start of CreateEventModal Logic
@@ -82,7 +88,12 @@ const DashboardHome = ({ navigation }) => {
         }
         else {
             CreateNewEvent({formData})
-                .then()
+                .then((res) => {
+                    let tempArray = userEvents;
+                    tempArray.push(res.newEvent._id);
+                    setLoadNewCard(true);
+                    setUserEvents(tempArray);
+                })
             return true;
         }
     };
@@ -95,7 +106,7 @@ const DashboardHome = ({ navigation }) => {
         setErrors({});
     }, [showModal]);
 
-// End of CreateEventModal Logic
+    // End of CreateEventModal Logic
 
         return (
             <View style={{
@@ -119,9 +130,18 @@ const DashboardHome = ({ navigation }) => {
                     <Heading textAlign={"center"}>
                         Upcoming Events
                     </Heading>
-                    <ScrollView>
-                        {eventCards}
-                    </ScrollView>
+                    <FlatList
+                        data = {eventData}
+                        renderItem={({ item }) => (
+                        <CustomCard
+                            navigation = {navigation}
+                            data = {item}
+                            key = {item.currEvent._id}
+                            />
+                        )}
+                        keyExtractor={item => item.currEvent._id}
+                    />
+                        {loadNewCard ? <Spinner size = "lg" /> : <></> }
                 </Box>
                 <Box pt={"5%"}>
                     <View>

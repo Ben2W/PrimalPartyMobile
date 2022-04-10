@@ -2,7 +2,9 @@ import * as React from 'react';
 import {NativeBaseProvider, Box, Center, Heading, ScrollView, Flex, VStack, ZStack, Container, View, Text} from "native-base";
 import EventHeading from "../components/EventHeading";
 import GuestTasksList from "../components/GuestTasksList";
-import {useState} from "react";
+import {useContext, useState} from "react";
+import {FAB} from "react-native-paper";
+import {CredentialsContext} from "../components/CredentialsContext";
 
 
 const EventGuestGuestsListView = ({ navigation, data }) => {
@@ -10,6 +12,36 @@ const EventGuestGuestsListView = ({ navigation, data }) => {
 
     const [props, setProps] = useState(userData)
     const [guestsMap, setGuestsMap] = useState(userData.guests)
+    const [curEventID, setCurEventID] = useState(userData._id);
+
+    const handleDelete = async ({curEventID}) => {
+        console.log("Deleting: " + curEventID);
+        const url = 'http://localhost:8080/events/' + curEventID
+
+        let details = [curEventID];
+        let formBody = [];
+        for (let property in details) {
+            let encodedKey = encodeURIComponent(property);
+            let encodedValue = encodeURIComponent(details[property]);
+            formBody.push(encodedKey + "=" + encodedValue);
+        }
+        formBody = formBody.join("&");
+
+        try {
+            const res = await fetch(url,
+                {
+                    method: 'DELETE',
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+                    },
+                    credentials: 'include',
+                    body: formBody
+                })
+            return navigation.navigate("Dashboard");
+        } catch (e) {
+            return en
+        }
+    }
 
     // console.log(guestsMap);
     // const [guestsMap, setGuestsMap] = useState({data.guests})
@@ -36,7 +68,17 @@ const EventGuestGuestsListView = ({ navigation, data }) => {
             flexDirection: "column",
         }}>
             <VStack space={"2%"} flex={1}>
-                <EventHeading props={props}/>
+                <>
+                    <EventHeading props={props}/>
+                    <FAB
+                        label={"Delete"}
+                        style={{
+                            width: "100%",
+                            backgroundColor: "#D11A2A",
+                        }}
+                        onPress={() => handleDelete({curEventID})}
+                    />
+                </>
                 <GuestTasksList guestsMap={guestsMap} heading={"Guest List"}/>
             </VStack>
         </View>
