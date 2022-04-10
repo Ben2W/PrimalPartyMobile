@@ -21,7 +21,6 @@ const { darkLight, primary } = Colors;
 
 const DashboardAccount = () => {
 
-    const [hidePassword, setHidePassword] = useState(true)
     const [message, setMessage] = useState('')
     const [messageType, setMessageType] = useState()
     const [isSubmitting, setIsSubmitting] = useState(false)
@@ -31,7 +30,7 @@ const DashboardAccount = () => {
 
         const { username, phone, email, firstName, lastName } = { ...credentials }
 
-        const url = 'https://primalpartybackend.azurewebsites.net/register'
+        const url = 'https://primalpartybackend.azurewebsites.net/account'
 
         if (username && phone && email && firstName && lastName) {
 
@@ -44,7 +43,7 @@ const DashboardAccount = () => {
             formBody = formBody.join("&");
 
             await fetch(url, {
-                method: 'POST',
+                method: 'PUT',
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
                 },
@@ -76,7 +75,6 @@ const DashboardAccount = () => {
                 })
                 .then(data => {
                     setIsSubmitting(false)
-                    navigation.navigate('VerifyEmail', { credentials })
                 })
                 .catch(err => {
                     setIsSubmitting(false)
