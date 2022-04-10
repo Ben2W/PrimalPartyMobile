@@ -18,7 +18,7 @@ const Welcome = ({ navigation }) => {
     const logout = () => {
         AsyncStorage.removeItem('ppcredentials')
             .then(() => {
-                fetch('http://localhost:8080/logout',
+                fetch('https://primalpartybackend.azurewebsites.net/logout',
                     {
                         method: 'POST',
                         headers: {
@@ -46,7 +46,7 @@ const Welcome = ({ navigation }) => {
     // TESTING
 
     const goToAccount = () => {
-        fetch('http://localhost:8080/account',
+        fetch('https://primalpartybackend.azurewebsites.net/account',
             {
                 method: 'GET',
                 credentials: 'include'

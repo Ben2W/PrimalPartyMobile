@@ -22,7 +22,7 @@ const DashboardHome = ({ navigation }) => {
 // Start of DisplayCards Logic
 
     const fetchEvents = async () => {
-        const url = 'http://localhost:8080/events'
+        const url = 'https://primalpartybackend.azurewebsites.net/events'
 
         try {
             const res = await fetch(url,

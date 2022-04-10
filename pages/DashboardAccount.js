@@ -14,7 +14,7 @@ const DashboardAccount = () => {
     const logout = () => {
         AsyncStorage.removeItem('ppcredentials')
             .then(() => {
-                fetch('http://localhost:8080/logout',
+                fetch('https://primalpartybackend.azurewebsites.net/logout',
                     {
                         method: 'POST',
                         headers: {
