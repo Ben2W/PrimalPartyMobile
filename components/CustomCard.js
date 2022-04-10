@@ -11,7 +11,6 @@ import {shouldThrowAnErrorOutsideOfExpo} from "expo/build/environment/validatorS
 import {CredentialsContext} from "./CredentialsContext";
 
 const CustomCard = ({navigation, data}) => {
-
     const [title, setTitle] = useState(data.currEvent.name);
     const [address, setAddress] = useState(data.currEvent.address);
     const [date, setDate] = useState(data.currEvent.date);
@@ -29,35 +28,7 @@ const CustomCard = ({navigation, data}) => {
         // navigation.navigate("EventGuestNavigation", {data:{curData}} )
     }
 
-    const handleDelete = async ({curEventID}) => {
-        console.log("Deleting: " + curEventID);
-        const url = 'http://localhost:8080/events/' + curEventID
 
-        let details = [curEventID];
-        let formBody = [];
-        for (let property in details) {
-            let encodedKey = encodeURIComponent(property);
-            let encodedValue = encodeURIComponent(details[property]);
-            formBody.push(encodedKey + "=" + encodedValue);
-        }
-        formBody = formBody.join("&");
-
-        try {
-            const res = await fetch(url,
-                {
-                    method: 'DELETE',
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
-                    },
-                    credentials: 'include',
-                    body: formBody
-                })
-            return await res.json();
-        } catch (e) {
-            return e
-        }
-
-    }
 
     let AdminButton;
     if (isAdmin){
@@ -73,14 +44,6 @@ const CustomCard = ({navigation, data}) => {
                     width: "100%",
                 }}
                 onPress={() => handleClick({navigation})}
-            />
-            <FAB
-                label={"Delete"}
-                style={{
-                    width: "100%",
-                    backgroundColor: "#D11A2A",
-                }}
-                onPress={() => handleDelete({curEventID})}
             />
         </View>
     }
