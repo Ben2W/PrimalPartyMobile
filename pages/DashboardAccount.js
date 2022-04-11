@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Button } from 'react-native-paper';
 import { StyleSheet, View, Text } from 'react-native';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {StackActions as navigation} from "react-navigation";
-import {useContext} from "react";
 import {CredentialsContext} from "../components/CredentialsContext";
 
 
@@ -20,6 +19,8 @@ import MyTextInput from '../components/MyTextInput';
 const { darkLight, primary } = Colors;
 
 const DashboardAccount = () => {
+
+    const { storedCredentials, setStoredCredentials } = useContext(CredentialsContext)
 
     const [message, setMessage] = useState('')
     const [messageType, setMessageType] = useState()
@@ -54,7 +55,6 @@ const DashboardAccount = () => {
                     if (res.status == 500) {
                         throw Error('Unexpected error happened on the server')
                     }
-
                     if (res.status == 503) {
                         throw Error('Unable to send the verification email')
                     }
@@ -86,6 +86,7 @@ const DashboardAccount = () => {
         // missing credentials
         else {
             setIsSubmitting(false)
+            console.log(storedCredentials)
             handleMessage('Missing fields')
         }
     }
@@ -99,8 +100,6 @@ const DashboardAccount = () => {
 
 
 
-    
-    const { storedCredentials, setStoredCredentials } = useContext(CredentialsContext)
 
     const logout = () => {
         AsyncStorage.removeItem('ppcredentials')
@@ -158,7 +157,7 @@ return (
                             <MyTextInput
                                 label="FIRST NAME*"
                                 icon="person"
-                                placeholder="John"
+                                placeholder={storedCredentials.firstName}
                                 placeholderTextColor={darkLight}
                                 onChangeText={handleChange('firstName')}
                                 onBlur={handleBlur('firstName')}
@@ -168,7 +167,7 @@ return (
                             <MyTextInput
                                 label="LAST NAME*"
                                 icon="person"
-                                placeholder="Doe"
+                                placeholder={storedCredentials.lastName}
                                 placeholderTextColor={darkLight}
                                 onChangeText={handleChange('lastName')}
                                 onBlur={handleBlur('lastName')}
@@ -178,7 +177,7 @@ return (
                             <MyTextInput
                                 label="USERNAME*"
                                 icon="person"
-                                placeholder="johndoe"
+                                placeholder={storedCredentials.username}
                                 placeholderTextColor={darkLight}
                                 onChangeText={handleChange('username')}
                                 onBlur={handleBlur('username')}
@@ -189,7 +188,7 @@ return (
                             <MyTextInput
                                 label="EMAIL ADDRESS*"
                                 icon="mail"
-                                placeholder="johndoe@gmail.com"
+                                placeholder={storedCredentials.email}
                                 placeholderTextColor={darkLight}
                                 onChangeText={handleChange('email')}
                                 onBlur={handleBlur('email')}
@@ -201,7 +200,7 @@ return (
                             <MyTextInput
                                 label="PHONE*"
                                 icon="device-mobile"
-                                placeholder="+14077574245"
+                                placeholder={storedCredentials.phone}
                                 placeholderTextColor={darkLight}
                                 onChangeText={handleChange('phone')}
                                 onBlur={handleBlur('phone')}
