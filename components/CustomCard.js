@@ -11,16 +11,17 @@ import {shouldThrowAnErrorOutsideOfExpo} from "expo/build/environment/validatorS
 import {CredentialsContext} from "./CredentialsContext";
 
 const CustomCard = ({navigation, data}) => {
-    const [title, setTitle] = useState(data.currEvent.name);
-    const [address, setAddress] = useState(data.currEvent.address);
-    const [date, setDate] = useState(data.currEvent.date);
-    const [desc, setDesc] = useState(data.currEvent.description);
-    const [curData, setCurData] = useState(data.currEvent);
-    const [adminID, setAdminID] = useState(data.currEvent.admin._id);
+
+    const [title, setTitle] = useState(data.name);
+    const [address, setAddress] = useState(data.address);
+    const [date, setDate] = useState(data.date);
+    const [desc, setDesc] = useState(data.description);
+    const [curData, setCurData] = useState(data);
+    const [adminID, setAdminID] = useState(data.admin._id);
     const [userID, setUserID] = useState(useContext(CredentialsContext).storedCredentials._id)
     const [isAdmin, setIsAdmin] = useState(() => {return adminID === userID});
 
-    const [curEventID, setCurEventID] = useState(data.currEvent._id);
+    const [curEventID, setCurEventID] = useState(data._id);
 
     const handleClick = ({navigation}) => {
         navigation.navigate("EventGuestNavigation", {data: {curData}});

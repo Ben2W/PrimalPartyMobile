@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { CredentialsContext } from '../components/CredentialsContext'
@@ -29,6 +29,12 @@ import { Colors } from '../components/styles'
 import DashboardFriendsList from "../pages/DashboardFriendsList";
 import TestingViewMore from "../pages/TestingViewMore";
 import CustomCard from "../components/CustomCard";
+import ReduxTesting from "../pages/ReduxTesting";
+import GetEvents from "../components/GetEvents";
+import {eventSET} from "../redux/eventsReducer";
+import {useDispatch} from "react-redux";
+import ReduxStore from "../redux/ReduxStore";
+import InitDashboard from "../components/InitDashboard";
 const { tertiary } = Colors
 
 const customTheme = {
@@ -55,6 +61,19 @@ const customTheme = {
 
 
 const RootStack = () => {
+    const dispatch = useDispatch();
+
+     const init = () => {
+         GetEvents.then((res) => {
+             dispatch(eventSET({res}))
+         })
+     }
+
+    useEffect(() => {
+        init();
+    }, []);
+
+
     return (
         <CredentialsContext.Consumer>
             {({ storedCredentials }) => (
@@ -68,14 +87,14 @@ const RootStack = () => {
 
                                     {storedCredentials ?
                                             <>
-                                            <Stack.Screen name='Dashboard' component={DashboardNavigation} />
                                             <Stack.Screen name="DashboardNavigation" component={DashboardNavigation} />
+                                            <Stack.Screen name='InitialLoadingScreen' component={InitDashboard} />
                                             <Stack.Screen name="DashboardTasksList" component={DashboardTasksList} />
                                             <Stack.Screen name="DashboardFriendsList" component={DashboardFriendsList} />
                                             <Stack.Screen name="EventGuestNavigation" component={EventGuestNavigation} />
                                             <Stack.Screen name="EventGuestGuestsListView" component={EventGuestGuestsListView} />
                                             <Stack.Screen name="EventGuestTasksView" component={EventGuestTasksView} />
-                                            <Stack.Screen name="TestingViewMore" component={TestingViewMore} />
+                                            <Stack.Screen name="ReduxTesting" component={ReduxTesting} />
                                             <Stack.Screen name="CustomCard" component={CustomCard} />
                                             </>
                                         : (<>

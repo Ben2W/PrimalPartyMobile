@@ -13,6 +13,8 @@ import { CredentialsContext } from '../components/CredentialsContext'
 import DashboardFriendsList from "./DashboardFriendsList";
 import DashboardAccount from "./DashboardAccount";
 import TestingViewMore from "./TestingViewMore";
+import ReduxTesting from "./ReduxTesting";
+import InitDashboard from "../components/InitDashboard";
 
 
 const Tab = createMaterialBottomTabNavigator();
@@ -58,17 +60,17 @@ const DashboardNavigation = ({ navigation }) => {
             flex: 1,
         }}>
             <Tab.Navigator
-                initialRouteName="DashboardHome"
+                initialRouteName="InitDashboard"
                 shifting={true}
             >
                 <Tab.Screen
                     name="Home"
                     children={() => (
-                        <DashboardHome
+                        <InitDashboard
                             navigation={navigation}
                         />)}
                     options={{
-                        tabBarLabel: 'DashboardHome',
+                        tabBarLabel: 'InitDashboard',
                         tabBarColor: "#1F44EA",
                         tabBarIcon: ({ color }) => (
                             <MaterialCommunityIcons name="home" color={color} size={26} />
@@ -119,10 +121,9 @@ const DashboardNavigation = ({ navigation }) => {
                     }}
                 />
                 <Tab.Screen
-                    name="TestingViewMore"
+                    name="ReduxTesting"
                     children={() => (
-                        <TestingViewMore
-                            navigation={navigation}
+                        <ReduxTesting
                         />)}
                     />
             </Tab.Navigator>
