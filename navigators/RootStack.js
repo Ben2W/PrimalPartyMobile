@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { CredentialsContext } from '../components/CredentialsContext'
@@ -33,6 +33,8 @@ import ReduxTesting from "../pages/ReduxTesting";
 import GetEvents from "../components/GetEvents";
 import {eventSET} from "../redux/eventsReducer";
 import {useDispatch} from "react-redux";
+import ReduxStore from "../redux/ReduxStore";
+import InitDashboard from "../components/InitDashboard";
 const { tertiary } = Colors
 
 const customTheme = {
@@ -61,9 +63,16 @@ const customTheme = {
 const RootStack = () => {
     const dispatch = useDispatch();
 
-    GetEvents.then((res) => {
-        dispatch(eventSET({res}))
-    })
+     const init = () => {
+         GetEvents.then((res) => {
+             dispatch(eventSET({res}))
+         })
+     }
+
+    useEffect(() => {
+        init();
+    }, []);
+
 
     return (
         <CredentialsContext.Consumer>
@@ -78,8 +87,8 @@ const RootStack = () => {
 
                                     {storedCredentials ?
                                             <>
-                                            <Stack.Screen name='Dashboard' component={DashboardNavigation} />
                                             <Stack.Screen name="DashboardNavigation" component={DashboardNavigation} />
+                                            <Stack.Screen name='InitialLoadingScreen' component={InitDashboard} />
                                             <Stack.Screen name="DashboardTasksList" component={DashboardTasksList} />
                                             <Stack.Screen name="DashboardFriendsList" component={DashboardFriendsList} />
                                             <Stack.Screen name="EventGuestNavigation" component={EventGuestNavigation} />

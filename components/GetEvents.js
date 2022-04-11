@@ -1,7 +1,3 @@
-import ReduxStore from "../redux/ReduxStore";
-import eventsReducer, {eventSET} from "../redux/eventsReducer";
-import {useDispatch} from "react-redux";
-
 const getEvents = async () => {
     const url = 'http://localhost:8080/events'
 

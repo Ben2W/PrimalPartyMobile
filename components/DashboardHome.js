@@ -11,64 +11,33 @@ import FetchEventData from "./FetchEventData";
 import {Datepicker, NativeDateService} from "@ui-kitten/components";
 import CreateNewEvent from "./CreateNewEvent";
 import {shouldThrowAnErrorOutsideOfExpo} from "expo/build/environment/validatorState";
+import ReduxStore from "../redux/ReduxStore";
 
 const DashboardHome = ({ navigation }) => {
+    const userEvents = ReduxStore.getState().events;
+    const eventData = ReduxStore.getState().events;
+    console.log(userEvents)
 
     const [showModal, setShowModal] = useState(false);
-    const [userEvents, setUserEvents] = useState([])
     const [loading, setLoading] = useState(true)
     const [eventCards, setEventCards] = useState([])
-    const [eventData, setEventData] = useState([])
     const [loadNewCard, setLoadNewCard] = useState(false)
     const [firstName, setFirstName] = useState(useContext(CredentialsContext).storedCredentials.firstName)
 
+
 // Start of DisplayCards Logic
-
-    const fetchEvents = async () => {
-        const url = 'http://localhost:8080/events'
-
-        try {
-            const res = await fetch(url,
-                {
-                    method: 'GET',
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
-                    },
-                    credentials: 'include'
-                })
-            const events = await res.json()
-            setUserEvents(events.events)
-            return events.events
-        } catch (e) {
-            return e
-        }
-    }
-
-    const setDisplayCards = async (curUserEvents) => {
-        let tempEvents = []
-        let tempEventData = []
-        for (let event of curUserEvents){
-            await FetchEventData(event._id)
-                .then((data) => {
-                    tempEventData.push(data);
-                    tempEvents.push(<CustomCard navigation={navigation} data={data} key={event._id}/>);
-                })
-            }
-        setEventData(tempEventData);
+    const setDisplayCards = () => {
+        let tempEvents = [];
+        for (let event of eventData){
+                    tempEvents.push(<CustomCard navigation={navigation} data={event} key={event._id}/>);
+                }
         setEventCards(tempEvents);
     }
 
     useLayoutEffect(() => {
-        fetchEvents()
-            .then((curUserEvents) => {
-                setDisplayCards(curUserEvents)
-                    .then(() => {
-                    setLoading(false);
-                    setLoadNewCard(false);
-                    }
-                )
-            }
-    )}, [userEvents.length])
+        setDisplayCards()
+        setLoading(false);
+    }, [eventData])
 // End of DisplayCards Logic
 
 // Start of CreateEventModal Logic
@@ -97,6 +66,7 @@ const DashboardHome = ({ navigation }) => {
             return true;
         }
     };
+
 
     useEffect(() => {
         if (showModal) return; // If shown, do nothing
@@ -136,10 +106,10 @@ const DashboardHome = ({ navigation }) => {
                         <CustomCard
                             navigation = {navigation}
                             data = {item}
-                            key = {item.currEvent._id}
+                            key = {item._id}
                             />
                         )}
-                        keyExtractor={item => item.currEvent._id}
+                        keyExtractor={item => item._id}
                     />
                         {loadNewCard ? <Spinner size = "lg" /> : <></> }
                 </Box>
