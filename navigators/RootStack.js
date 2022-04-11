@@ -88,7 +88,7 @@ const RootStack = () => {
                                     {storedCredentials ?
                                             <>
                                             <Stack.Screen name="DashboardNavigation" component={DashboardNavigation} />
-                                            <Stack.Screen name='InitialLoadingScreen' component={InitDashboard} />
+                                            <Stack.Screen name='InitDashboard' component={InitDashboard} />
                                             <Stack.Screen name="DashboardTasksList" component={DashboardTasksList} />
                                             <Stack.Screen name="DashboardFriendsList" component={DashboardFriendsList} />
                                             <Stack.Screen name="EventGuestNavigation" component={EventGuestNavigation} />

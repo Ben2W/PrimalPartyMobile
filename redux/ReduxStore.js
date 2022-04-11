@@ -7,7 +7,6 @@ const ReduxStore = configureStore({
     reducer: {
         events: eventsSlice.reducer,
         // friends: friendsReducer,
-        // tasks: tasksReducer,
     },
     preloadedState: {events: null}
 }, )

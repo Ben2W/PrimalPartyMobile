@@ -6,7 +6,6 @@ import ReduxStore from "../redux/ReduxStore";
 import GetEvents from "../components/GetEvents";
 
 const ReduxTesting = () => {
-
     const dispatch = useDispatch();
 
     return (
@@ -22,7 +21,7 @@ const ReduxTesting = () => {
                 }> Get Events button</Button>
 
                 <Button onPress={ () => console.log(
-                    dispatch( eventPOST({_id: 9, name: "postPayload"}) )
+                        dispatch( eventPOST({_id: 9, name: "postPayload"}) )
                     )}> Post Events button</Button>
 
                 <Button onPress={ () => console.log(

@@ -2,17 +2,20 @@ import * as React from 'react';
 import {NativeBaseProvider, Box, Center, Heading, ScrollView, Flex, VStack, ZStack, Container, View, Text} from "native-base";
 import EventHeading from "../components/EventHeading";
 import GuestTasksList from "../components/GuestTasksList";
-import {useContext, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {FAB} from "react-native-paper";
 import {CredentialsContext} from "../components/CredentialsContext";
+import {useDispatch} from "react-redux";
+import {eventDELETE} from "../redux/eventsReducer";
 
 
 const EventGuestGuestsListView = ({ navigation, data }) => {
-    const userData = data.data
 
-    const [props, setProps] = useState(userData)
-    const [guestsMap, setGuestsMap] = useState(userData.guests)
-    const [curEventID, setCurEventID] = useState(userData._id);
+    const [props, setProps] = useState({data: data})
+    // const [guestsMap, setGuestsMap] = useState(userData.guests)
+    const [curEventID, setCurEventID] = useState({data: data._id});
+
+    const dispatch = useDispatch();
 
     const handleDelete = async ({curEventID}) => {
         console.log("Deleting: " + curEventID);
@@ -37,11 +40,15 @@ const EventGuestGuestsListView = ({ navigation, data }) => {
                     credentials: 'include',
                     body: formBody
                 })
-            return navigation.navigate("Dashboard");
+            dispatch(eventDELETE(curEventID));
+            navigation.reset();
+            return navigation.navigate("InitDashboard")
         } catch (e) {
-            return en
+            return e
         }
     }
+
+    console.log(props)
 
     // console.log(guestsMap);
     // const [guestsMap, setGuestsMap] = useState({data.guests})
@@ -79,7 +86,7 @@ const EventGuestGuestsListView = ({ navigation, data }) => {
                         onPress={() => handleDelete({curEventID})}
                     />
                 </>
-                <GuestTasksList guestsMap={guestsMap} heading={"Guest List"}/>
+                {/*<GuestTasksList guestsMap={guestsMap} heading={"Guest List"}/>*/}
             </VStack>
         </View>
     );
