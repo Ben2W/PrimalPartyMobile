@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { View, Text, ScrollView } from 'react-native'
-import { Card, Title, Paragraph } from 'react-native-paper'
-import { Box, Button, Center, FormControl, Heading, HStack, Input, Modal, Spinner, VStack } from "native-base";
+import { View, ScrollView } from 'react-native'
+import { Card, Title } from 'react-native-paper'
+import { Box, Button, Center, FormControl, Heading, HStack, Input, Modal, Spinner, VStack, Text } from "native-base";
 import { LinearGradient } from 'expo-linear-gradient';
 
 const FriendCard = ({ navigation, data }) => {
@@ -26,8 +26,9 @@ const FriendCard = ({ navigation, data }) => {
                         alignItems: 'center',
                         justifyContent: 'center',
                         paddingBottom: 10
-                    }}></Card.Content>
-            <Title>{firstNames}{lastNames}</Title>
+                    }}>
+            <Heading>{firstNames} {lastNames}</Heading>
+            </Card.Content>
             </Card>
         </View>
     )
