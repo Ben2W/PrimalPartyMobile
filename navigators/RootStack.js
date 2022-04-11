@@ -29,6 +29,10 @@ import { Colors } from '../components/styles'
 import DashboardFriendsList from "../pages/DashboardFriendsList";
 import TestingViewMore from "../pages/TestingViewMore";
 import CustomCard from "../components/CustomCard";
+import ReduxTesting from "../pages/ReduxTesting";
+import GetEvents from "../components/GetEvents";
+import {eventSET} from "../redux/eventsReducer";
+import {useDispatch} from "react-redux";
 const { tertiary } = Colors
 
 const customTheme = {
@@ -55,6 +59,12 @@ const customTheme = {
 
 
 const RootStack = () => {
+    const dispatch = useDispatch();
+
+    GetEvents.then((res) => {
+        dispatch(eventSET({res}))
+    })
+
     return (
         <CredentialsContext.Consumer>
             {({ storedCredentials }) => (
@@ -75,7 +85,7 @@ const RootStack = () => {
                                             <Stack.Screen name="EventGuestNavigation" component={EventGuestNavigation} />
                                             <Stack.Screen name="EventGuestGuestsListView" component={EventGuestGuestsListView} />
                                             <Stack.Screen name="EventGuestTasksView" component={EventGuestTasksView} />
-                                            <Stack.Screen name="TestingViewMore" component={TestingViewMore} />
+                                            <Stack.Screen name="ReduxTesting" component={ReduxTesting} />
                                             <Stack.Screen name="CustomCard" component={CustomCard} />
                                             </>
                                         : (<>

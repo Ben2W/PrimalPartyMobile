@@ -13,6 +13,7 @@ import { CredentialsContext } from '../components/CredentialsContext'
 import DashboardFriendsList from "./DashboardFriendsList";
 import DashboardAccount from "./DashboardAccount";
 import TestingViewMore from "./TestingViewMore";
+import ReduxTesting from "./ReduxTesting";
 
 
 const Tab = createMaterialBottomTabNavigator();
@@ -119,10 +120,9 @@ const DashboardNavigation = ({ navigation }) => {
                     }}
                 />
                 <Tab.Screen
-                    name="TestingViewMore"
+                    name="ReduxTesting"
                     children={() => (
-                        <TestingViewMore
-                            navigation={navigation}
+                        <ReduxTesting
                         />)}
                     />
             </Tab.Navigator>

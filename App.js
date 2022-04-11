@@ -9,6 +9,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { CredentialsContext } from './components/CredentialsContext'
 
+// Redux
+import ReduxStore from "./redux/ReduxStore";
+import {Provider as ReduxProvider} from "react-redux";
+
 export default function App() {
 
   const [appReady, setAppReady] = useState(false)
@@ -39,7 +43,9 @@ export default function App() {
   }
   return (
     <CredentialsContext.Provider value={{ storedCredentials, setStoredCredentials }}>
-      <RootStack />
+      <ReduxProvider store={ReduxStore}>
+        <RootStack />
+      </ReduxProvider>
     </CredentialsContext.Provider>
   )
 }
