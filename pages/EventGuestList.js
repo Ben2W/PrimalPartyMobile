@@ -6,6 +6,7 @@ import {useDispatch} from "react-redux";
 import ReduxStore from "../redux/ReduxStore";
 import {FAB} from "react-native-paper";
 import {eventDELETE} from "../redux/eventsReducer";
+import {StackActions as navigation} from "react-navigation";
 
 const EventGuestList = (props) => {
     const dispatch = useDispatch();
@@ -13,7 +14,7 @@ const EventGuestList = (props) => {
     const handleDelete = async () => {
         console.log("Deleting: " + props.eventID);
         const url = 'http://localhost:8080/events/' + props.eventID
-        dispatch(eventDELETE({eventID: props.eventID}));
+        let newState = dispatch(eventDELETE({eventID: props.eventID}));
 
         let details = [props.eventID];
         let formBody = [];
@@ -34,7 +35,7 @@ const EventGuestList = (props) => {
                     credentials: 'include',
                     body: formBody
                 })
-            return res;
+            return newState;
         } catch (e) {
             return e
         }
@@ -60,7 +61,10 @@ const EventGuestList = (props) => {
                             backgroundColor: "#D11A2A",
                         }}
                         onPress={() => handleDelete(props.eventID)
-                            .then(props.navigation.navigate("DashboardNavigation"))}
+                            .then((res) => {
+                                props.navigation.push("DashboardNavigation", {params: { post: res}})
+                            })
+                    }
                     />
                 </>
             </VStack>

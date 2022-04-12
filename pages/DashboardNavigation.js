@@ -18,7 +18,7 @@ import InitDashboard from "../components/InitDashboard";
 const Tab = createMaterialBottomTabNavigator();
 
 
-const DashboardNavigation = ({ navigation }) => {
+const DashboardNavigation = ({ navigation, route}) => {
     const { storedCredentials, setStoredCredentials } = useContext(CredentialsContext)
 
     return (
@@ -34,6 +34,7 @@ const DashboardNavigation = ({ navigation }) => {
                     children={() => (
                         <InitDashboard
                             navigation={navigation}
+                            route={route}
                         />)}
                     options={{
                         tabBarLabel: 'InitDashboard',

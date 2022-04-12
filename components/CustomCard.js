@@ -20,7 +20,7 @@ const CustomCard = ({navigation, data}) => {
     const [curEventID, setCurEventID] = useState(data._id);
 
     const handleClick = ({navigation}) => {
-        navigation.navigate("EventGuestNavigation", {eventID: curEventID});
+        navigation.push("EventGuestNavigation", {eventID: curEventID});
         // navigation.navigate("TestingViewMore")
         // navigation.navigate("EventGuestNavigation", {data:{curData}} )
     }
