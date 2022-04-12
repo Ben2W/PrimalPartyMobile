@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react';
 import { View, Text } from "react-native";
-import DashboardHome from "../components/DashboardHome"
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import DashboardTasksList from "./DashboardTasksList";
@@ -12,7 +11,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CredentialsContext } from '../components/CredentialsContext'
 import DashboardFriendsList from "./DashboardFriendsList";
 import DashboardAccount from "./DashboardAccount";
-import TestingViewMore from "./TestingViewMore";
 import ReduxTesting from "./ReduxTesting";
 import InitDashboard from "../components/InitDashboard";
 
@@ -22,38 +20,6 @@ const Tab = createMaterialBottomTabNavigator();
 
 const DashboardNavigation = ({ navigation }) => {
     const { storedCredentials, setStoredCredentials } = useContext(CredentialsContext)
-
-    // //TEST PURPOSES
-    // const logout = () => {
-    //     console.log("fuck")
-    //     AsyncStorage.removeItem('ppcredentials')
-    //         .then(() => {
-    //             fetch('https://primalpartybackend.azurewebsites.net/logout',
-    //                 {
-    //                     method: 'POST',
-    //                     headers: {
-    //                         "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
-    //                     },
-    //                     credentials: 'include'
-    //                 }
-    //             )
-    //                 .then((data) => {
-    //                     navigation.reset({
-    //                         index: 0,
-    //                         routes: [{ name: 'Login' }],
-    //                     });
-    //                 })
-    //                 .catch(e => {
-    //                     console.log(e)
-    //                 })
-    //             setStoredCredentials('')
-    //         })
-    //         .catch(e => {
-    //             console.log(err)
-    //         })
-    // }
-
-    // logout()
 
     return (
         <View style={{
@@ -76,7 +42,6 @@ const DashboardNavigation = ({ navigation }) => {
                             <MaterialCommunityIcons name="home" color={color} size={26} />
                         ),
                     }}
-                    on
                 />
                 <Tab.Screen
                     name="DashboardAccount"
