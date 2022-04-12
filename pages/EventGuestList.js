@@ -11,8 +11,6 @@ import {CredentialsContext} from "../components/CredentialsContext";
 
 const EventGuestList = (props, route) => {
     const [routePush, setRoutePush] = useState(route.params?.post)
-    console.log(props);
-
 
     let delButton = {};
     if (useContext(CredentialsContext).storedCredentials._id === props.eventData.admin._id){
