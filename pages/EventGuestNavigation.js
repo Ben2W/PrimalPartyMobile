@@ -1,57 +1,66 @@
-import * as React from 'react';
 import {View} from "react-native";
-import {Headline, Paragraph, Text} from "react-native-paper";
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import React, {useEffect, useState} from "react";
+import EventGuestList from "./EventGuestList";
+import {createMaterialBottomTabNavigator} from "@react-navigation/material-bottom-tabs";
+import EventTaskList from "./EventTaskList";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
-import EventGuestGuestsListView from "./EventGuestGuestsListView"
-import EventGuestTasksView from "./EventGuestTasksView";
-import {useState} from "react";
+import {useDispatch} from "react-redux";
+import ReduxStore from "../redux/ReduxStore";
 
 const Tab = createMaterialBottomTabNavigator();
 
 const EventGuestNavigation = ({navigation, route}) => {
-    let data = route.params.data.curData;
-    const [event, setEvent] = useState({data});
+    const dispatch = useDispatch();
+    const [eventID, setEventID] = useState(route.params.eventID)
+
+    let tempData = ReduxStore.getState().events.find(obj => obj._id === eventID)
+    console.log(tempData)
+
+    const [eventData, setEventData] = useState(tempData);
+
+
 
     return (
         <View style={{
             flex: 1,
         }}>
             <Tab.Navigator
-                initialRouteName="EventGuestGuestsListView"
+                initialRouteName="EventGuestList"
                 shifting={true}
             >
-                <Tab.Screen
-                    name="EventGuestGuestsListView"
-                    children={() => (
-                        <EventGuestGuestsListView
-                            navigation={navigation}
-                            data = {event}
-                        />)}
-                    options={{
-                        tabBarLabel: 'EventGuestGuestsListView',
-                        tabBarColor: "#1F44EA",
-                        tabBarIcon: ({ color }) => (
-                            <MaterialCommunityIcons name="party-popper" color={color} size={26} />
-                        ),
-                }}/>
-                <Tab.Screen
-                    name = "EventGuestTasksView"
-                    children={() => (
-                        <EventGuestTasksView
-                            navigation={navigation}
-                            data = {event}
-                        />)}
-                    options={{
-                        tabBarLabel: 'EventGuestTasksView',
-                        tabBarColor: "#1F44EA",
-                        tabBarIcon: ({ color }) => (
-                            <MaterialCommunityIcons name="format-list-checks" color={color} size={26} />
-                        ),
-                    }}/>
+            <Tab.Screen
+                name = "EventGuestList"
+                children={() => (
+                    <EventGuestList
+                        eventID={eventID}
+                        eventData={eventData}
+                        navigation={navigation}
+                    />)}
+                options={{
+                    tabBarLabel: 'EventGuestList',
+                    tabBarColor: "#1F44EA",
+                    tabBarIcon: ({ color }) => (
+                        <MaterialCommunityIcons name="account-group" color={color} size={26} />
+                    ),
+                }}
+            />
+            <Tab.Screen
+                name = "EventTaskList"
+                children={() => (
+                    <EventTaskList
+                        eventID={eventID}
+                    />)}
+                options={{
+                    tabBarLabel: 'EventTasksList',
+                    tabBarColor: "#397367",
+                    tabBarIcon: ({ color }) => (
+                        <MaterialCommunityIcons name="format-list-checks" color={color} size={26} />
+                    ),
+                }}
+            />
             </Tab.Navigator>
         </View>
-    );
+    )
 }
 
 export default EventGuestNavigation;
