@@ -4,7 +4,7 @@ import { Button } from 'react-native-paper';
 import { StyleSheet, View, Text, ScrollView, ActivityIndicator, FlatList } from 'react-native';
 import { StyledImageContainer, InnerContainer, PageLogo, PageTitle, StyledFormArea, Subtitle, Colors, StyledButton, ButtonText, MsgBox, ExtraView, ExtraText, TextLink, TextLinkContent, StyledContainer } from '../components/styles'
 import KeyboardAvoidingViewWrapper from '../components/KeyboardAvoidingWrapper';
-import FriendCard from "../components/FriendCard"
+import { FriendCard, handleFriendDelete } from "../components/FriendCard"
 
 const DashboardFriendsList = ({navigation}) => {
     //const [friends, setFriends] = useState([])
@@ -66,6 +66,7 @@ const DashboardFriendsList = ({navigation}) => {
 
     useEffect(() => {
         getFriends();
+        handleFriendDelete();
     }, []);
     
 
