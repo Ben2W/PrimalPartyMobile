@@ -33,7 +33,15 @@ export const eventsSlice = createSlice({
         },
         eventSET: (state, action) => {
             return action.payload.res;
-        }
+        },
+        guestGET: (state, action) => {
+            let temp = [...state];
+            let findEvent = temp.findIndex(obj => obj._id === action.payload._id)
+            if (findEvent === -1)
+                console.log("no item to delete")
+            else
+                return temp[findEvent].guests;
+        },
     }
 })
 

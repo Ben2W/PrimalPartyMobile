@@ -14,11 +14,8 @@ const Stack = createNativeStackNavigator()
 import Login from '../pages/Login'
 import Register from '../pages/Register'
 import VerifyEmail from '../pages/VerifyEmail'
-import TestingDisplayCards from '../pages/TestingDisplayCards';
 import DashboardNavigation from "../pages/DashboardNavigation"
 import EventGuestNavigation from "../pages/EventGuestNavigation";
-import EventGuestGuestsListView from "../pages/EventGuestGuestsListView";
-import EventGuestTasksView from "../pages/EventGuestTasksView";
 import DashboardTasksList from "../pages/DashboardTasksList";
 import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
 import * as eva from '@eva-design/eva';
@@ -27,7 +24,6 @@ import { EvaIconsPack } from "@ui-kitten/eva-icons";
 //colors
 import { Colors } from '../components/styles'
 import DashboardFriendsList from "../pages/DashboardFriendsList";
-import TestingViewMore from "../pages/TestingViewMore";
 import CustomCard from "../components/CustomCard";
 import ReduxTesting from "../pages/ReduxTesting";
 import GetEvents from "../components/GetEvents";
@@ -92,8 +88,6 @@ const RootStack = () => {
                                             <Stack.Screen name="DashboardTasksList" component={DashboardTasksList} />
                                             <Stack.Screen name="DashboardFriendsList" component={DashboardFriendsList} />
                                             <Stack.Screen name="EventGuestNavigation" component={EventGuestNavigation} />
-                                            <Stack.Screen name="EventGuestGuestsListView" component={EventGuestGuestsListView} />
-                                            <Stack.Screen name="EventGuestTasksView" component={EventGuestTasksView} />
                                             <Stack.Screen name="ReduxTesting" component={ReduxTesting} />
                                             <Stack.Screen name="CustomCard" component={CustomCard} />
                                             </>
@@ -101,7 +95,6 @@ const RootStack = () => {
                                             <Stack.Screen name='Login' component={Login} />
                                             <Stack.Screen name='Register' component={Register} />
                                             <Stack.Screen name='VerifyEmail' component={VerifyEmail} />
-                                            <Stack.Screen name="Display Cards" component={TestingDisplayCards} />
                                         </>)
                                     }
                                 </Stack.Navigator>

@@ -4,10 +4,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 import ListItem from "react-native-paper/src/components/List/ListItem";
 import {useCallback, useContext, useEffect, useState} from "react";
 import EventGuestNavigation from "../pages/EventGuestNavigation";
-import FetchEventData from "./FetchEventData";
-import EventGuestGuestsListView from "../pages/EventGuestGuestsListView";
-import TestingViewMore from "../pages/TestingViewMore";
-import {shouldThrowAnErrorOutsideOfExpo} from "expo/build/environment/validatorState";
 import {CredentialsContext} from "./CredentialsContext";
 
 const CustomCard = ({navigation, data}) => {
