@@ -49,7 +49,6 @@ const DashboardAccount = () => {
                 encodedValue = storedCredentials[property]
             }
 
-            console.log(encodedKey + "=" + encodedValue)
             formBody.push(encodedKey + "=" + encodedValue);
            
         }
@@ -96,7 +95,9 @@ const DashboardAccount = () => {
                 setIsSubmitting(false)
                 if(storedCredentials.username != username && username){
                     logout()
+                    return
                 }
+                persistLogin({ ...data.updatedUser })
             })
             .catch(err => {
                 setIsSubmitting(false)
@@ -117,6 +118,17 @@ const DashboardAccount = () => {
     const handleMessage = (message, type = 'FAILED') => {
         setMessage(message)
         setMessageType(type)
+    }
+
+    const persistLogin = (credentials) => {
+        AsyncStorage.setItem('ppcredentials', JSON.stringify(credentials))
+            .then(() => {
+                setStoredCredentials(credentials)
+                console.log('success')
+            })
+            .catch(err => {
+                handleMessage('Persisting Login information failed')
+            })
     }
 
 
@@ -206,18 +218,6 @@ return (
                                 onBlur={handleBlur('username')}
                                 value={values.username}
                                 autoCapitalize="none"
-                            />
-
-                            <MyTextInput
-                                label="EMAIL ADDRESS*"
-                                icon="mail"
-                                placeholder={storedCredentials.email}
-                                placeholderTextColor={darkLight}
-                                onChangeText={handleChange('email')}
-                                onBlur={handleBlur('email')}
-                                value={values.email}
-                                autoCapitalize="none"
-                                keyboardType='email-address'
                             />
 
                             <MyTextInput
