@@ -10,10 +10,11 @@ import CustomCard from "./CustomCard";
 import {Datepicker, NativeDateService} from "@ui-kitten/components";
 import CreateNewEvent from "./CreateNewEvent";
 
-const InitDashboard = ({navigation}) => {
+const InitDashboard = ({navigation, route}) => {
     const [eventData, setEventData] = useState([]);
     const [firstName, setFirstName] = useState(useContext(CredentialsContext).storedCredentials.firstName)
     const [showModal, setShowModal] = useState(false);
+    const [routePush, setRoutePush] = useState(route.params?.post)
 
     // Redux Initialization
     const dispatch = useDispatch();
@@ -26,6 +27,13 @@ const InitDashboard = ({navigation}) => {
     useEffect(() => {
         init();
     }, []);
+
+    React.useEffect(() => {
+        if (route.params?.post) {
+            console.log(route.params)
+            setEventData(route.params.post)
+        }
+    }, [route.params?.post]);
 
     // End of Redux Initialization
 

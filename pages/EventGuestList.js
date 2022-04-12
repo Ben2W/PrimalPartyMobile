@@ -1,20 +1,58 @@
 import GuestList from "../components/GuestList";
 import EventHeading from "../components/EventHeading";
-import {View, VStack} from "native-base";
-import {useEffect, useState} from "react";
+import {Box, View, VStack} from "native-base";
+import React, {useContext, useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
 import ReduxStore from "../redux/ReduxStore";
 import {FAB} from "react-native-paper";
 import {eventDELETE} from "../redux/eventsReducer";
+import {StackActions as navigation} from "react-navigation";
+import {CredentialsContext} from "../components/CredentialsContext";
 
-const EventGuestList = (props) => {
+const EventGuestList = (props, route) => {
+    const [routePush, setRoutePush] = useState(route.params?.post)
+
+    let delButton = {};
+    if (useContext(CredentialsContext).storedCredentials._id === props.eventData.admin._id){
+        delButton =
+            <Box>
+            <FAB
+                label={"Search for Friend to Add"}
+                style={{
+                    width: "100%",
+                    backgroundColor: "#30AADD",
+                }}
+                onPress={() => handleSearch(props.eventID)}
+                key = "Search"
+            />
+            <FAB
+                label={"Delete"}
+                style={{
+                    width: "100%",
+                    backgroundColor: "#D11A2A",
+                }}
+                onPress={() => handleDelete(props.eventID)
+                    .then((res) => {
+                        props.navigation.push("DashboardNavigation", {params: { post: res}})
+                    })
+                }
+                key = "Delete"
+            />
+            </Box>
+    }
+
     const dispatch = useDispatch();
 
+    // Handle Add Guest
+    const handleSearch = () => {
+        props.navigation.push("SearchFriendsPage", { eventID: props.eventID } )
+    }
+
+    // Handle Delete
     const handleDelete = async () => {
         console.log("Deleting: " + props.eventID);
         const url = 'https://primalpartybackend.azurewebsites.net/events/' + props.eventID
-        dispatch(eventDELETE({eventID: props.eventID}));
-
+        let newState = dispatch(eventDELETE({eventID: props.eventID}));
         let details = [props.eventID];
         let formBody = [];
         for (let property in details) {
@@ -34,11 +72,21 @@ const EventGuestList = (props) => {
                     credentials: 'include',
                     body: formBody
                 })
-            return res;
+            return newState;
         } catch (e) {
             return e
         }
     }
+
+
+    const[eventData, setEventData] = useState(props.eventData);
+
+    React.useEffect(() => {
+        if (route.params?.post) {
+            setEventData(route.params.eventData)
+        }
+    }, [route.params?.post]);
+
 
     return (
         <View style={{
@@ -52,16 +100,8 @@ const EventGuestList = (props) => {
             <VStack space={"2%"} flex={1}>
                 <>
                     <EventHeading props={props}/>
-                    <GuestList />
-                    <FAB
-                        label={"Delete"}
-                        style={{
-                            width: "100%",
-                            backgroundColor: "#D11A2A",
-                        }}
-                        onPress={() => handleDelete(props.eventID)
-                            .then(props.navigation.navigate("DashboardNavigation"))}
-                    />
+                    <GuestList props = {props} />
+                    {delButton}
                 </>
             </VStack>
         </View>

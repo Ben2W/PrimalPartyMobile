@@ -31,6 +31,7 @@ import {eventSET} from "../redux/eventsReducer";
 import {useDispatch} from "react-redux";
 import ReduxStore from "../redux/ReduxStore";
 import InitDashboard from "../components/InitDashboard";
+import SearchFriendsPage from "../pages/SearchFriendsPage";
 const { tertiary } = Colors
 
 const customTheme = {
@@ -90,6 +91,7 @@ const RootStack = () => {
                                             <Stack.Screen name="EventGuestNavigation" component={EventGuestNavigation} />
                                             <Stack.Screen name="ReduxTesting" component={ReduxTesting} />
                                             <Stack.Screen name="CustomCard" component={CustomCard} />
+                                            <Stack.Screen name="SearchFriendsPage" component={SearchFriendsPage} />
                                             </>
                                         : (<>
                                             <Stack.Screen name='Login' component={Login} />
