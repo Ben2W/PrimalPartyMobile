@@ -1,4 +1,4 @@
-import {View} from "react-native";
+import {Platform, View} from "react-native";
 import { Avatar, Button, Card, Title, Paragraph, FAB } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 import ListItem from "react-native-paper/src/components/List/ListItem";
@@ -77,7 +77,8 @@ const CustomCard = ({navigation, data}) => {
                 colors={['#4555F2', '#878af7']}
             >
             <Card.Content style={{
-                alignItems:"left",
+                alightItems : Platform.OS === 'ios' ? "left" : '',
+                
                 justifyContent: 'center',
             }}>
                 <Title>{title}</Title>
@@ -87,7 +88,7 @@ const CustomCard = ({navigation, data}) => {
             </Card.Content>
             {/*<Card.Cover source={{ uri: 'https://picsum.photos/700' }} />*/}
             <Card.Actions style={{
-                alignItems:"center",
+                alightItems : Platform.OS === 'ios' ? "center" : '',
                 justifyContent: 'center',
             }}>
                 {AdminButton}
