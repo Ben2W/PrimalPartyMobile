@@ -1,6 +1,6 @@
 
 const CreateNewEvent = async ({formData}) => {
-    const url = 'https://primalpartybackend.azurewebsites.net/events'
+    const url = 'http://localhost:8080/events'
 
     const details = {
         name: formData.name,

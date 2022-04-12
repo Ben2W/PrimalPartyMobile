@@ -1,5 +1,5 @@
 const FetchEventData = async(curEventID) =>{
-    const url = 'https://primalpartybackend.azurewebsites.net/events/' + curEventID
+    const url = 'http://localhost:8080/events' + curEventID
 
     try {
         const res = await fetch(url,

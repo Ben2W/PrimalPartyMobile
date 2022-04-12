@@ -26,7 +26,7 @@ const DashboardNavigation = ({ navigation }) => {
     //     console.log("fuck")
     //     AsyncStorage.removeItem('ppcredentials')
     //         .then(() => {
-    //             fetch('https://primalpartybackend.azurewebsites.net/logout',
+    //             fetch('http://localhost:8080/logout',
     //                 {
     //                     method: 'POST',
     //                     headers: {

@@ -29,7 +29,7 @@ const Login = ({ navigation }) => {
 
         const { username, password } = { ...credentials }
 
-        const url = 'https://primalpartybackend.azurewebsites.net/login'
+        const url = 'http://localhost:8080/login'
 
         if (username && password) {
 
