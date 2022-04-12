@@ -29,11 +29,11 @@ const DashboardAccount = () => {
     const handleRegister = async (credentials) => {
         handleMessage(null)
 
-        const { username, phone, email, firstName, lastName } = { ...credentials }
+        const { username, phone, firstName, lastName } = { ...credentials }
 
         const url = 'https://primalpartybackend.azurewebsites.net/account'
 
-        if (!username && !phone && !email && !firstName && !lastName){
+        if (!username && !phone && !firstName && !lastName){
             setIsSubmitting(false)
             handleMessage('You havent made any updates!')
             return
@@ -67,17 +67,11 @@ const DashboardAccount = () => {
                 if (res.status == 500) {
                     throw Error('Unexpected error: Maybe your phone number is not 12 characters long')
                 }
-                if (res.status == 503) {
-                    throw Error('Unable to send the verification email')
-                }
 
                 if (res.status == 410) {
                     throw Error('phone already taken')
                 }
 
-                if (res.status == 411) {
-                    throw Error('email already taken')
-                }
 
                 if (res.status == 412) {
                     throw Error('username already taken')
@@ -104,14 +98,6 @@ const DashboardAccount = () => {
                 handleMessage(err.message)
             })
 
-
-
-        // // missing credentials
-        // else {
-        //     setIsSubmitting(false)
-        //     console.log(storedCredentials)
-        //     handleMessage('Missing fields')
-        // }
     }
 
 
@@ -124,7 +110,6 @@ const DashboardAccount = () => {
         AsyncStorage.setItem('ppcredentials', JSON.stringify(credentials))
             .then(() => {
                 setStoredCredentials(credentials)
-                console.log('success')
             })
             .catch(err => {
                 handleMessage('Persisting Login information failed')
@@ -174,7 +159,7 @@ return (
 
                     <Formik
                         initialValues={{
-                            firstName: '', lastName: '', username: '', email: '', phone: ''
+                            firstName: '', lastName: '', username: '', phone: ''
                         }}
                         onSubmit={(values) => {
                             setIsSubmitting(true)
@@ -183,7 +168,6 @@ return (
                             values.firstName = ''
                             values.lastName = ''
                             values.username = ''
-                            values.email = ''
                             values.phone = ''
 
                         }}
@@ -253,10 +237,6 @@ return (
                                 <ActivityIndicator size='large' color={primary}></ActivityIndicator>
                             </StyledButton>)
                             }
-                            <ExtraView>
-                                <ExtraText>Already have an account? </ExtraText>
-                                <TextLink onPress={() => navigation.navigate('Login')}><TextLinkContent>Sign in</TextLinkContent></TextLink>
-                            </ExtraView>
 
                         </StyledFormArea>)}
 
