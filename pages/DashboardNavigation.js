@@ -21,38 +21,6 @@ const Tab = createMaterialBottomTabNavigator();
 const DashboardNavigation = ({ navigation }) => {
     const { storedCredentials, setStoredCredentials } = useContext(CredentialsContext)
 
-    // //TEST PURPOSES
-    // const logout = () => {
-    //     console.log("fuck")
-    //     AsyncStorage.removeItem('ppcredentials')
-    //         .then(() => {
-    //             fetch('http://localhost:8080/logout',
-    //                 {
-    //                     method: 'POST',
-    //                     headers: {
-    //                         "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
-    //                     },
-    //                     credentials: 'include'
-    //                 }
-    //             )
-    //                 .then((data) => {
-    //                     navigation.reset({
-    //                         index: 0,
-    //                         routes: [{ name: 'Login' }],
-    //                     });
-    //                 })
-    //                 .catch(e => {
-    //                     console.log(e)
-    //                 })
-    //             setStoredCredentials('')
-    //         })
-    //         .catch(e => {
-    //             console.log(err)
-    //         })
-    // }
-
-    // logout()
-
     return (
         <View style={{
             flex: 1,
