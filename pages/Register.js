@@ -64,6 +64,14 @@ const Register = ({ navigation }) => {
                         throw Error('Email already taken')
                     }
 
+                    if (res.status == 413) {
+                        throw Error('Invalid phone number')
+                    }
+
+                    if (res.status == 414) {
+                        throw Error('Invalid email address')
+                    }
+
                     return res.json();
                 })
                 .then(data => {
