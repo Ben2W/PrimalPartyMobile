@@ -12,7 +12,7 @@ const EventGuestList = (props) => {
 
     const handleDelete = async () => {
         console.log("Deleting: " + props.eventID);
-        const url = 'http://localhost:8080/events/' + props.eventID
+        const url = 'https://primalpartybackend.azurewebsites.net/events/' + props.eventID
         dispatch(eventDELETE({eventID: props.eventID}));
 
         let details = [props.eventID];
