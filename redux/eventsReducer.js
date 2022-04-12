@@ -24,7 +24,7 @@ export const eventsSlice = createSlice({
         },
         eventDELETE: (state, action) => {
             let temp = [...state]
-            let delEvent = temp.findIndex(obj => obj._id === action.payload._id)
+            let delEvent = temp.findIndex(obj => obj._id === action.payload.eventID)
             if (delEvent === -1)
                 console.log("no item to delete")
             else
@@ -38,13 +38,13 @@ export const eventsSlice = createSlice({
             let temp = [...state];
             let findEvent = temp.findIndex(obj => obj._id === action.payload._id)
             if (findEvent === -1)
-                console.log("no item to delete")
+                console.log("no guests found")
             else
                 return temp[findEvent].guests;
         },
     }
 })
 
-export const { eventGET, eventPOST, eventPUT, eventDELETE, eventSET } = eventsSlice.actions
+export const { eventGET, eventPOST, eventPUT, eventDELETE, eventSET, eventDataGET, guestGET } = eventsSlice.actions
 
 export default eventsSlice.reducer

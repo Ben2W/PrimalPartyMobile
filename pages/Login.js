@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, {useState, useContext, useEffect} from 'react'
 import { ActivityIndicator } from 'react-native'
 import { StatusBar } from 'expo-status-bar';
 
@@ -12,6 +12,9 @@ import MyTextInput from '../components/MyTextInput';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { CredentialsContext } from '../components/CredentialsContext'
+import {useDispatch} from "react-redux";
+import GetEvents from "../components/GetEvents";
+import {eventSET} from "../redux/eventsReducer";
 
 const { darkLight, primary } = Colors;
 
@@ -84,6 +87,7 @@ const Login = ({ navigation }) => {
         setMessageType(type)
     }
 
+
     const persistLogin = (credentials) => {
         AsyncStorage.setItem('ppcredentials', JSON.stringify(credentials))
             .then(() => {
@@ -93,6 +97,21 @@ const Login = ({ navigation }) => {
                 handleMessage('Persisting Login information failed')
             })
     }
+
+    const dispatch = useDispatch();
+
+    const init = () => {
+        GetEvents.then((res) => {
+            dispatch(eventSET({res}))
+        })
+    }
+
+    useEffect(() => {
+        init();
+    }, [isSubmitting]);
+
+
+
     return (
         <KeyboardAvoidingViewWrapper>
             <StyledImageContainer resizeMode="cover" source={require('../assets/HomeBackground.png')}>

@@ -4,14 +4,9 @@ import {useState} from "react";
 import {useDispatch} from "react-redux";
 
 const GuestList = ({eventID}) =>{
-    console.log(eventID)
-    const [guests, setGuests] = useState[[]];
-    const dispatch = useDispatch();
-
-
 
     return(
-        <Box flexGrow={1} maxW="100%" maxH={"73%"} bg="violet.400" rounded="md" shadow={3}>
+        <Box flexGrow={1} maxW="100%" maxH={"64%"} bg="violet.400" rounded="md" shadow={3}>
             <Box>
                 <Heading pb="3" size="lg" textAlign={"center"}>
                     "Guest List"

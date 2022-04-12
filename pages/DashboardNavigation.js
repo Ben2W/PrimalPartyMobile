@@ -74,7 +74,6 @@ const DashboardNavigation = ({ navigation }) => {
                             <MaterialCommunityIcons name="home" color={color} size={26} />
                         ),
                     }}
-                    on
                 />
                 <Tab.Screen
                     name="DashboardAccount"
