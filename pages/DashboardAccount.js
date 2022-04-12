@@ -88,10 +88,11 @@ const DashboardAccount = () => {
             .then(data => {
                 setIsSubmitting(false)
                 if(storedCredentials.username != username && username){
+                    console.log(storedCredentials.username)
+                    console.log(username)
                     logout()
-                    return
-                }
-                persistLogin({ ...data.updatedUser })
+                    //return
+                } else persistLogin({ ...data.updatedUser })
             })
             .catch(err => {
                 setIsSubmitting(false)
@@ -110,6 +111,10 @@ const DashboardAccount = () => {
         AsyncStorage.setItem('ppcredentials', JSON.stringify(credentials))
             .then(() => {
                 setStoredCredentials(credentials)
+                handleMessage('You successfully updated your account!', 'SUCCESS')
+                setTimeout(()=>{
+                    handleMessage('')
+                }, 2000)
             })
             .catch(err => {
                 handleMessage('Persisting Login information failed')
@@ -159,16 +164,11 @@ return (
 
                     <Formik
                         initialValues={{
-                            firstName: '', lastName: '', username: '', phone: ''
+                            firstName: storedCredentials.firstName, lastName: storedCredentials.lastName, username: storedCredentials.username, phone: storedCredentials.phone
                         }}
                         onSubmit={(values) => {
                             setIsSubmitting(true)
                             handleRegister(values)
-                            //logout()
-                            values.firstName = ''
-                            values.lastName = ''
-                            values.username = ''
-                            values.phone = ''
 
                         }}
                     >
@@ -225,7 +225,6 @@ return (
                             </StyledButton>)
                             }
 
-                            <MsgBox type={messageType}>{message}</MsgBox>
                             {!isSubmitting && (<StyledButton onPress={logout}>
                                 <ButtonText>
                                     Logout
@@ -237,6 +236,7 @@ return (
                                 <ActivityIndicator size='large' color={primary}></ActivityIndicator>
                             </StyledButton>)
                             }
+
 
                         </StyledFormArea>)}
 
