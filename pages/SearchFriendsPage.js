@@ -5,8 +5,8 @@ import CustomCard from "../components/CustomCard";
 import {FlatList} from "react-native";
 import PeopleCard from "../components/PeopleCard";
 
-const SearchFriendsPage = () => {
-
+const SearchFriendsPage = ({navigation, route}) => {
+    const [eventID, setEventID] = useState(route.params.eventID);
     const [people, setPeople] = useState()
     const [formData, setData] = useState({search: ' '} );
 
@@ -14,7 +14,6 @@ const SearchFriendsPage = () => {
         const temp = await SearchUsers(formData.search)
             .then((res) => {
                 let parseMap = res.map((obj) => obj)
-                console.log(parseMap);
                 setPeople(parseMap);
             })
     }
@@ -44,7 +43,7 @@ const SearchFriendsPage = () => {
                         <FlatList
                             data = {people}
                             renderItem={({ item }) => (
-                                <PeopleCard props ={item} _id={item._id} key = {item._id} />
+                                <PeopleCard props ={item} _id={item._id} key = {item._id} eventID = {eventID} navigation = {navigation} />
                             )}
                             keyExtractor={item => item._id}
 

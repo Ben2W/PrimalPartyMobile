@@ -1,7 +1,7 @@
 import GuestList from "../components/GuestList";
 import EventHeading from "../components/EventHeading";
 import {Box, View, VStack} from "native-base";
-import {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
 import ReduxStore from "../redux/ReduxStore";
 import {FAB} from "react-native-paper";
@@ -9,7 +9,11 @@ import {eventDELETE} from "../redux/eventsReducer";
 import {StackActions as navigation} from "react-navigation";
 import {CredentialsContext} from "../components/CredentialsContext";
 
-const EventGuestList = (props) => {
+const EventGuestList = (props, route) => {
+    const [routePush, setRoutePush] = useState(route.params?.post)
+    console.log(props);
+
+
     let delButton = {};
     if (useContext(CredentialsContext).storedCredentials._id === props.eventData.admin._id){
         delButton =
@@ -33,7 +37,9 @@ const EventGuestList = (props) => {
                     .then((res) => {
                         props.navigation.push("DashboardNavigation", {params: { post: res}})
                     })
-                }/>
+                }
+                key = "Delete"
+            />
             </Box>
     }
 
@@ -41,7 +47,7 @@ const EventGuestList = (props) => {
 
     // Handle Add Guest
     const handleSearch = () => {
-        props.navigation.push("SearchFriendsPage")
+        props.navigation.push("SearchFriendsPage", { eventID: props.eventID } )
     }
 
     // Handle Delete
@@ -74,6 +80,16 @@ const EventGuestList = (props) => {
         }
     }
 
+
+    const[eventData, setEventData] = useState(props.eventData);
+
+    React.useEffect(() => {
+        if (route.params?.post) {
+            setEventData(route.params.eventData)
+        }
+    }, [route.params?.post]);
+
+
     return (
         <View style={{
             flex: 1,
@@ -86,7 +102,7 @@ const EventGuestList = (props) => {
             <VStack space={"2%"} flex={1}>
                 <>
                     <EventHeading props={props}/>
-                    <GuestList />
+                    <GuestList props = {props} />
                     {delButton}
                 </>
             </VStack>

@@ -42,9 +42,15 @@ export const eventsSlice = createSlice({
             else
                 return temp[findEvent].guests;
         },
+        guestADD: (state, action) => {
+            let temp = [...state];
+            let findEvent = temp.findIndex(obj => obj._id === action.payload.eventID);
+            temp[findEvent].guests.concat(action.payload._id);
+            return temp;
+        }
     }
 })
 
-export const { eventGET, eventPOST, eventPUT, eventDELETE, eventSET, eventDataGET, guestGET } = eventsSlice.actions
+export const { eventGET, eventPOST, eventPUT, eventDELETE, eventSET, eventDataGET, guestGET, guestADD } = eventsSlice.actions
 
 export default eventsSlice.reducer

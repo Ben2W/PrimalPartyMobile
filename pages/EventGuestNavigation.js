@@ -13,8 +13,8 @@ const EventGuestNavigation = ({navigation, route}) => {
     const dispatch = useDispatch();
     const [eventID, setEventID] = useState(route.params.eventID)
 
-    let tempData = ReduxStore.getState().events.find(obj => obj._id === eventID)
-    const [eventData, setEventData] = useState(tempData);
+    // let tempData = ReduxStore.getState().events.find((obj) => obj._id === eventID)
+    const [eventData, setEventData] = useState(route.params.eventData);
 
 
 
@@ -33,6 +33,7 @@ const EventGuestNavigation = ({navigation, route}) => {
                         eventID={eventID}
                         eventData={eventData}
                         navigation={navigation}
+                        route={route}
                     />)}
                 options={{
                     tabBarLabel: 'EventGuestList',
