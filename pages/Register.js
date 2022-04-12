@@ -23,7 +23,7 @@ const Register = ({ navigation }) => {
 
         const { username, password, phone, email, firstName, lastName } = { ...credentials }
 
-        const url = 'http://localhost:8080/register'
+        const url = 'https://primalpartybackend.azurewebsites.net/register'
 
         if (username && password && phone && email && firstName && lastName) {
 

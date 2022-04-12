@@ -20,7 +20,7 @@ const VerifyEmail = ({ navigation }) => {
     const { storedCredentials, setStoredCredentials } = useContext(CredentialsContext)
 
     const handleVerify = (token) => {
-        fetch('http://localhost:8080/authorize/' + token, {
+        fetch('https://primalpartybackend.azurewebsites.net/authorize/' + token, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json;charset=UTF-8"

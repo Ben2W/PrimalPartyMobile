@@ -16,7 +16,7 @@ const EventGuestGuestsListView = ({ navigation, data }) => {
 
     const handleDelete = async ({curEventID}) => {
         console.log("Deleting: " + curEventID);
-        const url = 'http://localhost:8080/events/' + curEventID
+        const url = 'https://primalpartybackend.azurewebsites.net/events/' + curEventID
 
         let details = [curEventID];
         let formBody = [];
