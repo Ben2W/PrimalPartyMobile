@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react';
 import { View, Text } from "react-native";
-import DashboardHome from "../components/DashboardHome"
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import DashboardTasksList from "./DashboardTasksList";
@@ -12,7 +11,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CredentialsContext } from '../components/CredentialsContext'
 import DashboardFriendsList from "./DashboardFriendsList";
 import DashboardAccount from "./DashboardAccount";
-import TestingViewMore from "./TestingViewMore";
 import ReduxTesting from "./ReduxTesting";
 import InitDashboard from "../components/InitDashboard";
 
@@ -76,7 +74,6 @@ const DashboardNavigation = ({ navigation }) => {
                             <MaterialCommunityIcons name="home" color={color} size={26} />
                         ),
                     }}
-                    on
                 />
                 <Tab.Screen
                     name="DashboardAccount"
