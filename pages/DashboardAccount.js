@@ -33,62 +33,75 @@ const DashboardAccount = () => {
 
         const url = 'https://primalpartybackend.azurewebsites.net/account'
 
-        if (username && phone && email && firstName && lastName) {
-
-            let formBody = [];
-            for (let property in credentials) {
-                let encodedKey = encodeURIComponent(property);
-                let encodedValue = encodeURIComponent(credentials[property]);
-                formBody.push(encodedKey + "=" + encodedValue);
-            }
-            formBody = formBody.join("&");
-
-            await fetch(url, {
-                method: 'PUT',
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
-                },
-                credentials: 'include',
-                body: formBody
-            })
-                .then(res => {
-                    if (res.status == 500) {
-                        throw Error('Unexpected error happened on the server')
-                    }
-                    if (res.status == 503) {
-                        throw Error('Unable to send the verification email')
-                    }
-
-                    if (res.status == 410) {
-                        throw Error('Username and email already taken')
-                    }
-
-                    if (res.status == 411) {
-                        throw Error('Username already taken')
-                    }
-
-                    if (res.status == 412) {
-                        throw Error('Email already taken')
-                    }
-
-                    return res.json();
-                })
-                .then(data => {
-                    setIsSubmitting(false)
-                })
-                .catch(err => {
-                    setIsSubmitting(false)
-                    handleMessage(err.message)
-                })
-
-        }
-
-        // missing credentials
-        else {
+        if (!username && !phone && !email && !firstName && !lastName){
             setIsSubmitting(false)
-            console.log(storedCredentials)
-            handleMessage('Missing fields')
+            console.log('booom')
+            handleMessage('You havent made any updates!')
+            return
         }
+
+
+        let formBody = [];
+        for (let property in credentials) {
+            let encodedKey = encodeURIComponent(property);
+            let encodedValue = encodeURIComponent(credentials[property]);
+
+            if (!encodedValue){
+                encodedValue = storedCredentials[property]
+            }
+
+            console.log(encodedKey + "=" + encodedValue)
+            formBody.push(encodedKey + "=" + encodedValue);
+           
+        }
+        formBody = formBody.join("&");
+        
+
+        await fetch(url, {
+            method: 'PUT',
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+            },
+            credentials: 'include',
+            body: formBody
+        })
+            .then(res => {
+                if (res.status == 500) {
+                    throw Error('Unexpected error happened on the server')
+                }
+                if (res.status == 503) {
+                    throw Error('Unable to send the verification email')
+                }
+
+                if (res.status == 410) {
+                    throw Error('Username and email already taken')
+                }
+
+                if (res.status == 411) {
+                    throw Error('Username already taken')
+                }
+
+                if (res.status == 412) {
+                    throw Error('Email already taken')
+                }
+                return res.json();
+            })
+            .then(data => {
+                setIsSubmitting(false)
+            })
+            .catch(err => {
+                setIsSubmitting(false)
+                handleMessage(err.message)
+            })
+
+
+
+        // // missing credentials
+        // else {
+        //     setIsSubmitting(false)
+        //     console.log(storedCredentials)
+        //     handleMessage('Missing fields')
+        // }
     }
 
 
