@@ -35,7 +35,6 @@ const DashboardAccount = () => {
 
         if (!username && !phone && !email && !firstName && !lastName){
             setIsSubmitting(false)
-            console.log('booom')
             handleMessage('You havent made any updates!')
             return
         }
@@ -67,27 +66,37 @@ const DashboardAccount = () => {
         })
             .then(res => {
                 if (res.status == 500) {
-                    throw Error('Unexpected error happened on the server')
+                    throw Error('Unexpected error: Maybe your phone number is not 12 characters long')
                 }
                 if (res.status == 503) {
                     throw Error('Unable to send the verification email')
                 }
 
                 if (res.status == 410) {
-                    throw Error('Username and email already taken')
+                    throw Error('phone already taken')
                 }
 
                 if (res.status == 411) {
-                    throw Error('Username already taken')
+                    throw Error('email already taken')
                 }
 
                 if (res.status == 412) {
-                    throw Error('Email already taken')
+                    throw Error('username already taken')
                 }
-                return res.json();
+
+                if(res.status == 401){
+                    throw Error('You are not authenticated')
+                }
+                if(res.status == 200){
+                    return res.json();
+                }
+                
             })
             .then(data => {
                 setIsSubmitting(false)
+                if(storedCredentials.username != username && username){
+                    logout()
+                }
             })
             .catch(err => {
                 setIsSubmitting(false)
@@ -158,6 +167,7 @@ return (
                         onSubmit={(values) => {
                             setIsSubmitting(true)
                             handleRegister(values)
+                            //logout()
                             values.firstName = ''
                             values.lastName = ''
                             values.username = ''
@@ -226,7 +236,15 @@ return (
                             <MsgBox type={messageType}>{message}</MsgBox>
                             {!isSubmitting && (<StyledButton onPress={handleSubmit}>
                                 <ButtonText>
-                                    REGISTER
+                                    Save Changes
+                                </ButtonText>
+                            </StyledButton>)
+                            }
+
+                            <MsgBox type={messageType}>{message}</MsgBox>
+                            {!isSubmitting && (<StyledButton onPress={logout}>
+                                <ButtonText>
+                                    Logout
                                 </ButtonText>
                             </StyledButton>)
                             }
