@@ -31,7 +31,7 @@ const DashboardAccount = () => {
 
         const { username, phone, firstName, lastName } = { ...credentials }
 
-        const url = 'http://localhost:8080/account'
+        const url = 'https://primalpartybackend.azurewebsites.net/account'
 
         if (!username && !phone && !firstName && !lastName){
             setIsSubmitting(false)

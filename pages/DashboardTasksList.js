@@ -13,7 +13,7 @@ const DashboardTasksList = ({ navigation }) => {
     const [firstName, setFirstName] = useState(useContext(CredentialsContext).storedCredentials.firstName)
 
     const fetchTasks = async () => {
-        const url = 'http://localhost:8080/tasks'
+        const url = 'https://primalpartybackend.azurewebsites.net/tasks'
 
         try {
             const res = await fetch(url,
