@@ -6,7 +6,7 @@ import {useDispatch} from "react-redux";
 const GuestList = ({eventID}) =>{
 
     return(
-        <Box flexGrow={1} maxW="100%" maxH={"64%"} bg="violet.400" rounded="md" shadow={3}>
+        <Box flexGrow={1} maxW="100%" maxH={"50%"} bg="violet.400" rounded="md" shadow={3}>
             <Box>
                 <Heading pb="3" size="lg" textAlign={"center"}>
                     "Guest List"

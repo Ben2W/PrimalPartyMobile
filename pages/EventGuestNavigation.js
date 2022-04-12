@@ -14,8 +14,6 @@ const EventGuestNavigation = ({navigation, route}) => {
     const [eventID, setEventID] = useState(route.params.eventID)
 
     let tempData = ReduxStore.getState().events.find(obj => obj._id === eventID)
-    console.log(tempData)
-
     const [eventData, setEventData] = useState(tempData);
 
 
