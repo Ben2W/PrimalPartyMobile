@@ -2,19 +2,9 @@ import * as React from 'react';
 import {Box, Container, Heading, ScrollView, VStack, Text, View} from "native-base";
 import {useState} from "react";
 
-<<<<<<< Updated upstream
 const EventHeading = ({data}) => {
     const [props, setProps] = useState({data})
     const [numGuests, setNumGuests] = useState(0)
-
-=======
-const EventHeading = ({props}) => {
-    props = props.data;
-
-    // const [props, setProps] = useState({props})
-    // const [numGuests, setNumGuests] = useState(0)
-    //
->>>>>>> Stashed changes
 
     return(
             <Container maxW={"100%"} maxH="20%" bg="indigo.300" rounded="md" shadow={3} flexGrow="1">
