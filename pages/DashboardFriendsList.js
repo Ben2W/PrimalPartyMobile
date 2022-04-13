@@ -4,53 +4,20 @@ import { Button } from 'react-native-paper';
 import { StyleSheet, View, Text, ScrollView, ActivityIndicator, FlatList } from 'react-native';
 import { StyledImageContainer, InnerContainer, PageLogo, PageTitle, StyledFormArea, Subtitle, Colors, StyledButton, ButtonText, MsgBox, ExtraView, ExtraText, TextLink, TextLinkContent, StyledContainer } from '../components/styles'
 import KeyboardAvoidingViewWrapper from '../components/KeyboardAvoidingWrapper';
-import { FriendCard, handleFriendDelete } from "../components/FriendCard"
+import FriendCard from "../components/FriendCard"
 
 const DashboardFriendsList = ({navigation}) => {
     //const [friends, setFriends] = useState([])
     const url = 'https://primalpartybackend.azurewebsites.net/friends';
 
-    /*useEffect(() => {
-        fetchFriends();
-    }, []);
-
-    const fetchFriends = async() => {
-        await fetch(url, {
-            method: 'GET',
-        })
-        .then(response => response.json())
-            .then(data => {
-                setFriends(data.friends)
-            })
-            .catch(err => {
-               console.log(err);
-            })
-    }
-
-    function friendlist(props)
-    {
-        let Friends = [];
-
-        for (var i=0; i<props.props.length; i++) 
-        {
-            Friends.push(<friends props = { props.props[i].firstName } key={i}/>)
-        }
-    }
-
-    fetch(`${url}`, {
-    method: 'POST',
-    headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-        firstParam: 'yourValue',
-        secondParam: 'yourOtherValue'
-    })
-    });*/
-
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState([]);
+
+    const setState = ( list ) =>{
+        setData(list)
+        //console.log(list)
+        //console.log("state changed")
+    }
 
     const getFriends = async () => {
         try {
@@ -66,10 +33,8 @@ const DashboardFriendsList = ({navigation}) => {
 
     useEffect(() => {
         getFriends();
-        handleFriendDelete();
     }, []);
     
-
     /*return(
         <KeyboardAvoidingViewWrapper>
             <PageTitle>
@@ -93,7 +58,7 @@ const DashboardFriendsList = ({navigation}) => {
         </KeyboardAvoidingViewWrapper>
       );
     }*/
-    console.log(data)
+    //console.log(data)
     return (
         <View>
           {isLoading ? <ActivityIndicator/> : (
@@ -105,7 +70,9 @@ const DashboardFriendsList = ({navigation}) => {
                         renderItem={({ item }) => (
                             <FriendCard
                             navigation = {navigation}
-                            data = {item}
+                            friend = {item}
+                            friendsList = {data}
+                            setState = {setState}
                             key = {item.friends._id}
                             />
                         )} /></>
