@@ -24,12 +24,16 @@ const GuestList = (pass) =>{
         // remove from API storage
         RemoveUser(eventID, guestID)
             .then();
-        eventArray = ReduxStore.getState().events.guests;
+        eventArray = ReduxStore.getState().events.guests.toArray();
         setGuests(eventArray);
     }
 
-    let flatList;
 
+    useEffect(() => {
+    }, [guests])
+
+
+    let flatList;
     if (guests.length === 0){
         flatList =
             <Center>
