@@ -1,14 +1,14 @@
 import {Box, Button, Center, FormControl, Heading, Input, Modal, Spinner, Text, View} from "native-base"
 import ReduxStore from "../redux/ReduxStore";
 import {useDispatch} from "react-redux";
-import GetEvents from "./GetEvents";
+import GetEvents from "./API Calls/GetEvents";
 import {eventPOST, eventSET} from "../redux/eventsReducer";
 import React, {useContext, useEffect, useState} from "react";
 import {CredentialsContext} from "./CredentialsContext";
 import {FlatList} from "react-native";
 import CustomCard from "./CustomCard";
 import {Datepicker, NativeDateService} from "@ui-kitten/components";
-import CreateNewEvent from "./CreateNewEvent";
+import CreateNewEvent from "./API Calls/CreateNewEvent";
 
 const InitDashboard = ({navigation, route}) => {
     const [eventData, setEventData] = useState([]);

@@ -26,7 +26,7 @@ import { Colors } from '../components/styles'
 import DashboardFriendsList from "../pages/DashboardFriendsList";
 import CustomCard from "../components/CustomCard";
 import ReduxTesting from "../pages/ReduxTesting";
-import GetEvents from "../components/GetEvents";
+import GetEvents from "../components/API Calls/GetEvents";
 import {eventSET} from "../redux/eventsReducer";
 import {useDispatch} from "react-redux";
 import ReduxStore from "../redux/ReduxStore";

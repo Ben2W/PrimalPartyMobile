@@ -1,6 +1,6 @@
 import {Box, Button, Center, Input, Text, View, VStack} from "native-base";
 import React, {useState} from "react";
-import SearchUsers from "../components/SearchUsers";
+import SearchUsers from "../components/API Calls/SearchUsers";
 import CustomCard from "../components/CustomCard";
 import {FlatList} from "react-native";
 import PeopleCard from "../components/PeopleCard";

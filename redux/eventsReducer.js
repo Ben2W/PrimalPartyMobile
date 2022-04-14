@@ -62,9 +62,13 @@ export const eventsSlice = createSlice({
             console.log(temp2)
             return temp2;
         },
+        logoutRESET: (state, action) => {
+            state = undefined;
+            return;
+        }
     }
 })
 
-export const { eventGET, eventPOST, eventPUT, eventDELETE, eventSET, eventDataGET, guestGET, guestADD, guestREMOVE, individualEventGet } = eventsSlice.actions
+export const { eventGET, eventPOST, eventPUT, eventDELETE, eventSET, eventDataGET, guestGET, guestADD, guestREMOVE, individualEventGet, logoutRESET } = eventsSlice.actions
 
 export default eventsSlice.reducer
