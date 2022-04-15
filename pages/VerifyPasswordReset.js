@@ -14,28 +14,56 @@ import KeyboardAvoidingViewWrapper from '../components/KeyboardAvoidingWrapper'
 const { darkLight, primary } = Colors;
 
 const VerifyPasswordReset = ({ navigation }) => {
+    const [hidePassword, setHidePassword] = useState(true)
     const [message, setMessage] = useState('')
     const [messageType, setMessageType] = useState()
     const [isSubmitting, setIsSubmitting] = useState(false)
     const { storedCredentials, setStoredCredentials } = useContext(CredentialsContext)
 
-    const handleVerify = (token) => {
+    const handleVerify = (values) => {
+
+        const { token, password } = { ...values }
+
+        const details = {
+            'password': password
+        };
+    
+        var formBody = [];
+        for (var property in details) {
+            var encodedKey = encodeURIComponent(property);
+            var encodedValue = encodeURIComponent(details[property]);
+            formBody.push(encodedKey + "=" + encodedValue);
+        }
+        formBody = formBody.join("&");
+
+
         fetch('https://primalpartybackend.azurewebsites.net/reset/' + token, {
             method: 'POST',
             headers: {
-                "Content-Type": "application/json;charset=UTF-8"
+                "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
             },
-            credentials: 'include'
-        })
+            credentials: 'include',
+            body: formBody,
+            })
             .then(response => {
-                if (!response.ok) {
-                    throw Error("Unexpected error happened while trying to verify your email. Please try again")
+                switch(response.status) {
+                    case 200:
+                        handleMessage('SUCCESS, Please Log in with your new credentials!', 'SUCCESS');
+                        //navigation.navigate('VerifyPasswordReset')
+                        return;
+                    case 404:
+                        handleMessage('Token Does not exist')
+                        return;
+                    case 410:
+                        handleMessage('Token expired');
+                        return;
+                    case 500:
+                        handleMessage('Unexpected error.');
+                        return;
                 }
-                return response.json();
             })
             .then((res) => {
                 setIsSubmitting(false)
-                persistRegister({ ...res.user })
             })
             .catch(err => {
                 setIsSubmitting(false)
@@ -63,16 +91,17 @@ const VerifyPasswordReset = ({ navigation }) => {
     return (
         <KeyboardAvoidingViewWrapper>
             <StyledContainer>
-                <PageTitle>Verify Email</PageTitle>
+                <PageTitle>Enter Your New Password</PageTitle>
                 <View style={styles.container}>
                     <Formik
                         initialValues={{
-                            token: ''
+                            token: '', password: ''
                         }}
                         onSubmit={(values) => {
                             setIsSubmitting(true)
-                            handleVerify(values.token)
+                            handleVerify(values)
                             values.token = ''
+                            values.password = ''
                         }}
                     >
                         {({ handleChange, handleBlur, handleSubmit, values }) => (<StyledFormArea>
@@ -86,6 +115,21 @@ const VerifyPasswordReset = ({ navigation }) => {
                                 value={values.token}
                             />
 
+                            <MyTextInput
+                                label="PASSWORD*"
+                                icon="lock"
+                                placeholder="* * * * * * * *"
+                                placeholderTextColor={darkLight}
+                                onChangeText={handleChange('password')}
+                                onBlur={handleBlur('password')}
+                                value={values.password}
+                                secureTextEntry={hidePassword}
+                                autoCapitalize="none"
+                                isPassword={true}
+                                hidePassword={hidePassword}
+                                setHidePassword={setHidePassword}
+                            />
+                            
                             <MsgBox type={messageType}>{message}</MsgBox>
                             {!isSubmitting && (<StyledButton onPress={handleSubmit}>
                                 <ButtonText>
