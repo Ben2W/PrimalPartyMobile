@@ -1,10 +1,12 @@
 import * as React from 'react';
 import { useEffect, useState, component } from 'react';
 import { Button } from 'react-native-paper';
-import { StyleSheet, View, Text, ScrollView, ActivityIndicator, FlatList } from 'react-native';
+import { StyleSheet, View, Text, ActivityIndicator, FlatList, SafeAreaView } from 'react-native';
 import { StyledImageContainer, InnerContainer, PageLogo, PageTitle, StyledFormArea, Subtitle, Colors, StyledButton, ButtonText, MsgBox, ExtraView, ExtraText, TextLink, TextLinkContent, StyledContainer } from '../components/styles'
 import KeyboardAvoidingViewWrapper from '../components/KeyboardAvoidingWrapper';
 import FriendCard from "../components/FriendCard"
+//import { SafeAreaView } from 'react-native-safe-area-context';
+//import {NativeBaseProvider, Box, Center, Heading, ScrollView, Flex, VStack, ZStack, Container, View, Text} from "native-base";
 
 const DashboardFriendsList = ({navigation}) => {
     //const [friends, setFriends] = useState([])
@@ -94,7 +96,15 @@ const DashboardFriendsList = ({navigation}) => {
     }*/
     console.log(data)
     return (
-        <View>
+        <View style={{
+            flex: 1,
+            alignContent: "center",
+            top: "5%",
+            marginLeft: "2%",
+            marginRight: "2%",
+            flexDirection: "column",
+            marginBottom: "15%"
+        }}>
           {isLoading ? <ActivityIndicator/> : (
             <><PageTitle>
                     Friends
