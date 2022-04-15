@@ -1,20 +1,74 @@
 import * as React from 'react';
+import { useEffect, useState, component } from 'react';
 import { Button } from 'react-native-paper';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, ActivityIndicator, FlatList, SafeAreaView } from 'react-native';
+import { StyledImageContainer, InnerContainer, PageLogo, PageTitle, StyledFormArea, Subtitle, Colors, StyledAddButton, ButtonText, MsgBox, ExtraView, ExtraText, TextLink, TextLinkContent, StyledContainer } from '../components/styles'
+import KeyboardAvoidingViewWrapper from '../components/KeyboardAvoidingWrapper';
+import FriendCard from "../components/FriendCard"
+//import { SafeAreaView } from 'react-native-safe-area-context';
+//import {NativeBaseProvider, Box, Center, Heading, ScrollView, Flex, VStack, ZStack, Container, View, Text} from "native-base";
 
+const DashboardFriendsList = ({navigation}) => {
+    const url = 'https://primalpartybackend.azurewebsites.net/friends';
 
-const DashboardFriendsList = () => (
-    <View style = {
-        {
-            justifyContent: 'center',
-            alignItems: 'center',
-            top: "50%",
+    const [isLoading, setLoading] = useState(true);
+    const [data, setData] = useState([]);
+
+    const setState = ( friendsList ) =>{
+        setData(friendsList)
+    }
+
+    useEffect(() => {
+        getFriends();
+    }, []);
+
+    const getFriends = async () => {
+        try {
+        const response = await fetch(`${url}`);
+        const json = await response.json();
+        setData(json.friends);
+        } catch (error) {
+        console.error(error);
+        } finally {
+        setLoading(false);
         }
-    }>
-        <Text>
-            Friends
-        </Text>
-    </View>
-)
-
+    }
+    
+    //console.log(data)
+    return (
+        <View style={{
+            flex: 1,
+            alignContent: "center",
+            top: "5%",
+            marginLeft: "2%",
+            marginRight: "2%",
+            flexDirection: "column",
+            marginBottom: "15%"
+        }}>
+          {isLoading ? <ActivityIndicator/> : (
+            <><PageTitle>
+                Friends 
+            </PageTitle>
+            <StyledAddButton onPress={getFriends}>
+                <ButtonText>
+                    Add Friends
+                </ButtonText>
+            </StyledAddButton>
+            <FlatList
+                data={data}
+                keyExtractor={({ id }, index) => id}
+                renderItem={({ item }) => (
+                <FriendCard
+                navigation = {navigation}
+                friend = {item}
+                friendsList = {data}
+                setState = {setState}
+                key = {item.friends._id}
+            />
+            )} /></>
+          )}
+        </View>
+      );
+    }
+    
 export default DashboardFriendsList
