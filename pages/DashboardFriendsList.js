@@ -9,50 +9,18 @@ import FriendCard from "../components/FriendCard"
 //import {NativeBaseProvider, Box, Center, Heading, ScrollView, Flex, VStack, ZStack, Container, View, Text} from "native-base";
 
 const DashboardFriendsList = ({navigation}) => {
-    //const [friends, setFriends] = useState([])
     const url = 'https://primalpartybackend.azurewebsites.net/friends';
-
-    /*useEffect(() => {
-        fetchFriends();
-    }, []);
-
-    const fetchFriends = async() => {
-        await fetch(url, {
-            method: 'GET',
-        })
-        .then(response => response.json())
-            .then(data => {
-                setFriends(data.friends)
-            })
-            .catch(err => {
-               console.log(err);
-            })
-    }
-
-    function friendlist(props)
-    {
-        let Friends = [];
-
-        for (var i=0; i<props.props.length; i++) 
-        {
-            Friends.push(<friends props = { props.props[i].firstName } key={i}/>)
-        }
-    }
-
-    fetch(`${url}`, {
-    method: 'POST',
-    headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-        firstParam: 'yourValue',
-        secondParam: 'yourOtherValue'
-    })
-    });*/
 
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState([]);
+
+    const setState = ( friendsList ) =>{
+        setData(friendsList)
+    }
+
+    useEffect(() => {
+        getFriends();
+    }, []);
 
     const getFriends = async () => {
         try {
@@ -65,36 +33,8 @@ const DashboardFriendsList = ({navigation}) => {
         setLoading(false);
         }
     }
-
-    useEffect(() => {
-        getFriends();
-    }, []);
     
-
-    /*return(
-        <KeyboardAvoidingViewWrapper>
-            <PageTitle>
-                Friend
-            </PageTitle>
-        </KeyboardAvoidingViewWrapper>
-    )*/
-
-   /* return (
-        <KeyboardAvoidingViewWrapper>
-          {isLoading ? <ActivityIndicator/> : (
-            <><PageTitle>
-                    Friends
-                </PageTitle><FlatList
-                        data={data}
-                        //keyExtractor={({ id }, index) => id}
-                        renderItem={({ item }) => (
-                            <Text>{item.firstName} {item.lastName}</Text>
-                        )} /></>
-          )}
-        </KeyboardAvoidingViewWrapper>
-      );
-    }*/
-    console.log(data)
+    //console.log(data)
     return (
         <View style={{
             flex: 1,
@@ -114,7 +54,9 @@ const DashboardFriendsList = ({navigation}) => {
                         renderItem={({ item }) => (
                             <FriendCard
                             navigation = {navigation}
-                            data = {item}
+                            friend = {item}
+                            friendsList = {data}
+                            setState = {setState}
                             key = {item.friends._id}
                             />
                         )} /></>
@@ -122,25 +64,5 @@ const DashboardFriendsList = ({navigation}) => {
         </View>
       );
     }
-
-    /*return (
-        <KeyboardAvoidingViewWrapper>
-          {isLoading ? <ActivityIndicator/> : (
-            <><PageTitle>
-                    Friends
-                </PageTitle><FlatList
-                data = {data}
-                //keyExtractor={({ id }, index) => id}
-                renderItem={({ item }) => (
-                    <FriendCard
-                        navigation = {navigation}
-                        data = {item}
-                        //key = {item.friends._id}
-                        />
-                    )}
-                /></>
-    )}
-     </KeyboardAvoidingViewWrapper>
-    )
-}*/
+    
 export default DashboardFriendsList

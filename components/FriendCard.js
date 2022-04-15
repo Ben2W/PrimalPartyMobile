@@ -5,24 +5,32 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { StyledImageContainer, InnerContainer, PageLogo, PageTitle, StyledFormArea, Subtitle, Colors, StyledButton, ButtonText, MsgBox, ExtraView, ExtraText, TextLink, TextLinkContent, StyledContainer } from '../components/styles'
 import { inlineStyles } from 'react-native-svg';
 
-const FriendCard = ({ navigation, data }) => {
-    const [firstNames, setFirstNames] = useState(data.firstName)
-    const [lastNames, setLastNames] = useState(data.lastName)
-    //const [data, setData] = useState([])
+const FriendCard = ({ navigation, friend, friendsList, setState }) => {
+    const [firstNames, setFirstNames] = useState(friend.firstName)
+    const [lastNames, setLastNames] = useState(friend.lastName)
 
-    const handleFriendDelete = () => {
+    const handleFriendDelete = async () => {
 
         const url = 'https://primalpartybackend.azurewebsites.net/friends/'
 
-        console.log(data._id)
+        console.log(friend._id)
 
-        fetch(url + (data._id) ,{
+        await fetch(url + (friend._id) ,{
             method: 'DELETE',
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+            },
             credentials: 'include',
         })
         .then(response =>{
             console.log("RESPONSE: " + response.status);
         })
+
+        const updatedList = friendsList.filter(friendsList => friendsList._id != friend._id)
+        console.log("FILTER TESTTTTTTTT")
+        console.log(friendsList)
+        setState(updatedList)
+
       }
 
     return(
