@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useEffect, useState, component } from 'react';
 import { Button } from 'react-native-paper';
 import { StyleSheet, View, Text, ActivityIndicator, FlatList, SafeAreaView } from 'react-native';
-import { StyledImageContainer, InnerContainer, PageLogo, PageTitle, StyledFormArea, Subtitle, Colors, StyledButton, ButtonText, MsgBox, ExtraView, ExtraText, TextLink, TextLinkContent, StyledContainer } from '../components/styles'
+import { StyledImageContainer, InnerContainer, PageLogo, PageTitle, StyledFormArea, Subtitle, Colors, StyledAddButton, ButtonText, MsgBox, ExtraView, ExtraText, TextLink, TextLinkContent, StyledContainer } from '../components/styles'
 import KeyboardAvoidingViewWrapper from '../components/KeyboardAvoidingWrapper';
 import FriendCard from "../components/FriendCard"
 //import { SafeAreaView } from 'react-native-safe-area-context';
@@ -47,19 +47,25 @@ const DashboardFriendsList = ({navigation}) => {
         }}>
           {isLoading ? <ActivityIndicator/> : (
             <><PageTitle>
-                    Friends
-                </PageTitle><FlatList
-                        data={data}
-                        keyExtractor={({ id }, index) => id}
-                        renderItem={({ item }) => (
-                            <FriendCard
-                            navigation = {navigation}
-                            friend = {item}
-                            friendsList = {data}
-                            setState = {setState}
-                            key = {item.friends._id}
-                            />
-                        )} /></>
+                Friends 
+            </PageTitle>
+            <StyledAddButton onPress={getFriends}>
+                <ButtonText>
+                    Add Friends
+                </ButtonText>
+            </StyledAddButton>
+            <FlatList
+                data={data}
+                keyExtractor={({ id }, index) => id}
+                renderItem={({ item }) => (
+                <FriendCard
+                navigation = {navigation}
+                friend = {item}
+                friendsList = {data}
+                setState = {setState}
+                key = {item.friends._id}
+            />
+            )} /></>
           )}
         </View>
       );

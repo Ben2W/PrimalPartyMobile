@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { View, Text, Image, TextInput, TouchableOpacity, ImageBackground, KeyboardAvoidingView } from 'react-native'
 import Constants from 'expo-constants'
+//import { blue100 } from 'react-native-paper/lib/typescript/styles/colors'
 
 const StatusBarHeight = Constants.statusBarHeight
 
@@ -118,6 +119,17 @@ export const StyledDeleteButton = styled.TouchableOpacity`
     margin-vertical: 0px;
     height: 60px;
     width: 60px;
+`
+
+export const StyledAddButton = styled.TouchableOpacity`
+    padding: 15px;
+    background-color: ${darkLight};
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    margin-vertical: 0px;
+    height: 60px;
+    width: 120px;
 `
 
 export const ButtonText = styled.Text`
