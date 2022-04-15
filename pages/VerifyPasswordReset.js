@@ -13,64 +13,29 @@ import KeyboardAvoidingViewWrapper from '../components/KeyboardAvoidingWrapper'
 
 const { darkLight, primary } = Colors;
 
-const SendResetEmail = ({ navigation }) => {
+const VerifyPasswordReset = ({ navigation }) => {
     const [message, setMessage] = useState('')
     const [messageType, setMessageType] = useState()
     const [isSubmitting, setIsSubmitting] = useState(false)
     const { storedCredentials, setStoredCredentials } = useContext(CredentialsContext)
 
-    const handleVerify = (email) => {
-
-        const details = {
-            'email': email
-        };
-    
-        var formBody = [];
-        for (var property in details) {
-            var encodedKey = encodeURIComponent(property);
-            var encodedValue = encodeURIComponent(details[property]);
-            formBody.push(encodedKey + "=" + encodedValue);
-        }
-        formBody = formBody.join("&");
-        console.log(formBody)
-
-        fetch('https://primalpartybackend.azurewebsites.net' + '/forgot', {
-            method: 'PUT',
+    const handleVerify = (token) => {
+        fetch('https://primalpartybackend.azurewebsites.net/reset/' + token, {
+            method: 'POST',
             headers: {
-                "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+                "Content-Type": "application/json;charset=UTF-8"
             },
-            credentials: 'include',
-            body: formBody,
+            credentials: 'include'
         })
             .then(response => {
-                switch(response.status) {
-                case 200:
-                    handleMessage('SUCCESS', {type: 'SUCCESS'}, { replace : true});
-                    navigation.navigate('VerifyPasswordReset')
-                    return;
-                case 403:
-                    handleMessage('Cannot reset password while logged in.')
-                    return;
-                case 404:
-                    handleMessage('Email not associated with account.');
-                    return;
-                case 409:
-                    handleMessage('Please wait longer than 15 seconds to reset password.');
-                    return;
-                case 412:
-                    handleMessage('Invalid email syntax.');
-                    return;
-                case 500:
-                    handleMessage('Unexpected error.');
-                    return;
-                case 503:
-                    handleMessage('Email service unavailable');
-                    return;
-            }
+                if (!response.ok) {
+                    throw Error("Unexpected error happened while trying to verify your email. Please try again")
+                }
+                return response.json();
             })
             .then((res) => {
                 setIsSubmitting(false)
-                //persistRegister({ ...res.user })
+                persistRegister({ ...res.user })
             })
             .catch(err => {
                 setIsSubmitting(false)
@@ -78,7 +43,7 @@ const SendResetEmail = ({ navigation }) => {
             })
     }
 
-        const handleMessage = (message, type = 'FAILED') => {
+    const handleMessage = (message, type = 'FAILED') => {
         setMessage(message)
         setMessageType(type)
     }
@@ -98,35 +63,33 @@ const SendResetEmail = ({ navigation }) => {
     return (
         <KeyboardAvoidingViewWrapper>
             <StyledContainer>
-                <PageTitle>RESET PASSWORD</PageTitle>
+                <PageTitle>Verify Email</PageTitle>
                 <View style={styles.container}>
                     <Formik
                         initialValues={{
-                            email: ''
+                            token: ''
                         }}
                         onSubmit={(values) => {
                             setIsSubmitting(true)
-                            handleVerify(values.email)
-                            values.email = ''
+                            handleVerify(values.token)
+                            values.token = ''
                         }}
                     >
                         {({ handleChange, handleBlur, handleSubmit, values }) => (<StyledFormArea>
                             <MyTextInput
-                                label="EMAIL ADDRESS*"
-                                icon="mail"
-                                placeholder="johndoe@gmail.com"
+                                label="VERIFY TOKEN*"
+                                icon="key"
+                                placeholder="enter token"
                                 placeholderTextColor={darkLight}
-                                onChangeText={handleChange('email')}
-                                onBlur={handleBlur('email')}
-                                value={values.email}
-                                autoCapitalize="none"
-                                keyboardType='email-address'
+                                onChangeText={handleChange('token')}
+                                onBlur={handleBlur('token')}
+                                value={values.token}
                             />
 
                             <MsgBox type={messageType}>{message}</MsgBox>
                             {!isSubmitting && (<StyledButton onPress={handleSubmit}>
                                 <ButtonText>
-                                    SEND EMAIL
+                                    VERIFY
                                 </ButtonText>
                             </StyledButton>)
                             }
@@ -152,4 +115,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default SendResetEmail
+export default VerifyPasswordReset
