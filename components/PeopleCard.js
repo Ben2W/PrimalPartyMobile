@@ -8,14 +8,13 @@ import ReduxStore from "../redux/ReduxStore";
 const PeopleCard = (props) => {
     const dispatch = useDispatch();
 
-    // Handle Delete
-    const handleGuestAdd = async ({_id, eventID}) => {
-        console.log("Adding: " + _id + " - " + eventID);
-        const url = 'https://primalpartybackend.azurewebsites.net/events/' + eventID + '/guests/' + _id;
-        dispatch(guestADD({_id: _id, eventID: eventID}))
-        let newState = ReduxStore.getState().events.find((obj) => obj._id === eventID);
+    // Handle Add
+    const handleGuestAdd = async ({userData, eventID}) => {
+        console.log("Adding: " + userData._id + " - " + eventID);
+        const url = 'https://primalpartybackend.azurewebsites.net/events/' + eventID + '/guests/' + userData._id;
+        dispatch(guestADD({userData: userData, eventID: eventID}))
 
-        let details = [eventID, _id];
+        let details = [eventID, userData._id];
         let formBody = [];
         for (let property in details) {
             let encodedKey = encodeURIComponent(property);
@@ -34,8 +33,8 @@ const PeopleCard = (props) => {
                     credentials: 'include',
                     body: formBody
                 })
-            await res.json();
-            return newState;
+            let postData = await res.json();
+            return;
         } catch (e) {
             return e
         }
@@ -43,9 +42,11 @@ const PeopleCard = (props) => {
 
 
     const handleClick = () => {
-        handleGuestAdd({_id: props._id, eventID: props.eventID})
-            .then((res) => {
-                props.navigation.push("EventGuestNavigation", {eventData: res})
+        handleGuestAdd({userData: props.props, eventID: props.eventID})
+            .then(() => {
+                let newState = ReduxStore.getState().events.find((obj) => obj._id === props.eventID);
+                // console.log(newState);
+                props.navigation.push("EventGuestNavigation", {eventData: newState})
             })
     }
 

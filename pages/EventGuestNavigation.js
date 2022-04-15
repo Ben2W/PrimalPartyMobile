@@ -16,7 +16,10 @@ const EventGuestNavigation = ({navigation, route}) => {
     // let tempData = ReduxStore.getState().events.find((obj) => obj._id === eventID)
     const [eventData, setEventData] = useState(route.params.eventData);
 
-
+    useEffect(() => {
+        // console.log(route.params.eventData.guests)
+        setEventData(route.params.eventData);
+    }, [route.params.eventData])
 
     return (
         <View style={{

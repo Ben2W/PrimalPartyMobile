@@ -11,6 +11,7 @@ import {CredentialsContext} from "../components/CredentialsContext";
 
 const EventGuestList = (props, route) => {
     const [routePush, setRoutePush] = useState(route.params?.post)
+    const [pass, setPass] = useState(props);
 
     let delButton = {};
     if (useContext(CredentialsContext).storedCredentials._id === props.eventData.admin._id){
@@ -90,8 +91,8 @@ const EventGuestList = (props, route) => {
         }}>
             <VStack space={"2%"} flex={1}>
                 <>
-                    <EventHeading props={props}/>
-                    <GuestList props = {props} />
+                    <EventHeading props={pass}/>
+                    <GuestList props = {pass} />
                     {delButton}
                 </>
             </VStack>

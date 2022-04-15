@@ -12,25 +12,31 @@ import _ from 'lodash';
 const GuestList = (pass) =>{
     const [props, setProps] = useState(pass.props.eventData)
     const [guests, setGuests] = useState(pass.props.eventData.guests)
+    const [removing, setRemoving] = useState(false);
     const dispatch = useDispatch();
 
     const handleRemove = (guestID, eventID) => {
         console.log(guestID)
         console.log(eventID)
-        let eventArray = ReduxStore.getState().events
-
+        console.log(guests.length)
         // remove from local storage
         dispatch(guestREMOVE({guestID: guestID, eventID: eventID}));
+        setRemoving(true);
         // remove from API storage
         RemoveUser(eventID, guestID)
             .then();
-        eventArray = ReduxStore.getState().events.guests.toArray();
-        setGuests(eventArray);
     }
 
 
     useEffect(() => {
-    }, [guests])
+        if (removing === true){
+            let findEvent = ReduxStore.getState().events.findIndex((obj) => obj._id === props._id);
+            let eventArray = ReduxStore.getState().events[findEvent]
+            setGuests(eventArray);
+            console.log(guests.length)
+            setRemoving(false);
+        }
+    }, [removing])
 
 
     let flatList;
