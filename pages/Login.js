@@ -170,7 +170,7 @@ const Login = ({ navigation }) => {
                             </StyledButton>)
                             }
                             <ExtraView>
-                                <TextLink><TextLinkContent>Forgot Password?</TextLinkContent></TextLink>
+                            <TextLink onPress={() => navigation.navigate('SendResetEmail')}><TextLinkContent>Forgot Password?</TextLinkContent></TextLink>
                             </ExtraView>
 
                             <ExtraView>

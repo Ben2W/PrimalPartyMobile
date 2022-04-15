@@ -14,6 +14,7 @@ const Stack = createNativeStackNavigator()
 import Login from '../pages/Login'
 import Register from '../pages/Register'
 import VerifyEmail from '../pages/VerifyEmail'
+import SendResetEmail from '../pages/SendResetEmail'
 import DashboardNavigation from "../pages/DashboardNavigation"
 import EventGuestNavigation from "../pages/EventGuestNavigation";
 import DashboardTasksList from "../pages/DashboardTasksList";
@@ -97,6 +98,7 @@ const RootStack = () => {
                                             <Stack.Screen name='Login' component={Login} />
                                             <Stack.Screen name='Register' component={Register} />
                                             <Stack.Screen name='VerifyEmail' component={VerifyEmail} />
+                                            <Stack.Screen name='SendResetEmail' component={SendResetEmail} />
                                         </>)
                                     }
                                 </Stack.Navigator>
