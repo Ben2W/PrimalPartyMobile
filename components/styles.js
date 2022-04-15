@@ -109,10 +109,26 @@ export const StyledButton = styled.TouchableOpacity`
     margin-vertical: 5px;
     height: 60px;
 `
+export const StyledDeleteButton = styled.TouchableOpacity`
+    padding: 15px;
+    background-color: ${red};
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    margin-vertical: 0px;
+    height: 60px;
+    width: 60px;
+`
 
 export const ButtonText = styled.Text`
     color: ${primary};
     font-size: 16px;
+    font-weight: bold
+`
+
+export const DeleteButtonText = styled.Text`
+    color: ${primary};
+    font-size: 10px;
     font-weight: bold
 `
 

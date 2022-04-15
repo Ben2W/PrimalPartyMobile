@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Box, Container, Heading, ScrollView, VStack, Text, View, NativeBaseProvider} from "native-base";
 import {useState} from "react";
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { StyledImageContainer, InnerContainer, PageLogo, PageTitle, StyledFormArea, Subtitle, Colors, StyledButton, ButtonText, MsgBox, ExtraView, ExtraText, TextLink, TextLinkContent, StyledContainer } from '../components/styles'
+import { StyledImageContainer, InnerContainer, PageLogo, PageTitle, StyledFormArea, Subtitle, Colors, StyledButton, ButtonText, StyledDeleteButton, DeleteButtonText, MsgBox, ExtraView, ExtraText, TextLink, TextLinkContent, StyledContainer } from '../components/styles'
 import { inlineStyles } from 'react-native-svg';
 
 const FriendCard = ({ navigation, friend, friendsList, setState }) => {
@@ -39,11 +39,11 @@ const FriendCard = ({ navigation, friend, friendsList, setState }) => {
                 <Heading pb="5" size="md" marginLeft="5%" >
                     {firstNames} {lastNames}
                 </Heading>
-                <StyledButton onPress={handleFriendDelete}>
-                    <ButtonText>
-                        Delete friend
-                    </ButtonText>
-                </StyledButton>
+                <StyledDeleteButton onPress={handleFriendDelete} justify-content="center">
+                    <DeleteButtonText>
+                        Delete Friend
+                    </DeleteButtonText>
+                </StyledDeleteButton>
             </Box>
         </Container>
 );
