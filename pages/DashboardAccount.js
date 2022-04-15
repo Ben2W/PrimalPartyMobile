@@ -15,6 +15,8 @@ import { StyledImageContainer, InnerContainer, PageTitle, StyledFormArea, Subtit
 
 import KeyboardAvoidingViewWrapper from '../components/KeyboardAvoidingWrapper';
 import MyTextInput from '../components/MyTextInput';
+import ReduxStore from "../redux/ReduxStore";
+import {logoutRESET} from "../redux/eventsReducer";
 
 const { darkLight, primary } = Colors;
 
@@ -138,6 +140,7 @@ const DashboardAccount = () => {
                     }
                 )
                     .then((data) => {
+                        logoutRESET();
                         navigation.reset({
                             index: 0,
                             routes: [{ name: 'Login' }],

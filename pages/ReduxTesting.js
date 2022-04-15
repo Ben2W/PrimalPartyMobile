@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useState} from "react";
 import {eventDELETE, eventPOST, eventPUT, eventSET, eventsSlice} from "../redux/eventsReducer";
 import ReduxStore from "../redux/ReduxStore";
-import GetEvents from "../components/GetEvents";
+import GetEvents from "../components/API Calls/GetEvents";
 
 const ReduxTesting = () => {
 

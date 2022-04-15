@@ -13,8 +13,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { CredentialsContext } from '../components/CredentialsContext'
 import {useDispatch} from "react-redux";
-import GetEvents from "../components/GetEvents";
+import GetEvents from "../components/API Calls/GetEvents";
 import {eventSET} from "../redux/eventsReducer";
+import ReduxStore from "../redux/ReduxStore";
 
 const { darkLight, primary } = Colors;
 
@@ -26,6 +27,16 @@ const Login = ({ navigation }) => {
     const [isSubmitting, setIsSubmitting] = useState(false)
 
     const { storedCredentials, setStoredCredentials } = useContext(CredentialsContext)
+
+    const dispatch = useDispatch();
+
+    const init = () => {
+        console.log(ReduxStore.getState())
+        GetEvents.then((res) => {
+            dispatch(eventSET({res}))
+            console.log(ReduxStore.getState())
+        })
+    }
 
     const handleLogin = async (credentials) => {
         handleMessage(null)
@@ -64,6 +75,7 @@ const Login = ({ navigation }) => {
                     return res.json();
                 })
                 .then(data => {
+                    init();
                     setIsSubmitting(false)
                     persistLogin({ ...data.user })
                 })
@@ -98,17 +110,6 @@ const Login = ({ navigation }) => {
             })
     }
 
-    const dispatch = useDispatch();
-
-    const init = () => {
-        GetEvents.then((res) => {
-            dispatch(eventSET({res}))
-        })
-    }
-
-    useEffect(() => {
-        init();
-    }, [isSubmitting]);
 
 
 

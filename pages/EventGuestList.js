@@ -33,7 +33,7 @@ const EventGuestList = (props, route) => {
                 }}
                 onPress={() => handleDelete(props.eventID)
                     .then((res) => {
-                        props.navigation.push("DashboardNavigation", {params: { post: res}})
+                        props.navigation.push("DashboardNavigation", {params: { post: res, change: "bruh"}})
                     })
                 }
                 key = "Delete"
@@ -77,15 +77,6 @@ const EventGuestList = (props, route) => {
             return e
         }
     }
-
-
-    const[eventData, setEventData] = useState(props.eventData);
-
-    React.useEffect(() => {
-        if (route.params?.post) {
-            setEventData(route.params.eventData)
-        }
-    }, [route.params?.post]);
 
 
     return (
