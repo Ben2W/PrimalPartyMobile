@@ -6,7 +6,6 @@ import {FlatList} from "react-native";
 import PeopleCard from "../components/PeopleCard";
 
 const SearchFriendsPage = ({navigation, route}) => {
-    console.log(route.params)
     const [eventID, setEventID] = useState(route.params.eventID);
     const [people, setPeople] = useState()
     const [formData, setData] = useState({search: ' '} );
@@ -15,6 +14,14 @@ const SearchFriendsPage = ({navigation, route}) => {
         const temp = await SearchUsers(formData.search)
             .then((res) => {
                 let parseMap = res.map((obj) => obj)
+                
+                // filter duplicates
+                parseMap = parseMap.filter(element => {
+                    return !route.params.eventData.guests.find(el => {
+                        return element._id === el._id;
+                    })
+                })
+
                 setPeople(parseMap);
             })
     }
