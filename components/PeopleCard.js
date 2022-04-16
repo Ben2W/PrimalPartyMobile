@@ -1,4 +1,4 @@
-import {Box, Button, Text} from "native-base";
+import {Box, Button, Heading, HStack, Text} from "native-base";
 import React, {useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
 import {eventDELETE, guestADD} from "../redux/eventsReducer";
@@ -66,14 +66,21 @@ const PeopleCard = (pass) => {
             borderRadius={8}
             pb={"1%"} pt={"1%"}
         >
-            <Box flexDirection={"row"} alignSelf={'center'} pb={"1%"} pt={"1%"}>
-                <Text textAlign={"center"} width={"50%"}>
-                    {props.props.firstName} {props.props.lastName}
-                </Text>
+            <Box flexDirection={"row"} marginLeft="5%" pb={"3%"} pt={"3%"}>
+                <HStack space={"2%"} flex={1} alignItems={'center'} >
+                    <Heading
+                        textAlign={"left"} width={"50%"} pt="2%" size={'sm'} flexWrap={'wrap'}>
+                        {props.props.firstName} {props.props.lastName}
+                    </Heading>
+                    <Button
+                        w={'40%'}
+                        height={'40px'}
+                        size={'sm'}
+                        onPress={() => handleClick()}>
+                        {"Add " + props.props.username}
+                    </Button>
+                </HStack>
             </Box>
-            <Button onPress={() => handleClick()}>
-                {"Add " + props.props.username}
-            </Button>
         </Box>
     )
 }

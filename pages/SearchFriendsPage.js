@@ -1,8 +1,7 @@
-import {Box, Button, Center, Input, Text, View, VStack} from "native-base";
+import {Box, Button, Center, Input, Text, View, VStack, FlatList} from "native-base";
 import React, {useEffect, useState} from "react";
 import SearchUsers from "../components/API Calls/SearchUsers";
 import CustomCard from "../components/CustomCard";
-import {FlatList} from "react-native";
 import PeopleCard from "../components/PeopleCard";
 
 const SearchFriendsPage = ({navigation, route}) => {
@@ -52,7 +51,7 @@ const SearchFriendsPage = ({navigation, route}) => {
                     <Button onPress={() => handleClick()}>
                         Get Users
                     </Button>
-                    <Box flexGrow={1} maxW="100%" maxH={"75%"} bg="violet.400" rounded="md" shadow={3}
+                    <Box flexGrow={1} maxW="100%" maxH={"75%"} minH={'80%'} bg="violet.400" rounded="md" shadow={3}
                     >
                         <FlatList
                             data = {people}
@@ -64,7 +63,7 @@ const SearchFriendsPage = ({navigation, route}) => {
                             showsVerticalScrollIndicator={true}
                             borderColor={"black"}
                             rounded="md"
-                            bg="violet.300"
+                            // bg="violet.300"
                             maxH={"90%"} marginLeft= "5%" marginRight="5%"
                             textAlign={"center"}
                             lineHeight={10}
