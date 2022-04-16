@@ -7,8 +7,10 @@ import EventGuestNavigation from "../pages/EventGuestNavigation";
 import {CredentialsContext} from "./CredentialsContext";
 import Moment from "react-moment";
 import {Text} from "native-base";
+import ReduxStore from "../redux/ReduxStore";
+import {find} from "styled-components/test-utils";
 
-const CustomCard = ({navigation, data}) => {
+const CustomCard = ({navigation, data, route}) => {
 
     const [title, setTitle] = useState(data.name);
     const [address, setAddress] = useState(data.address);
@@ -22,12 +24,14 @@ const CustomCard = ({navigation, data}) => {
     const [curEventID, setCurEventID] = useState(data._id);
 
     const handleClick = ({navigation}) => {
-        navigation.navigate("EventGuestNavigation", {eventID: curEventID, eventData: curData, isAdmin: isAdmin});
+        let curState = ReduxStore.getState().events;
+        let findEvent = curState.findIndex((obj) => obj._id === data._id);
+        setCurData(curState[findEvent]);
+
+        navigation.navigate("EventGuestNavigation", {eventID: curEventID, eventData: curState[findEvent], isAdmin: isAdmin});
         // navigation.navigate("TestingViewMore")
         // navigation.navigate("EventGuestNavigation", {data:{curData}} )
     }
-
-
 
     let AdminButton;
     if (isAdmin){

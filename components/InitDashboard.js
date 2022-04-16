@@ -28,12 +28,13 @@ const InitDashboard = ({ navigation, route }) => {
     }, []);
 
     useEffect(() => {
+        console.log({route})
         if (route.params !== undefined){
             setEventData(route.params.newData);
             console.log("bruh")
             // console.log(route.params)
         }
-    }, [route]);
+    }, [route.params]);
 
     // End of Redux Initialization
 
@@ -93,6 +94,7 @@ const InitDashboard = ({ navigation, route }) => {
                                 navigation={navigation}
                                 data={item}
                                 key={item._id}
+                                route={route}
                             />
                         )}
                         keyExtractor={item => item._id}
