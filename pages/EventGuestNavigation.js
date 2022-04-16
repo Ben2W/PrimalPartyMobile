@@ -14,6 +14,7 @@ const EventGuestNavigation = ({navigation, route}) => {
     const [eventID, setEventID] = useState(route.params.eventID)
     const [newRoute, setNewRoute] = useState(route)
     // let tempData = ReduxStore.getState().events.find((obj) => obj._id === eventID)
+    const [isAdmin, setIsAdmin] = useState(route.params.isAdmin)
     const [eventData, setEventData] = useState(route.params.eventData);
 
     useEffect(() => {
@@ -21,6 +22,7 @@ const EventGuestNavigation = ({navigation, route}) => {
         // console.log(route.params.eventData.guests)
         setNewRoute(route);
         setEventData(route.params.eventData);
+        setIsAdmin(route.params.isAdmin)
     }, [route.params.eventData])
 
     return (
@@ -39,6 +41,7 @@ const EventGuestNavigation = ({navigation, route}) => {
                         eventData={eventData}
                         navigation={navigation}
                         route={newRoute}
+                        isAdmin={isAdmin}
                     />)}
                 options={{
                     tabBarLabel: 'EventGuestList',

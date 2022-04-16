@@ -60,7 +60,7 @@ const EventGuestList = (props) => {
 
     // Handle Add Guest
     const handleSearch = () => {
-        props.navigation.navigate("SearchFriendsPage", { eventID: pass.eventData._id, eventData: pass.eventData,})
+        props.navigation.navigate("SearchFriendsPage", { eventID: pass.eventData._id, eventData: pass.eventData, isAdmin: pass.isAdmin})
     }
 
     // Handle Delete
