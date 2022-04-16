@@ -49,8 +49,7 @@ const VerifyPasswordReset = ({ navigation }) => {
                 switch(response.status) {
                     case 200:
                         handleMessage('SUCCESS, Please Log in with your new credentials!', 'SUCCESS');
-                        //navigation.navigate('VerifyPasswordReset')
-                        return;
+                        return response.json();
                     case 404:
                         handleMessage('Token Does not exist')
                         return;
@@ -62,8 +61,9 @@ const VerifyPasswordReset = ({ navigation }) => {
                         return;
                 }
             })
-            .then((res) => {
+            .then((data) => {
                 setIsSubmitting(false)
+                persistLogin({ ...data.user })
             })
             .catch(err => {
                 setIsSubmitting(false)
@@ -76,13 +76,13 @@ const VerifyPasswordReset = ({ navigation }) => {
         setMessageType(type)
     }
 
-    const persistRegister = (credentials) => {
+    const persistLogin = (credentials) => {
         AsyncStorage.setItem('ppcredentials', JSON.stringify(credentials))
             .then(() => {
                 setStoredCredentials(credentials)
             })
             .catch(err => {
-                handleMessage('Persisting Register information failed')
+                handleMessage('Persisting Login information failed')
             })
     }
 

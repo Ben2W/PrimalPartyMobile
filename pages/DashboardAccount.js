@@ -88,8 +88,6 @@ const DashboardAccount = () => {
             .then(data => {
                 setIsSubmitting(false)
                 if(storedCredentials.username != username && username){
-                    console.log(storedCredentials.username)
-                    console.log(username)
                     logout()
                     //return
                 } else persistLogin({ ...data.updatedUser })

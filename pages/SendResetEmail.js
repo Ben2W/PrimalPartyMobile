@@ -32,7 +32,6 @@ const SendResetEmail = ({ navigation }) => {
             formBody.push(encodedKey + "=" + encodedValue);
         }
         formBody = formBody.join("&");
-        console.log(formBody)
 
         fetch('https://primalpartybackend.azurewebsites.net' + '/forgot', {
             method: 'PUT',
@@ -45,7 +44,7 @@ const SendResetEmail = ({ navigation }) => {
             .then(response => {
                 switch(response.status) {
                 case 200:
-                    handleMessage('SUCCESS', {type: 'SUCCESS'}, { replace : true});
+                    handleMessage('SUCCESS', 'SUCCESS');
                     navigation.navigate('VerifyPasswordReset')
                     return;
                 case 403:
