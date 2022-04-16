@@ -34,7 +34,6 @@ const EventGuestList = (props, route) => {
                 }}
                 onPress={() => handleDelete(props.eventID)
                     .then((res) => {
-
                         props.navigation.push("DashboardNavigation", {params: { post: res, change: "bruh"}})
                     })
                 }

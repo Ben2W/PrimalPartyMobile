@@ -31,8 +31,9 @@ const GuestList = (pass) =>{
     useEffect(() => {
         if (removing === true){
             let findEvent = ReduxStore.getState().events.findIndex((obj) => obj._id === props._id);
-            let eventArray = ReduxStore.getState().events[findEvent]
-            setGuests(eventArray);
+            let eventArray = ReduxStore.getState().events[findEvent];
+            console.log(eventArray.guests)
+            setGuests(eventArray.guests);
             console.log(guests.length)
             setRemoving(false);
         }

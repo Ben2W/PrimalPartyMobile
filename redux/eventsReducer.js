@@ -61,7 +61,7 @@ export const eventsSlice = createSlice({
             let temp = [...state];
             let findEvent = temp.findIndex((obj) => obj._id === action.payload.eventID);
             let findGuest = temp[findEvent].guests.findIndex((obj) => obj._id === action.payload.guestID);
-            console.log(temp[findEvent].guests.length)
+            // console.log(temp[findEvent].guests.length)
             // let temp2 = JSON.parse(JSON.stringify(temp[findEvent]))
             // temp2.guests.splice(action.payload.guestID, 1);
             // temp[findEvent].guests = temp2;
@@ -70,11 +70,11 @@ export const eventsSlice = createSlice({
             // findGuest == index of guest
 
             temp[findEvent].guests = temp[findEvent].guests.filter((obj) => action.payload.guestID !== obj._id);
-            console.log(temp[findEvent].guests);
-            console.log(temp[findEvent].guests.length)
-            console.log(temp[findEvent].guests);
+            // console.log(temp[findEvent].guests);
+            // console.log(temp[findEvent].guests.length)
+            // console.log(temp[findEvent].guests);
             state = temp;
-            return 
+            return;
         },
         logoutRESET: (state, action) => {
             state = undefined;
