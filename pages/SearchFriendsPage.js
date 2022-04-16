@@ -1,5 +1,5 @@
 import {Box, Button, Center, Input, Text, View, VStack} from "native-base";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import SearchUsers from "../components/API Calls/SearchUsers";
 import CustomCard from "../components/CustomCard";
 import {FlatList} from "react-native";
@@ -14,9 +14,23 @@ const SearchFriendsPage = ({navigation, route}) => {
         const temp = await SearchUsers(formData.search)
             .then((res) => {
                 let parseMap = res.map((obj) => obj)
+                
+                // filter duplicates
+                parseMap = parseMap.filter(element => {
+                    return !route.params.eventData.guests.find(el => {
+                        return element._id === el._id;
+                    })
+                })
+
                 setPeople(parseMap);
             })
     }
+
+    useEffect(() => {
+        setEventID(route.params.eventID)
+
+    }, [])
+
     return(
         <View style={{
             flex: 1,

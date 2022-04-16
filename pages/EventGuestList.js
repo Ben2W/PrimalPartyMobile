@@ -9,11 +9,17 @@ import {eventDELETE} from "../redux/eventsReducer";
 import {StackActions as navigation} from "react-navigation";
 import {CredentialsContext} from "../components/CredentialsContext";
 
-const EventGuestList = (props, route) => {
-    const [routePush, setRoutePush] = useState(route.params?.post)
+const EventGuestList = (props) => {
+    const [pass, setPass] = useState(props.route.params);
+
+    useEffect(() => {
+        console.log("!123849123748912739847812934")
+        console.log(props.route.params)
+        setPass(props.route.params);
+    }, [])
 
     let delButton = {};
-    if (useContext(CredentialsContext).storedCredentials._id === props.eventData.admin._id){
+    if (useContext(CredentialsContext).storedCredentials._id === pass.eventData.admin._id){
         delButton =
             <Box>
             <FAB
@@ -22,7 +28,7 @@ const EventGuestList = (props, route) => {
                     width: "100%",
                     backgroundColor: "#30AADD",
                 }}
-                onPress={() => handleSearch(props.eventID)}
+                onPress={() => handleSearch(pass.eventData._id)}
                 key = "Search"
             />
             <FAB
@@ -31,9 +37,9 @@ const EventGuestList = (props, route) => {
                     width: "100%",
                     backgroundColor: "#D11A2A",
                 }}
-                onPress={() => handleDelete(props.eventID)
+                onPress={() => handleDelete(pass.eventData._id)
                     .then((res) => {
-                        props.navigation.push("DashboardNavigation", {params: { post: res, change: "bruh"}})
+                        pass.navigation.push("DashboardNavigation", {params: { post: res, change: "bruh"}})
                     })
                 }
                 key = "Delete"
@@ -45,15 +51,15 @@ const EventGuestList = (props, route) => {
 
     // Handle Add Guest
     const handleSearch = () => {
-        props.navigation.push("SearchFriendsPage", { eventID: props.eventID } )
+        props.navigation.push("SearchFriendsPage", { eventID: pass.eventData._id, eventData: pass.eventData } )
     }
 
     // Handle Delete
     const handleDelete = async () => {
-        console.log("Deleting: " + props.eventID);
-        const url = 'https://primalpartybackend.azurewebsites.net/events/' + props.eventID
-        let newState = dispatch(eventDELETE({eventID: props.eventID}));
-        let details = [props.eventID];
+        console.log("Deleting: " + pass.eventData._id);
+        const url = 'https://primalpartybackend.azurewebsites.net/events/' + pass.eventData._id
+        let newState = dispatch(eventDELETE({eventID: pass.eventData._id}));
+        let details = [pass.eventData._id];
         let formBody = [];
         for (let property in details) {
             let encodedKey = encodeURIComponent(property);
@@ -90,8 +96,8 @@ const EventGuestList = (props, route) => {
         }}>
             <VStack space={"2%"} flex={1}>
                 <>
-                    <EventHeading props={props}/>
-                    <GuestList props = {props} />
+                    <EventHeading props={pass}/>
+                    <GuestList props = {pass} />
                     {delButton}
                 </>
             </VStack>

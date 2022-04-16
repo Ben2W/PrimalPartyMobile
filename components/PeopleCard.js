@@ -1,21 +1,26 @@
 import {Box, Button, Text} from "native-base";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
 import {eventDELETE, guestADD} from "../redux/eventsReducer";
 import {StackActions as navigation} from "react-navigation";
 import ReduxStore from "../redux/ReduxStore";
 
-const PeopleCard = (props) => {
+const PeopleCard = (pass) => {
+    const [props, setProps] = useState(pass);
     const dispatch = useDispatch();
 
-    // Handle Delete
-    const handleGuestAdd = async ({_id, eventID}) => {
-        console.log("Adding: " + _id + " - " + eventID);
-        const url = 'https://primalpartybackend.azurewebsites.net/events/' + eventID + '/guests/' + _id;
-        dispatch(guestADD({_id: _id, eventID: eventID}))
-        let newState = ReduxStore.getState().events.find((obj) => obj._id === eventID);
+    useEffect(() => {
+        // console.log("new Page")
+        // setProps(pass);
+    }, [])
 
-        let details = [eventID, _id];
+    // Handle Add
+    const handleGuestAdd = async ({userData, eventID}) => {
+        console.log("Adding: " + userData._id + " - " + eventID);
+        const url = 'https://primalpartybackend.azurewebsites.net/events/' + eventID + '/guests/' + userData._id;
+        dispatch(guestADD({userData: userData, eventID: eventID}))
+
+        let details = [eventID, userData._id];
         let formBody = [];
         for (let property in details) {
             let encodedKey = encodeURIComponent(property);
@@ -34,8 +39,8 @@ const PeopleCard = (props) => {
                     credentials: 'include',
                     body: formBody
                 })
-            await res.json();
-            return newState;
+            let postData = await res.json();
+            return;
         } catch (e) {
             return e
         }
@@ -43,9 +48,11 @@ const PeopleCard = (props) => {
 
 
     const handleClick = () => {
-        handleGuestAdd({_id: props._id, eventID: props.eventID})
-            .then((res) => {
-                props.navigation.push("EventGuestNavigation", {eventData: res})
+        handleGuestAdd({userData: props.props, eventID: props.eventID})
+            .then(() => {
+                let newState = ReduxStore.getState().events.find((obj) => obj._id === props.eventID);
+                // console.log(newState);
+                props.navigation.push("EventGuestNavigation", {eventData: newState})
             })
     }
 
