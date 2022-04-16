@@ -24,7 +24,8 @@ export const eventsSlice = createSlice({
         eventPUT: (state, action) => {
             let temp = [...state]
             let editEvent = temp.findIndex(obj => obj._id === action.payload._id)
-            temp[editEvent] = action.payload;
+            temp[editEvent] = action.payload.eventData;
+            state = temp;
             return temp;
         },
         eventDELETE: (state, action) => {

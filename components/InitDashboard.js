@@ -36,6 +36,11 @@ const InitDashboard = ({ navigation, route }) => {
         }
     }, [route.params]);
 
+    useEffect(() => {
+        console.log('wierjoiqwer')
+        // console.log(navigation.getState())
+    }, [navigation.getState().routes[0]]);
+
     // End of Redux Initialization
 
     // Start of CreateEventModal Logic

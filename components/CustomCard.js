@@ -9,9 +9,9 @@ import Moment from "react-moment";
 import {Text} from "native-base";
 import ReduxStore from "../redux/ReduxStore";
 import {find} from "styled-components/test-utils";
+import {useFocusEffect} from "@react-navigation/native";
 
 const CustomCard = ({navigation, data, route}) => {
-
     const [title, setTitle] = useState(data.name);
     const [address, setAddress] = useState(data.address);
     const [date, setDate] = useState(new Date(data.date));
@@ -22,6 +22,24 @@ const CustomCard = ({navigation, data, route}) => {
     const [isAdmin, setIsAdmin] = useState(() => {return adminID === userID});
 
     const [curEventID, setCurEventID] = useState(data._id);
+
+    useFocusEffect(
+        useCallback(() => {
+            const bruh = () => {
+                let curState = ReduxStore.getState().events;
+                let findEvent = curState.findIndex((obj) => obj._id === data._id);
+                setCurData(curState[findEvent]);
+
+                setTitle(curState[findEvent].name);
+                setAddress(curState[findEvent].address);
+                setDate(new Date(curState[findEvent].date));
+                setDesc(curState[findEvent].description);
+            }
+
+            bruh();
+            return () => bruh;
+        }, [])
+    );
 
     const handleClick = ({navigation}) => {
         let curState = ReduxStore.getState().events;
