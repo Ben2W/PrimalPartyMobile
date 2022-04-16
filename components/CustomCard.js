@@ -5,12 +5,14 @@ import ListItem from "react-native-paper/src/components/List/ListItem";
 import {useCallback, useContext, useEffect, useState} from "react";
 import EventGuestNavigation from "../pages/EventGuestNavigation";
 import {CredentialsContext} from "./CredentialsContext";
+import Moment from "react-moment";
+import {Text} from "native-base";
 
 const CustomCard = ({navigation, data}) => {
 
     const [title, setTitle] = useState(data.name);
     const [address, setAddress] = useState(data.address);
-    const [date, setDate] = useState(data.date);
+    const [date, setDate] = useState(new Date(data.date));
     const [desc, setDesc] = useState(data.description);
     const [curData, setCurData] = useState(data);
     const [adminID, setAdminID] = useState(data.admin._id);
@@ -63,7 +65,6 @@ const CustomCard = ({navigation, data}) => {
             </View>
     }
 
-
     return (
     <View style={{
         marginBottom : "5%",
@@ -87,7 +88,7 @@ const CustomCard = ({navigation, data}) => {
                 justifyContent: 'center',
             }}>
                 <Title>{title}</Title>
-                <Paragraph>Date: {date}</Paragraph>
+                <Paragraph>Date: {date.toLocaleDateString("en-US")}</Paragraph>
                 <Paragraph>Location: {address}</Paragraph>
                 <Paragraph>Desc: {desc}</Paragraph>
             </Card.Content>
