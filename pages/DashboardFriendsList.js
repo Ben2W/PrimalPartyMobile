@@ -14,13 +14,9 @@ const DashboardFriendsList = ({navigation}) => {
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState([]);
 
-    const setState = ( friendsList ) =>{
-        setData(friendsList)
+    const setState = ( list ) =>{
+        setData([])
     }
-
-    useEffect(() => {
-        getFriends();
-    }, []);
 
     const getFriends = async () => {
         try {
@@ -33,6 +29,14 @@ const DashboardFriendsList = ({navigation}) => {
         setLoading(false);
         }
     }
+
+    useEffect(() => {
+        getFriends();
+    }, []);
+
+    useEffect(() => {
+        getFriends();
+    }, [data]);
     
     //console.log(data)
     return (
@@ -61,7 +65,6 @@ const DashboardFriendsList = ({navigation}) => {
                 <FriendCard
                 navigation = {navigation}
                 friend = {item}
-                friendsList = {data}
                 setState = {setState}
                 key = {item.friends._id}
             />
