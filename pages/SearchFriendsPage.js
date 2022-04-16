@@ -11,8 +11,8 @@ const SearchFriendsPage = ({navigation, route}) => {
     const [formData, setData] = useState({search: ' '} );
     const [myID, setMyID] = useState(useContext(CredentialsContext).storedCredentials._id)
 
-    async function handleClick() {
-        const temp = await SearchUsers(formData.search)
+    async function handleClick(value) {
+        const temp = await SearchUsers(value)
             .then((res) => {
                 // list of user objects
                 let parseMap = res.map((obj) => obj)
@@ -55,14 +55,14 @@ const SearchFriendsPage = ({navigation, route}) => {
                         onChangeText={value => {
                             setData({ ...formData,
                                 search: value})
-                            handleClick()
+                            handleClick(value);
                         }
                         }
                     />
-                    <Button onPress={() => handleClick()}>
-                        Get Users
-                    </Button>
-                    <Box flexGrow={1} maxW="100%" maxH={"75%"} minH={'80%'} bg="violet.400" rounded="md" shadow={3}
+                    {/*<Button onPress={() => handleClick()}>*/}
+                    {/*    Get Users*/}
+                    {/*</Button>*/}
+                    <Box flexGrow={1} maxW="100%" maxH={"90%"} minH={'80%'} bg="violet.400" rounded="md" shadow={3}
                     >
                         <FlatList
                             data = {people}
