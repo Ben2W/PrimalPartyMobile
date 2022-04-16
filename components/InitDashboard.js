@@ -8,8 +8,6 @@ import { CredentialsContext } from "./CredentialsContext";
 import CustomCard from "./CustomCard";
 import { Datepicker, NativeDateService } from "@ui-kitten/components";
 import CreateNewEvent from "./API Calls/CreateNewEvent";
-import GetTasks from "../components/API Calls/GetTasks";
-import { taskSET } from "../redux/tasksReducer";
 
 const InitDashboard = ({ navigation, route }) => {
     const [eventData, setEventData] = useState([]);
@@ -23,9 +21,6 @@ const InitDashboard = ({ navigation, route }) => {
         GetEvents.then((events) => {
             dispatch(eventSET({ events }))
             setEventData(events)
-        })
-        GetTasks.then((res) => {
-            dispatch(eventSET({ res }))
         })
     }
     useEffect(() => {

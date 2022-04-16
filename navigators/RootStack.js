@@ -69,7 +69,7 @@ const RootStack = () => {
             dispatch(eventSET({ res }))
         })
         GetTasks.then((res) => {
-            dispatch(eventSET({ res }))
+            dispatch(taskSET({ res }))
         })
     }
 
