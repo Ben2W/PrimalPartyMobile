@@ -44,8 +44,11 @@ const SearchFriendsPage = ({navigation, route}) => {
                         size="md"
                         placeholder = "Search for a new guest!"
                         value = {formData.search}
-                        onChangeText={value => setData({ ...formData,
-                            search: value})
+                        onChangeText={value => {
+                            setData({ ...formData,
+                                search: value})
+                            handleClick()
+                        }
                         }
                     />
                     <Button onPress={() => handleClick()}>
