@@ -32,10 +32,16 @@ const DashboardFriendsList = ({ navigation }) => {
 
     useEffect(() => {
         getFriends();
+        return () => {
+            abortController.abort();
+        }
     }, []);
 
     useEffect(() => {
         getFriends();
+        return () => {
+            abortController.abort();
+        }
     }, [data]);
 
     //console.log(data)
