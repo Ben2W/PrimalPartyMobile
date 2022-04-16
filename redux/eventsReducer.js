@@ -65,11 +65,16 @@ export const eventsSlice = createSlice({
             // let temp2 = JSON.parse(JSON.stringify(temp[findEvent]))
             // temp2.guests.splice(action.payload.guestID, 1);
             // temp[findEvent].guests = temp2;
-            console.log("slicing")
-            temp[findEvent].guests = temp[findEvent].guests.slice(findGuest);
+            console.log("splicing")
+
+            // findGuest == index of guest
+
+            temp[findEvent].guests = temp[findEvent].guests.filter((obj) => action.payload.guestID !== obj._id);
+            console.log(temp[findEvent].guests);
             console.log(temp[findEvent].guests.length)
+            console.log(temp[findEvent].guests);
             state = temp;
-            return
+            return 
         },
         logoutRESET: (state, action) => {
             state = undefined;
