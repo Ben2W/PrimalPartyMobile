@@ -24,10 +24,12 @@ const DashboardTasksList = ({ navigation }) => {
 
     const setTaskList = () => {
         let temp = []
-        for (let task of taskData) {
-            temp.push(<CustomTaskCard navigation={navigation} key={task._id} data={task}></CustomTaskCard>)
+        if (taskData != null) {
+            for (let task of taskData) {
+                temp.push(<CustomTaskCard navigation={navigation} key={task._id} data={task}></CustomTaskCard>)
+            }
+            setTaskArray(temp)
         }
-        setTaskArray(temp)
         setLoading(false)
     }
 
@@ -49,12 +51,12 @@ const DashboardTasksList = ({ navigation }) => {
                     marginLeft: "2%",
                     marginRight: "2%",
                 }}>
-                    <Box maxH={"90%"} flexGrow={1}>
+                    <Box maxH={"90%"} flexGrow={1} alignItems={"center"}>
                         <Heading textAlign={"center"} style={{ paddingBottom: '5%' }}>
                             Your tasks
                         </Heading>
                         <ScrollView>
-                            {taskArray}
+                            {taskArray.length > 0 ? taskArray : <Text>You have no tasks</Text>}
                         </ScrollView>
                     </Box>
                 </View>

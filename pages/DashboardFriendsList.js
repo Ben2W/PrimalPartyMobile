@@ -8,36 +8,42 @@ import FriendCard from "../components/FriendCard"
 //import { SafeAreaView } from 'react-native-safe-area-context';
 //import {NativeBaseProvider, Box, Center, Heading, ScrollView, Flex, VStack, ZStack, Container, View, Text} from "native-base";
 
-const DashboardFriendsList = ({navigation}) => {
+const DashboardFriendsList = ({ navigation }) => {
     const url = 'https://primalpartybackend.azurewebsites.net/friends';
 
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState([]);
     //Function used to rerender the friends list every time a friend is added or deleted
-    const setDataState = () =>{
+    const setDataState = () => {
         setData([])
     }
 
     const getFriends = async () => {
         try {
-        const response = await fetch(`${url}`);
-        const json = await response.json();
-        setData(json.friends);
+            const response = await fetch(`${url}`);
+            const json = await response.json();
+            setData(json.friends);
         } catch (error) {
-        console.error(error);
+            console.error(error);
         } finally {
-        setLoading(false);
+            setLoading(false);
         }
     }
 
     useEffect(() => {
         getFriends();
+        return () => {
+            abortController.abort();
+        }
     }, []);
 
     useEffect(() => {
         getFriends();
+        return () => {
+            abortController.abort();
+        }
     }, [data]);
-    
+
     //console.log(data)
     return (
         <View style={{
@@ -49,29 +55,29 @@ const DashboardFriendsList = ({navigation}) => {
             flexDirection: "column",
             marginBottom: "15%"
         }}>
-          {isLoading ? <ActivityIndicator/> : (
-            <><PageTitle>
-                Friends 
-            </PageTitle>
-            <StyledAddButton onPress={() => navigation.navigate('SearchAddFriend')}>
-                <ButtonText>
-                    Add Friends
-                </ButtonText>
-            </StyledAddButton>
-            <FlatList
-                data={data}
-                keyExtractor={({ id }, index) => id}
-                renderItem={({ item }) => (
-                <FriendCard
-                navigation = {navigation}
-                friend = {item}
-                setDataState = {setDataState}
-                key = {item.friends._id}
-            />
-            )} /></>
-          )}
+            {isLoading ? <ActivityIndicator /> : (
+                <><PageTitle>
+                    Friends
+                </PageTitle>
+                    <StyledAddButton onPress={() => navigation.navigate('SearchAddFriend')}>
+                        <ButtonText>
+                            Add Friends
+                        </ButtonText>
+                    </StyledAddButton>
+                    <FlatList
+                        data={data}
+                        keyExtractor={({ id }, index) => index}
+                        renderItem={({ item }) => (
+                            <FriendCard
+                                navigation={navigation}
+                                friend={item}
+                                setDataState={setDataState}
+                                key={item.friends._id}
+                            />
+                        )} /></>
+            )}
         </View>
-      );
-    }
-    
+    );
+}
+
 export default DashboardFriendsList

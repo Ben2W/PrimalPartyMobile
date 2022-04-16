@@ -28,7 +28,7 @@ const InitDashboard = ({ navigation, route }) => {
     }, []);
 
     useEffect(() => {
-        if (route.params !== undefined){
+        if (route.params !== undefined) {
             setEventData(route.params.newData);
             console.log("bruh")
             // console.log(route.params)

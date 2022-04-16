@@ -1,4 +1,4 @@
-import React, {useState, useContext, useEffect} from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { ActivityIndicator } from 'react-native'
 import { StatusBar } from 'expo-status-bar';
 
@@ -12,10 +12,13 @@ import MyTextInput from '../components/MyTextInput';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { CredentialsContext } from '../components/CredentialsContext'
-import {useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import GetEvents from "../components/API Calls/GetEvents";
-import {eventSET} from "../redux/eventsReducer";
+import { eventSET } from "../redux/eventsReducer";
 import ReduxStore from "../redux/ReduxStore";
+
+import GetTasks from "../components/API Calls/GetTasks";
+import { taskSET } from "../redux/tasksReducer";
 
 const { darkLight, primary } = Colors;
 
@@ -33,7 +36,10 @@ const Login = ({ navigation }) => {
     const init = () => {
         console.log(ReduxStore.getState())
         GetEvents.then((res) => {
-            dispatch(eventSET({res}))
+            dispatch(eventSET({ res }))
+        })
+        GetTasks.then((res) => {
+            dispatch(taskSET({ res }))
             console.log(ReduxStore.getState())
         })
     }
@@ -171,7 +177,7 @@ const Login = ({ navigation }) => {
                             </StyledButton>)
                             }
                             <ExtraView>
-                            <TextLink onPress={() => navigation.navigate('SendResetEmail')}><TextLinkContent>Forgot Password?</TextLinkContent></TextLink>
+                                <TextLink onPress={() => navigation.navigate('SendResetEmail')}><TextLinkContent>Forgot Password?</TextLinkContent></TextLink>
                             </ExtraView>
 
                             <ExtraView>

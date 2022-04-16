@@ -1,32 +1,31 @@
-import {Box, Button, Text} from "native-base";
+import { Box, Button, Text } from "native-base";
 import React from "react";
-import {useDispatch} from "react-redux";
-import {eventDELETE, guestADD} from "../redux/eventsReducer";
-import {StackActions as navigation} from "react-navigation";
+import { useDispatch } from "react-redux";
+import { eventDELETE, guestADD } from "../redux/eventsReducer";
+import { StackActions as navigation } from "react-navigation";
 import ReduxStore from "../redux/ReduxStore";
-import {useState} from "react";
+import { useState } from "react";
 
 const AddFriendCard = ({ navigation, friend, setDataState }) => {
 
     const [firstNames, setFirstNames] = useState(friend.firstName)
     const [lastNames, setLastNames] = useState(friend.lastName)
-    
-const handleAddFriend = async () => {
-    const url = 'https://primalpartybackend.azurewebsites.net/friends/'
 
-    await fetch(url + (friend._id) ,{
-        method: 'POST',
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
-        },
-        credentials: 'include',
-    })
-    .then(response =>{
-        console.log("RESPONSE: " + response.status);
-    })
+    const handleAddFriend = async () => {
+        const url = 'https://primalpartybackend.azurewebsites.net/friends/'
 
-    setDataState()
-}
+        await fetch(url + (friend._id), {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+            },
+            credentials: 'include',
+        })
+            .then(response => {
+                console.log("RESPONSE: " + response.status);
+            })
+        // setDataState()
+    }
 
     return (
         <Box
