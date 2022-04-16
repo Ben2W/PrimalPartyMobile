@@ -45,11 +45,15 @@ const GuestList = (pass) =>{
         setGuests(pass.route.params.eventData.guests);
     }, [pass.route.params])
 
+
+    const img = require('./dino_icon2.png');
+
     let flatList;
     if (guests.length === 0){
         flatList =
             <Center>
-                <Image source={{uri: "https://i.kym-cdn.com/entries/icons/mobile/000/039/393/cover2.jpg"}} alt = "no bitches?" size = '2xl'/>
+                <Image source={img} alt = "PrimalParty" size = '2xl'/>
+                <Heading>{'\n'}Let's get this PrimalParty started!</Heading>
             </Center>
 
     }
