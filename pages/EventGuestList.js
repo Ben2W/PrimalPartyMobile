@@ -46,7 +46,7 @@ const EventGuestList = (props) => {
                 }}
                 onPress={() => handleDelete(pass.eventData._id)
                     .then((res) => {
-                        props.navigation.navigate("DashboardNavigation", {params: { post: res, change: "bruh"}})
+                        props.navigation.navigate("DashboardNavigation", {newData: ReduxStore.getState().events, change: "lol"})
                     })
                 }
                 key = "Delete"

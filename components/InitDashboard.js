@@ -14,7 +14,7 @@ const InitDashboard = ({ navigation, route }) => {
     const [eventData, setEventData] = useState([]);
     const [username, setUsername] = useState(useContext(CredentialsContext).storedCredentials.username)
     const [showModal, setShowModal] = useState(false);
-    const [routePush, setRoutePush] = useState(route.params?.post)
+    const [routePush, setRoutePush] = useState(route.params)
 
     // Redux Initialization
     const dispatch = useDispatch();
@@ -28,13 +28,13 @@ const InitDashboard = ({ navigation, route }) => {
         init();
     }, []);
 
-    useLayoutEffect(() => {
-        if (route.params?.change === "bruh") {
+    useEffect(() => {
+        if (route.params !== undefined){
+            setEventData(route.params.newData);
             console.log("bruh")
-            route.params.change = "lol";
-            setEventData(route.params.post)
+            // console.log(route.params)
         }
-    }, [routePush]);
+    }, [route]);
 
     // End of Redux Initialization
 
