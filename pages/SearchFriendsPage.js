@@ -1,11 +1,12 @@
 import {Box, Button, Center, Input, Text, View, VStack} from "native-base";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import SearchUsers from "../components/API Calls/SearchUsers";
 import CustomCard from "../components/CustomCard";
 import {FlatList} from "react-native";
 import PeopleCard from "../components/PeopleCard";
 
 const SearchFriendsPage = ({navigation, route}) => {
+    console.log(route.params)
     const [eventID, setEventID] = useState(route.params.eventID);
     const [people, setPeople] = useState()
     const [formData, setData] = useState({search: ' '} );
@@ -17,6 +18,12 @@ const SearchFriendsPage = ({navigation, route}) => {
                 setPeople(parseMap);
             })
     }
+
+    useEffect(() => {
+        setEventID(route.params.eventID)
+
+    }, [])
+
     return(
         <View style={{
             flex: 1,

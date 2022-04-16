@@ -20,7 +20,7 @@ const EventGuestNavigation = ({navigation, route}) => {
         // console.log(route.params.eventData.guests)
         setEventData(route.params.eventData);
     }, [route.params.eventData])
-
+    console.log(route);
     return (
         <View style={{
             flex: 1,

@@ -1,12 +1,18 @@
 import {Box, Button, Text} from "native-base";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
 import {eventDELETE, guestADD} from "../redux/eventsReducer";
 import {StackActions as navigation} from "react-navigation";
 import ReduxStore from "../redux/ReduxStore";
 
-const PeopleCard = (props) => {
+const PeopleCard = (pass) => {
+    const [props, setProps] = useState(pass);
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        // console.log("new Page")
+        // setProps(pass);
+    }, [])
 
     // Handle Add
     const handleGuestAdd = async ({userData, eventID}) => {

@@ -35,6 +35,7 @@ const GuestList = (pass) =>{
             console.log(eventArray.guests)
             setGuests(eventArray.guests);
             console.log(guests.length)
+            setProps(eventArray);
             setRemoving(false);
         }
     }, [removing])
