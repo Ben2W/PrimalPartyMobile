@@ -1,20 +1,19 @@
-import { Box, Button, Center, FormControl, Heading, Input, Modal, Spinner, Text, View } from "native-base"
+import { Box, Button, Center, FormControl, Heading, Input, Modal, Spinner, Text, View, FlatList } from "native-base"
 import ReduxStore from "../redux/ReduxStore";
 import { useDispatch } from "react-redux";
 import GetEvents from "./API Calls/GetEvents";
 import { eventPOST, eventSET } from "../redux/eventsReducer";
 import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
 import { CredentialsContext } from "./CredentialsContext";
-import { FlatList } from "react-native";
 import CustomCard from "./CustomCard";
 import { Datepicker, NativeDateService } from "@ui-kitten/components";
 import CreateNewEvent from "./API Calls/CreateNewEvent";
 
 const InitDashboard = ({ navigation, route }) => {
     const [eventData, setEventData] = useState([]);
-    const [username, setUsername] = useState(useContext(CredentialsContext).storedCredentials.username)
+    const [username, setUsername] = useState(useContext(CredentialsContext).storedCredentials.firstName)
     const [showModal, setShowModal] = useState(false);
-    const [routePush, setRoutePush] = useState(route.params?.post)
+    const [routePush, setRoutePush] = useState(route.params)
 
     // Redux Initialization
     const dispatch = useDispatch();
@@ -28,13 +27,13 @@ const InitDashboard = ({ navigation, route }) => {
         init();
     }, []);
 
-    useLayoutEffect(() => {
-        if (route.params?.change === "bruh") {
+    useEffect(() => {
+        if (route.params !== undefined){
+            setEventData(route.params.newData);
             console.log("bruh")
-            route.params.change = "lol";
-            setEventData(route.params.post)
+            // console.log(route.params)
         }
-    }, [routePush]);
+    }, [route]);
 
     // End of Redux Initialization
 
@@ -83,8 +82,9 @@ const InitDashboard = ({ navigation, route }) => {
         }}>
             <>
                 <Box maxH={"80%"} flexGrow={1} borderWidth={"2"} borderColor={"indigo.100"} >
-                    <Heading textAlign={"center"}>
-                        Upcoming Events
+                    <Heading textAlign={"center"} pb={'2%'} pt={'2%'}>
+                        {username}'s
+                        Upcoming Events!
                     </Heading>
                     <FlatList
                         data={eventData}

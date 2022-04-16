@@ -1,9 +1,10 @@
-import {Box, Button, Text} from "native-base";
-import React, {useEffect, useState} from "react";
+import {Box, Button, Heading, HStack, Text} from "native-base";
+import React, {useContext, useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
 import {eventDELETE, guestADD} from "../redux/eventsReducer";
 import {StackActions as navigation} from "react-navigation";
 import ReduxStore from "../redux/ReduxStore";
+import {CredentialsContext} from "./CredentialsContext";
 
 const PeopleCard = (pass) => {
     const [props, setProps] = useState(pass);
@@ -13,6 +14,8 @@ const PeopleCard = (pass) => {
         // console.log("new Page")
         // setProps(pass);
     }, [])
+
+
 
     // Handle Add
     const handleGuestAdd = async ({userData, eventID}) => {
@@ -52,7 +55,9 @@ const PeopleCard = (pass) => {
             .then(() => {
                 let newState = ReduxStore.getState().events.find((obj) => obj._id === props.eventID);
                 // console.log(newState);
-                props.navigation.push("EventGuestNavigation", {eventData: newState})
+                // props.route.params.newData(newState)
+                props.navigation.navigate("EventGuestNavigation", {eventData: newState})
+                // props.navigation.navigate("EventGuestNavigation");
             })
     }
 
@@ -64,14 +69,21 @@ const PeopleCard = (pass) => {
             borderRadius={8}
             pb={"1%"} pt={"1%"}
         >
-            <Box flexDirection={"row"} alignSelf={'center'} pb={"1%"} pt={"1%"}>
-                <Text textAlign={"center"} width={"50%"}>
-                    {props.props.firstName} {props.props.lastName}
-                </Text>
+            <Box flexDirection={"row"} marginLeft="5%" pb={"3%"} pt={"3%"}>
+                <HStack space={"2%"} flex={1} alignItems={'center'} >
+                    <Heading
+                        textAlign={"left"} width={"50%"} pt="2%" size={'sm'} flexWrap={'wrap'}>
+                        {props.props.firstName} {props.props.lastName}
+                    </Heading>
+                    <Button
+                        w={'40%'}
+                        height={'40px'}
+                        size={'sm'}
+                        onPress={() => handleClick()}>
+                        {"Add " + props.props.username}
+                    </Button>
+                </HStack>
             </Box>
-            <Button onPress={() => handleClick()}>
-                {"Add " + props.props.username}
-            </Button>
         </Box>
     )
 }

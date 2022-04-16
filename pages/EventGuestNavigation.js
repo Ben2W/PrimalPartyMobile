@@ -12,15 +12,17 @@ const Tab = createMaterialBottomTabNavigator();
 const EventGuestNavigation = ({navigation, route}) => {
     const dispatch = useDispatch();
     const [eventID, setEventID] = useState(route.params.eventID)
-
+    const [newRoute, setNewRoute] = useState(route)
     // let tempData = ReduxStore.getState().events.find((obj) => obj._id === eventID)
     const [eventData, setEventData] = useState(route.params.eventData);
 
     useEffect(() => {
+        // console.log('999')
         // console.log(route.params.eventData.guests)
+        setNewRoute(route);
         setEventData(route.params.eventData);
     }, [route.params.eventData])
-    console.log(route);
+
     return (
         <View style={{
             flex: 1,
@@ -36,7 +38,7 @@ const EventGuestNavigation = ({navigation, route}) => {
                         eventID={eventID}
                         eventData={eventData}
                         navigation={navigation}
-                        route={route}
+                        route={newRoute}
                     />)}
                 options={{
                     tabBarLabel: 'EventGuestList',
