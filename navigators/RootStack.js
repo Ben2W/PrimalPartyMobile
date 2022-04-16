@@ -112,5 +112,4 @@ const RootStack = () => {
         </CredentialsContext.Consumer>
     )
 }
-
 export default RootStack

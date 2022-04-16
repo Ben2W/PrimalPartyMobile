@@ -1,15 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit'
-import {eventsSlice} from "./eventsReducer";
-import GetEvents from "../components/API Calls/GetEvents";
+import { eventsSlice } from "./eventsReducer";
+import { tasksSlice } from "./tasksReducer"
 
 
 const ReduxStore = configureStore({
     reducer: {
         events: eventsSlice.reducer,
+        tasks: tasksSlice.reducer
         // friends: friendsReducer,
-        // tasks: tasksReducer,
     },
-    preloadedState: {events: null}
-}, )
+    preloadedState: { events: null, tasks: null }
+})
 
 export default ReduxStore

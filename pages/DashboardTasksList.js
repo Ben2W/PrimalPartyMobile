@@ -1,58 +1,35 @@
 import React, { useState, useEffect, useLayoutEffect, useContext } from 'react'
-import { List, Text, View, Spinner, Center, Box, Heading } from "native-base";
+import { List, Button, Text, View, Spinner, Center, Box, Heading } from "native-base";
 import { CredentialsContext } from "../components/CredentialsContext";
 import { ScrollView } from "react-native";
 import CustomTaskCard from '../components/CustomTaskCard'
+import ReduxStore from "../redux/ReduxStore";
+import { useDispatch } from "react-redux";
+import GetTasks from "../components/API Calls/GetTasks";
+import { taskPOST, taskSET } from "../redux/tasksReducer";
 
 
 const DashboardTasksList = ({ navigation }) => {
 
-    const [tasks, setTasks] = useState([])
+    const [taskData, setTaskData] = useState([])
     const [taskArray, setTaskArray] = useState([])
     const [loading, setLoading] = useState(true)
-    const [firstName, setFirstName] = useState(useContext(CredentialsContext).storedCredentials.firstName)
+    const [username, setUsername] = useState(useContext(CredentialsContext).storedCredentials.username)
 
-    const fetchTasks = async () => {
-        const url = 'https://primalpartybackend.azurewebsites.net/tasks'
 
-        try {
-            const res = await fetch(url,
-                {
-                    method: 'GET',
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
-                    },
-                    credentials: 'include'
-                })
-            const tasks = await res.json()
-            setTasks(tasks.tasks)
-            return tasks.tasks
-        } catch (e) {
-            return e
+    useEffect(async () => {
+        setTaskData(ReduxStore.getState().tasks)
+        setTaskList()
+    }, [taskData]);
+
+    const setTaskList = () => {
+        let temp = []
+        for (let task of taskData) {
+            temp.push(<CustomTaskCard navigation={navigation} key={task._id} data={task}></CustomTaskCard>)
         }
+        setTaskArray(temp)
+        setLoading(false)
     }
-
-    const setTaskList = async (currTasks) => {
-        let tempTasks = []
-        for (let task of currTasks) {
-            tempTasks.push(<CustomTaskCard navigation={navigation} key={task.id} data={task}></CustomTaskCard>);
-        }
-        setTaskArray(tempTasks);
-    }
-
-    useEffect(() => {
-        fetchTasks()
-            .then((currTasks) => {
-                setTaskList(currTasks)
-                    .then(() => {
-                        setLoading(false);
-                    }
-                    )
-            }).catch(e => {
-                return e
-            })
-
-    }, [])
 
     return (
         loading ?
@@ -60,7 +37,7 @@ const DashboardTasksList = ({ navigation }) => {
                 < Box >
                     <Spinner size="lg" />
                     <Heading color="#397367" fontSize="md">
-                        Welcome to {firstName}'s tasks!
+                        Welcome to {username}'s tasks!
                     </Heading>
                 </Box >
             </Center >

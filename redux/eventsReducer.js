@@ -48,19 +48,33 @@ export const eventsSlice = createSlice({
                 return temp[findEvent].guests;
         },
         guestADD: (state, action) => {
+            // console.log(action)
             let temp = [...state];
             let findEvent = temp.findIndex(obj => obj._id === action.payload.eventID);
-            temp[findEvent].guests.concat(action.payload._id);
-            return temp;
+            temp[findEvent].guests.push(action.payload.userData);
+            // I need to create a guests Object to add to this
+            state = temp;
+            // console.log(temp[findEvent].guests);
+            return
         },
         guestREMOVE: (state, action) => {
             let temp = [...state];
             let findEvent = temp.findIndex((obj) => obj._id === action.payload.eventID);
-            // let findGuest = temp[findEvent].guests.findIndex((obj) => obj._id === action.payload.guestID);
-            let temp2 = JSON.parse(JSON.stringify(temp[findEvent]))
-            temp2.guests.splice(action.payload.guestID, 1);
-            // console.log(temp2)
-            return temp2;
+            let findGuest = temp[findEvent].guests.findIndex((obj) => obj._id === action.payload.guestID);
+            // console.log(temp[findEvent].guests.length)
+            // let temp2 = JSON.parse(JSON.stringify(temp[findEvent]))
+            // temp2.guests.splice(action.payload.guestID, 1);
+            // temp[findEvent].guests = temp2;
+            console.log("splicing")
+
+            // findGuest == index of guest
+
+            temp[findEvent].guests = temp[findEvent].guests.filter((obj) => action.payload.guestID !== obj._id);
+            // console.log(temp[findEvent].guests);
+            // console.log(temp[findEvent].guests.length)
+            // console.log(temp[findEvent].guests);
+            state = temp;
+            return;
         },
         logoutRESET: (state, action) => {
             state = undefined;

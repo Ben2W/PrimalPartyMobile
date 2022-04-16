@@ -1,21 +1,29 @@
-import {Box, Button, Text} from "native-base";
-import React from "react";
+import {Box, Button, Heading, HStack, Text} from "native-base";
+import React, {useContext, useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
 import {eventDELETE, guestADD} from "../redux/eventsReducer";
 import {StackActions as navigation} from "react-navigation";
 import ReduxStore from "../redux/ReduxStore";
+import {CredentialsContext} from "./CredentialsContext";
 
-const PeopleCard = (props) => {
+const PeopleCard = (pass) => {
+    const [props, setProps] = useState(pass);
     const dispatch = useDispatch();
 
-    // Handle Delete
-    const handleGuestAdd = async ({_id, eventID}) => {
-        console.log("Adding: " + _id + " - " + eventID);
-        const url = 'https://primalpartybackend.azurewebsites.net/events/' + eventID + '/guests/' + _id;
-        dispatch(guestADD({_id: _id, eventID: eventID}))
-        let newState = ReduxStore.getState().events.find((obj) => obj._id === eventID);
+    useEffect(() => {
+        // console.log("new Page")
+        // setProps(pass);
+    }, [])
 
-        let details = [eventID, _id];
+
+
+    // Handle Add
+    const handleGuestAdd = async ({userData, eventID}) => {
+        console.log("Adding: " + userData._id + " - " + eventID);
+        const url = 'https://primalpartybackend.azurewebsites.net/events/' + eventID + '/guests/' + userData._id;
+        dispatch(guestADD({userData: userData, eventID: eventID}))
+
+        let details = [eventID, userData._id];
         let formBody = [];
         for (let property in details) {
             let encodedKey = encodeURIComponent(property);
@@ -34,8 +42,8 @@ const PeopleCard = (props) => {
                     credentials: 'include',
                     body: formBody
                 })
-            await res.json();
-            return newState;
+            let postData = await res.json();
+            return;
         } catch (e) {
             return e
         }
@@ -43,9 +51,13 @@ const PeopleCard = (props) => {
 
 
     const handleClick = () => {
-        handleGuestAdd({_id: props._id, eventID: props.eventID})
-            .then((res) => {
-                props.navigation.push("EventGuestNavigation", {eventData: res})
+        handleGuestAdd({userData: props.props, eventID: props.eventID})
+            .then(() => {
+                let newState = ReduxStore.getState().events.find((obj) => obj._id === props.eventID);
+                // console.log(newState);
+                // props.route.params.newData(newState)
+                props.navigation.navigate("EventGuestNavigation", {eventData: newState})
+                // props.navigation.navigate("EventGuestNavigation");
             })
     }
 
@@ -57,14 +69,21 @@ const PeopleCard = (props) => {
             borderRadius={8}
             pb={"1%"} pt={"1%"}
         >
-            <Box flexDirection={"row"} alignSelf={'center'} pb={"1%"} pt={"1%"}>
-                <Text textAlign={"center"} width={"50%"}>
-                    {props.props.firstName} {props.props.lastName}
-                </Text>
+            <Box flexDirection={"row"} marginLeft="5%" pb={"3%"} pt={"3%"}>
+                <HStack space={"2%"} flex={1} alignItems={'center'} >
+                    <Heading
+                        textAlign={"left"} width={"50%"} pt="2%" size={'sm'} flexWrap={'wrap'}>
+                        {props.props.firstName} {props.props.lastName}
+                    </Heading>
+                    <Button
+                        w={'40%'}
+                        height={'40px'}
+                        size={'sm'}
+                        onPress={() => handleClick()}>
+                        {"Add " + props.props.username}
+                    </Button>
+                </HStack>
             </Box>
-            <Button onPress={() => handleClick()}>
-                {"Add " + props.props.username}
-            </Button>
         </Box>
     )
 }

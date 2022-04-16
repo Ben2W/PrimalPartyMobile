@@ -15,7 +15,7 @@ const EventHeading = (pass) => {
                         {props.name}
                     </Heading>
                     <Text size = "md" marginLeft="2%" fontWeight="medium">
-                        Date: {props.date} {"\n"}
+                        Date: {new Date(props.date).toLocaleDateString("en-US")} {"\n"}
                         Location: {props.address} {"\n"}
                         Guests: {props.guests.length} {"\n"}
                         Desc: {props.description}

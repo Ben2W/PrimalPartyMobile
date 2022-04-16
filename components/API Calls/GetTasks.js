@@ -1,19 +1,20 @@
-const RemoveUser = async(curEventID, curUserID) =>{
-    const url = 'https://primalpartybackend.azurewebsites.net/events/' + curEventID + "/guests/" + curUserID;
+const GetTasks = async () => {
+    const url = 'https://primalpartybackend.azurewebsites.net/tasks'
+
     try {
         const res = await fetch(url,
             {
-                method: 'DELETE',
+                method: 'GET',
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
                 },
                 credentials: 'include'
             })
-        let newRes = await res.json();
-        return newRes;
+        const tasks = await res.json()
+        return tasks.tasks
     } catch (e) {
         return e
     }
 }
 
-export default RemoveUser
+export default GetTasks()
