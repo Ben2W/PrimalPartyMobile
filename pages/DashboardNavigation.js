@@ -18,7 +18,7 @@ import InitDashboard from "../components/InitDashboard";
 const Tab = createMaterialBottomTabNavigator();
 
 
-const DashboardNavigation = ({ navigation, route}) => {
+const DashboardNavigation = ({ navigation, route }) => {
     const { storedCredentials, setStoredCredentials } = useContext(CredentialsContext)
 
     return (
@@ -37,7 +37,7 @@ const DashboardNavigation = ({ navigation, route}) => {
                             route={route}
                         />)}
                     options={{
-                        tabBarLabel: 'InitDashboard',
+                        tabBarLabel: 'Dashboard',
                         tabBarColor: "#1F44EA",
                         tabBarIcon: ({ color }) => (
                             <MaterialCommunityIcons name="home" color={color} size={26} />
@@ -51,7 +51,7 @@ const DashboardNavigation = ({ navigation, route}) => {
                             navigation={navigation}
                         />)}
                     options={{
-                        tabBarLabel: 'DashboardAccount',
+                        tabBarLabel: 'Account',
                         tabBarColor: "#397367",
                         tabBarIcon: ({ color }) => (
                             <MaterialCommunityIcons name="account" color={color} size={26} />
@@ -65,7 +65,7 @@ const DashboardNavigation = ({ navigation, route}) => {
                             navigation={navigation}
                         />)}
                     options={{
-                        tabBarLabel: 'DashboardFriendsList',
+                        tabBarLabel: 'Friends',
                         tabBarColor: "#397367",
                         tabBarIcon: ({ color }) => (
                             <MaterialCommunityIcons name="account-group" color={color} size={26} />
@@ -79,7 +79,7 @@ const DashboardNavigation = ({ navigation, route}) => {
                             navigation={navigation}
                         />)}
                     options={{
-                        tabBarLabel: 'DashboardTasksList',
+                        tabBarLabel: 'Tasks',
                         tabBarColor: "#397367",
                         tabBarIcon: ({ color }) => (
                             <MaterialCommunityIcons name="format-list-checks" color={color} size={26} />
@@ -91,7 +91,7 @@ const DashboardNavigation = ({ navigation, route}) => {
                     children={() => (
                         <ReduxTesting
                         />)}
-                    />
+                />
             </Tab.Navigator>
         </View>
     )
