@@ -17,6 +17,7 @@ import VerifyEmail from '../pages/VerifyEmail'
 import DashboardNavigation from "../pages/DashboardNavigation"
 import EventGuestNavigation from "../pages/EventGuestNavigation";
 import DashboardTasksList from "../pages/DashboardTasksList";
+import SearchAddFriend from "../pages/SearchAddFriend"
 import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
 import * as eva from '@eva-design/eva';
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
@@ -92,6 +93,7 @@ const RootStack = () => {
                                             <Stack.Screen name="ReduxTesting" component={ReduxTesting} />
                                             <Stack.Screen name="CustomCard" component={CustomCard} />
                                             <Stack.Screen name="SearchFriendsPage" component={SearchFriendsPage} />
+                                            <Stack.Screen name="SearchAddFriend" component={SearchAddFriend} />
                                             </>
                                         : (<>
                                             <Stack.Screen name='Login' component={Login} />

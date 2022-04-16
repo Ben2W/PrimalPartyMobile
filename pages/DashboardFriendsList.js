@@ -49,7 +49,7 @@ const DashboardFriendsList = ({navigation}) => {
             <><PageTitle>
                 Friends 
             </PageTitle>
-            <StyledAddButton onPress={getFriends}>
+            <StyledAddButton onPress={() => navigation.navigate('SearchAddFriend')}>
                 <ButtonText>
                     Add Friends
                 </ButtonText>
