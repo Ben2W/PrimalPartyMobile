@@ -1,17 +1,20 @@
 import {Box, Button, Center, Input, Text, View, VStack, FlatList} from "native-base";
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import SearchUsers from "../components/API Calls/SearchUsers";
 import CustomCard from "../components/CustomCard";
 import PeopleCard from "../components/PeopleCard";
+import {CredentialsContext} from "../components/CredentialsContext";
 
 const SearchFriendsPage = ({navigation, route}) => {
     const [eventID, setEventID] = useState(route.params.eventID);
     const [people, setPeople] = useState()
     const [formData, setData] = useState({search: ' '} );
+    const [myID, setMyID] = useState(useContext(CredentialsContext).storedCredentials._id)
 
     async function handleClick() {
         const temp = await SearchUsers(formData.search)
             .then((res) => {
+                // list of user objects
                 let parseMap = res.map((obj) => obj)
                 
                 // filter duplicates
@@ -19,6 +22,11 @@ const SearchFriendsPage = ({navigation, route}) => {
                     return !route.params.eventData.guests.find(el => {
                         return element._id === el._id;
                     })
+                })
+
+                // filter friends
+                parseMap = parseMap.filter(element => {
+                    return element.friends.includes(myID);
                 })
 
                 setPeople(parseMap);
