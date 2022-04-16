@@ -13,8 +13,8 @@ const DashboardFriendsList = ({navigation}) => {
 
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState([]);
-
-    const setState = ( list ) =>{
+    //Function used to rerender the friends list every time a friend is added or deleted
+    const setDataState = () =>{
         setData([])
     }
 
@@ -65,7 +65,7 @@ const DashboardFriendsList = ({navigation}) => {
                 <FriendCard
                 navigation = {navigation}
                 friend = {item}
-                setState = {setState}
+                setDataState = {setDataState}
                 key = {item.friends._id}
             />
             )} /></>

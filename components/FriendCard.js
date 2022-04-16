@@ -5,7 +5,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { StyledImageContainer, InnerContainer, PageLogo, PageTitle, StyledFormArea, Subtitle, Colors, StyledButton, ButtonText, StyledDeleteButton, DeleteButtonText, MsgBox, ExtraView, ExtraText, TextLink, TextLinkContent, StyledContainer } from '../components/styles'
 import { inlineStyles } from 'react-native-svg';
 
-const FriendCard = ({ navigation, friend, setState }) => {
+const FriendCard = ({ navigation, friend, setDataState }) => {
     const [firstNames, setFirstNames] = useState(friend.firstName)
     const [lastNames, setLastNames] = useState(friend.lastName)
 
@@ -26,7 +26,7 @@ const FriendCard = ({ navigation, friend, setState }) => {
             console.log("RESPONSE: " + response.status);
         })
 
-        setState([])
+        setDataState()
       }
 
     return(
