@@ -56,7 +56,7 @@ const SearchFriendsPage = ({navigation, route}) => {
                         <FlatList
                             data = {people}
                             renderItem={({ item }) => (
-                                <PeopleCard props ={item} _id={item._id} key = {item._id} eventID = {eventID} navigation = {navigation} route = {route}/>
+                                <PeopleCard props ={item} _id={item._id} key = {item._id} eventID = {eventID} navigation = {navigation} route = {route} isAdmin = {props.isAdmin}/>
                             )}
                             keyExtractor={item => item._id}
 

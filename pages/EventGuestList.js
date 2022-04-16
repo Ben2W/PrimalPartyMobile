@@ -60,7 +60,7 @@ const EventGuestList = (props) => {
 
     // Handle Add Guest
     const handleSearch = () => {
-        props.navigation.navigate("SearchFriendsPage", { eventID: pass.eventData._id, eventData: pass.eventData })
+        props.navigation.navigate("SearchFriendsPage", { eventID: pass.eventData._id, eventData: pass.eventData,})
     }
 
     // Handle Delete
@@ -106,7 +106,7 @@ const EventGuestList = (props) => {
             <VStack space={"2%"} flex={1}>
                 <>
                     <EventHeading props={pass}/>
-                    <GuestList props = {pass} route = {newRoute} />
+                    <GuestList props = {pass} route = {newRoute} isAdmin={(useContext(CredentialsContext).storedCredentials._id === pass.eventData.admin._id)} />
                     {delButton}
                 </>
             </VStack>

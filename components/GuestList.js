@@ -8,6 +8,7 @@ import ReduxStore from "../redux/ReduxStore";
 import RemoveUser from "./API Calls/RemoveUser";
 
 const GuestList = (pass) =>{
+    console.log(pass.isAdmin);
     const [props, setProps] = useState(pass.props.eventData)
     const [guests, setGuests] = useState(pass.props.eventData.guests)
     const [removing, setRemoving] = useState(false);
@@ -46,26 +47,47 @@ const GuestList = (pass) =>{
 
     const img = require('./dino_icon2.png');
 
-    let flatList;
-    if (guests.length === 0){
-        flatList =
-            <Center>
-                <Image source={img} alt = "PrimalParty" size = '2xl'/>
-                <Heading>{'\n'}Let's get this PrimalParty started!</Heading>
-            </Center>
 
+    let insideStuff = {};
+    if (!pass.isAdmin){
+        insideStuff =
+            <>
+                <FlatList
+                    data = {guests}
+                    renderItem={({ item }) => (
+                        <Box flexDirection={"row"} marginLeft="5%" pb={"3%"} pt={"3%"} alignItems={'center'}
+                            // background={'fuchsia.200'}
+                        >
+                            <HStack space={"2%"} flex={1} alignItems={'center'}                     justifyContent={'center'}
+                            >
+                                <Heading textAlign={"center"} width={"50%"} pt="2%" size={'sm'} flexWrap={'wrap'}>
+                                    {item.firstName} {item.lastName}
+                                </Heading>
+                            </HStack>
+                        </Box>
+                    )}
+                    keyExtractor={item => item._id}
+
+                    showsVerticalScrollIndicator={true}
+                    borderColor={"black"}
+                    rounded="md"
+                    bg="violet.300"
+                    maxH={"85%"} marginLeft= "5%" marginRight="5%"
+                    textAlign={"center"}
+                    lineHeight={10}
+                />
+            </>
     }
-    else{
-        flatList =
-            <FlatList
-                data = {guests}
-                renderItem={({ item }) => (
-                    <Box flexDirection={"row"} marginLeft="5%" pb={"3%"} pt={"3%"}
-                         // background={'fuchsia.200'}
-
-                    >
-
-                        <HStack space={"2%"} flex={1} alignItems={'center'} >
+    else {
+        insideStuff =
+            <>
+                <FlatList
+                    data={guests}
+                    renderItem={({item}) => (
+                        <Box flexDirection={"row"} marginLeft="5%" pb={"3%"} pt={"3%"}
+                            // background={'fuchsia.200'}
+                        >
+                            <HStack space={"2%"} flex={1} alignItems={'center'}>
                                 <Heading textAlign={"left"} width={"50%"} pt="2%" size={'sm'} flexWrap={'wrap'}>
                                     {item.firstName} {item.lastName}
                                 </Heading>
@@ -77,19 +99,35 @@ const GuestList = (pass) =>{
                                     {'Remove from Guest List'}
                                     {/*{"Remove: " + item.username }*/}
                                 </Button>
-                        </HStack>
-                    </Box>
-                )}
-                keyExtractor={item => item._id}
+                            </HStack>
+                        </Box>
+                    )}
+                    keyExtractor={item => item._id}
 
-                showsVerticalScrollIndicator={true}
-                borderColor={"black"}
-                rounded="md"
-                bg="violet.300"
-                maxH={"85%"} marginLeft= "5%" marginRight="5%"
-                textAlign={"center"}
-                lineHeight={10}
-            />
+                    showsVerticalScrollIndicator={true}
+                    borderColor={"black"}
+                    rounded="md"
+                    bg="violet.300"
+                    maxH={"85%"} marginLeft="5%" marginRight="5%"
+                    textAlign={"center"}
+                    lineHeight={10}
+                />
+            </>
+    }
+
+
+
+    let flatList;
+    if (guests.length === 0){
+        flatList =
+            <Center>
+                <Image source={img} alt = "PrimalParty" size = '2xl'/>
+                <Heading>{'\n'}Let's get this PrimalParty started!</Heading>
+            </Center>
+
+    }
+    else{
+        flatList = insideStuff;
     }
 
     return(
