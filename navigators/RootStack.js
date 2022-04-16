@@ -38,6 +38,18 @@ import InitDashboard from "../components/InitDashboard";
 import SearchFriendsPage from "../pages/SearchFriendsPage";
 const { tertiary } = Colors
 
+const fontConfig = {
+    web: {
+        fontFamily: 'Helvetica',
+    },
+    ios: {
+        fontFamily: 'Helvetica',
+    },
+    android: {
+        fontFamily: 'Helvetica',
+    }
+};
+
 const customTheme = {
     defaultTheme,
     dark: false,
@@ -57,7 +69,7 @@ const customTheme = {
         backdrop: '#001021',
         notification: '#cc614b',
     },
-    fonts: configureFonts(),
+    fonts: configureFonts(fontConfig),
 }
 
 
@@ -85,7 +97,7 @@ const RootStack = () => {
                 <SSRProvider>
                     <ApplicationProvider {...eva} theme={eva.light}>
                         <IconRegistry icons={EvaIconsPack} />
-                        <NativeBaseProvider>
+                        <NativeBaseProvider fontFamily={'Open Sans'}>
                             <PaperProvider theme={customTheme}>
                                 <NavigationContainer>
                                     <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: 'transparent' }, headerTintColor: tertiary, headerTransparent: true, headerTitle: '' }} initialRouteName='Login'>

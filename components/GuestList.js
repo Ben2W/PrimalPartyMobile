@@ -1,13 +1,11 @@
-import {Box, Button, Center, Heading, Image, ScrollView, Text} from "native-base";
+import {Box, Button, Center, Divider, Heading, HStack, Image, ScrollView, Text, View, VStack, FlatList} from "native-base";
 import * as React from "react";
 import {useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
-import {FlatList} from "react-native";
 import PeopleCard from "./PeopleCard";
 import {guestREMOVE} from "../redux/eventsReducer";
 import ReduxStore from "../redux/ReduxStore";
 import RemoveUser from "./API Calls/RemoveUser";
-import _ from 'lodash';
 
 const GuestList = (pass) =>{
     const [props, setProps] = useState(pass.props.eventData)
@@ -62,18 +60,25 @@ const GuestList = (pass) =>{
             <FlatList
                 data = {guests}
                 renderItem={({ item }) => (
-                    <Box flexDirection={"row"} marginLeft="5%" pb={"1%"} pt={"1%"}
-                         background={'fuchsia.200'}
+                    <Box flexDirection={"row"} marginLeft="5%" pb={"3%"} pt={"3%"}
+                         // background={'fuchsia.200'}
 
                     >
-                        <Text textAlign={"left"} width={"50%"}>
-                            {item.firstName} {item.lastName}
-                        </Text>
-                        <Button onPress={() => handleRemove(item._id, props._id)}>
-                            {"Remove: " + item.username }
-                        </Button>
+
+                        <HStack space={"2%"} flex={1} alignItems={'center'} >
+                                <Heading textAlign={"left"} width={"50%"} pt="2%" size={'sm'} flexWrap={'wrap'}>
+                                    {item.firstName} {item.lastName}
+                                </Heading>
+                                <Button
+                                    maxW={'50%'}
+                                    height={'40px'}
+                                    size={'sm'}
+                                    onPress={() => handleRemove(item._id, props._id)}>
+                                    {'Remove from Guest List'}
+                                    {/*{"Remove: " + item.username }*/}
+                                </Button>
+                        </HStack>
                     </Box>
-                    // <PeopleCard props ={item} _id={item._id} key = {item._id} eventID = {props.eventID} />
                 )}
                 keyExtractor={item => item._id}
 
@@ -81,7 +86,7 @@ const GuestList = (pass) =>{
                 borderColor={"black"}
                 rounded="md"
                 bg="violet.300"
-                maxH={"90%"} marginLeft= "5%" marginRight="5%"
+                maxH={"85%"} marginLeft= "5%" marginRight="5%"
                 textAlign={"center"}
                 lineHeight={10}
             />
