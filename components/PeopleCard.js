@@ -52,7 +52,9 @@ const PeopleCard = (pass) => {
             .then(() => {
                 let newState = ReduxStore.getState().events.find((obj) => obj._id === props.eventID);
                 // console.log(newState);
-                props.navigation.push("EventGuestNavigation", {eventData: newState})
+                // props.route.params.newData(newState)
+                props.navigation.navigate("EventGuestNavigation", {eventData: newState})
+                // props.navigation.navigate("EventGuestNavigation");
             })
     }
 

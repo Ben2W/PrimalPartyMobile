@@ -16,9 +16,9 @@ const GuestList = (pass) =>{
     const dispatch = useDispatch();
 
     const handleRemove = (guestID, eventID) => {
-        console.log(guestID)
-        console.log(eventID)
-        console.log(guests.length)
+        // console.log(guestID)
+        // console.log(eventID)
+        // console.log(guests.length)
         // remove from local storage
         dispatch(guestREMOVE({guestID: guestID, eventID: eventID}));
         setRemoving(true);
@@ -32,14 +32,18 @@ const GuestList = (pass) =>{
         if (removing === true){
             let findEvent = ReduxStore.getState().events.findIndex((obj) => obj._id === props._id);
             let eventArray = ReduxStore.getState().events[findEvent];
-            console.log(eventArray.guests)
+            // console.log(eventArray.guests)
             setGuests(eventArray.guests);
-            console.log(guests.length)
+            // console.log(guests.length)
             setProps(eventArray);
             setRemoving(false);
         }
     }, [removing])
 
+    useEffect(() => {
+        setProps(pass.route.params.eventData)
+        setGuests(pass.route.params.eventData.guests);
+    }, [pass.route.params])
 
     let flatList;
     if (guests.length === 0){

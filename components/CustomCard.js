@@ -20,7 +20,7 @@ const CustomCard = ({navigation, data}) => {
     const [curEventID, setCurEventID] = useState(data._id);
 
     const handleClick = ({navigation}) => {
-        navigation.push("EventGuestNavigation", {eventID: curEventID, eventData: curData});
+        navigation.navigate("EventGuestNavigation", {eventID: curEventID, eventData: curData});
         // navigation.navigate("TestingViewMore")
         // navigation.navigate("EventGuestNavigation", {data:{curData}} )
     }
@@ -46,7 +46,11 @@ const CustomCard = ({navigation, data}) => {
     }
     else{
         AdminButton =
-            <View>
+            <View
+                style={{
+                    width: "100%",
+                }}
+            >
                 <FAB
                     label={"View More"}
                     style={{
@@ -55,7 +59,6 @@ const CustomCard = ({navigation, data}) => {
                     onPress={() => handleClick({navigation})}
                 />
             </View>
-        ;
     }
 
 
