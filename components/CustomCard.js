@@ -39,6 +39,7 @@ const CustomCard = ({navigation, data}) => {
                 label={"Edit/View More"}
                 style={{
                     width: "100%",
+                    backgroundColor: '#721121',
                 }}
                 onPress={() => handleClick({navigation})}
             />
@@ -55,6 +56,7 @@ const CustomCard = ({navigation, data}) => {
                     label={"View More"}
                     style={{
                         width: "100%",
+                        backgroundColor:'#FFC07F'
                     }}
                     onPress={() => handleClick({navigation})}
                 />
