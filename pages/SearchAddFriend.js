@@ -7,7 +7,7 @@ import {FlatList} from "react-native";
 import AddFriendCard from "../components/AddFriendCard";
 //import { TextInput } from 'react-native';
 
-const SearchAddFriend = (props, route) => {
+const SearchAddFriend = () => {
 
     const [people, setPeople] = useState()
     const [formData, setData] = useState({search: ' '} );

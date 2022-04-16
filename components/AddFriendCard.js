@@ -25,7 +25,7 @@ const handleAddFriend = async () => {
         console.log("RESPONSE: " + response.status);
     })
 
-    //setDataState()
+    setDataState()
 }
 
     return (
