@@ -21,6 +21,7 @@ import SearchAddFriend from "../pages/SearchAddFriend"
 import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
 import * as eva from '@eva-design/eva';
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
+import SendResetEmail from '../pages/SendResetEmail'
 
 //colors
 import { Colors } from '../components/styles'
@@ -105,6 +106,7 @@ const RootStack = () => {
                                                 <Stack.Screen name='Login' component={Login} />
                                                 <Stack.Screen name='Register' component={Register} />
                                                 <Stack.Screen name='VerifyEmail' component={VerifyEmail} />
+                                                <Stack.Screen name='SendResetEmail' component={SendResetEmail} />
                                             </>)
                                         }
                                     </Stack.Navigator>
