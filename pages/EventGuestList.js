@@ -11,7 +11,6 @@ import { CredentialsContext } from "../components/CredentialsContext";
 import { Datepicker, NativeDateService } from "@ui-kitten/components";
 import CreateNewEvent from "../components/API Calls/CreateNewEvent";
 import EditEvent from "../components/API Calls/EditEvent";
-import {CommonActions} from "@react-navigation/native";
 
 
 const abortController = new AbortController()
