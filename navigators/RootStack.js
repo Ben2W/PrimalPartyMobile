@@ -10,6 +10,7 @@ import { SSRProvider } from '@react-aria/ssr'
 
 const Stack = createNativeStackNavigator()
 const abortController = new AbortController()
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 //screens
 import Login from '../pages/Login'
@@ -66,13 +67,13 @@ const customTheme = {
 const RootStack = () => {
     const dispatch = useDispatch();
 
-    const init = () => {
-        GetEvents.then((res) => {
-            dispatch(eventSET({ res }))
-        })
-        GetTasks.then((res) => {
-            dispatch(taskSET({ res }))
-        })
+    const init = async () => {
+        const jsonValue = await AsyncStorage.getItem('ppcredentials')
+        if (jsonValue != null) {
+            GetEvents.then((res) => {
+                dispatch(eventSET({ res }))
+            })
+        }
     }
 
     useEffect(() => {
