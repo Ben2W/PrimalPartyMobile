@@ -10,13 +10,20 @@ import { Datepicker, NativeDateService } from "@ui-kitten/components";
 import CreateNewEvent from "./API Calls/CreateNewEvent";
 
 const InitDashboard = ({ navigation, route }) => {
-    const [eventData, setEventData] = useState([]);
+    let bruh = ReduxStore.getState().events;
+    const [eventData, setEventData] = useState(bruh);
     const [username, setUsername] = useState(useContext(CredentialsContext).storedCredentials.firstName)
     const [showModal, setShowModal] = useState(false);
     const [routePush, setRoutePush] = useState(route.params)
     const { storedCredentials, setStoredCredentials } = useContext(CredentialsContext)
 
     const abortController = new AbortController()
+
+    useEffect(() => {
+        console.log('lol')
+        bruh = ReduxStore.getState().events;
+        setEventData(bruh);
+    }, [ReduxStore.getState().events])
 
     // Redux Initialization
     const dispatch = useDispatch();
