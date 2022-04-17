@@ -1,12 +1,12 @@
 
-const CreateNewEvent = async ({formData}) => {
+const CreateNewEvent = async ({ formData }) => {
     const url = 'https://primalpartybackend.azurewebsites.net/events'
 
     const details = {
         name: formData.name,
         description: formData.description,
         date: formData.date,
-        address: formData.location,
+        address: formData.location || "TBD",
         tags: [],
     }
 
@@ -28,7 +28,7 @@ const CreateNewEvent = async ({formData}) => {
                 credentials: 'include',
                 body: formBody
             })
-            return await res.json();
+        return await res.json();
     } catch (e) {
         return e
     }
