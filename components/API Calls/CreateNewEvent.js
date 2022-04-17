@@ -4,9 +4,9 @@ const CreateNewEvent = async ({formData}) => {
 
     const details = {
         name: formData.name,
-        description: formData.description,
+        description: formData.description || 'TBD',
         date: formData.date,
-        address: formData.location,
+        address: formData.location || 'TBD',
         tags: [],
     }
 
