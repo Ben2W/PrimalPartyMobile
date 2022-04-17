@@ -1,17 +1,19 @@
 import GuestList from "../components/GuestList";
 import EventHeading from "../components/EventHeading";
-import {Box, Button, FormControl, Input, Modal, Text, View, VStack} from "native-base";
-import React, {useContext, useEffect, useState} from "react";
-import {useDispatch} from "react-redux";
+import { Box, Button, FormControl, Input, Modal, Text, View, VStack } from "native-base";
+import React, { useContext, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import ReduxStore from "../redux/ReduxStore";
-import {FAB} from "react-native-paper";
-import {eventDELETE, eventPOST, eventPUT} from "../redux/eventsReducer";
-import {StackActions as navigation} from "react-navigation";
-import {CredentialsContext} from "../components/CredentialsContext";
-import {Datepicker, NativeDateService} from "@ui-kitten/components";
+import { FAB } from "react-native-paper";
+import { eventDELETE, eventPOST, eventPUT } from "../redux/eventsReducer";
+import { StackActions as navigation } from "react-navigation";
+import { CredentialsContext } from "../components/CredentialsContext";
+import { Datepicker, NativeDateService } from "@ui-kitten/components";
 import CreateNewEvent from "../components/API Calls/CreateNewEvent";
 import EditEvent from "../components/API Calls/EditEvent";
 
+
+const abortController = new AbortController()
 const EventGuestList = (props) => {
     const [newRoute, setNewRoute] = useState(props.route);
     const [pass, setPass] = useState(props.route.params);
@@ -26,34 +28,37 @@ const EventGuestList = (props) => {
         // console.log("!69~")
         setPass(props.route.params);
         setNewRoute(props.route);
+        return () => {
+            abortController.abort()
+        }
     }, [props.route.params])
 
     let delButton = {};
-    if (useContext(CredentialsContext).storedCredentials._id === pass.eventData.admin._id){
+    if (useContext(CredentialsContext).storedCredentials._id === pass.eventData.admin._id) {
         delButton =
             <Box>
-            <FAB
-                label={"Search for Friend to Add"}
-                style={{
-                    width: "100%",
-                    backgroundColor: "#30AADD",
-                }}
-                onPress={() => handleSearch(pass.eventData._id)}
-                key = "Search"
-            />
-            <FAB
-                label={"Delete"}
-                style={{
-                    width: "100%",
-                    backgroundColor: "#D11A2A",
-                }}
-                onPress={() => handleDelete(pass.eventData._id)
-                    .then((res) => {
-                        props.navigation.navigate("DashboardNavigation", {newData: ReduxStore.getState().events, change: "lol"})
-                    })
-                }
-                key = "Delete"
-            />
+                <FAB
+                    label={"Search for Friend to Add"}
+                    style={{
+                        width: "100%",
+                        backgroundColor: "#30AADD",
+                    }}
+                    onPress={() => handleSearch(pass.eventData._id)}
+                    key="Search"
+                />
+                <FAB
+                    label={"Delete"}
+                    style={{
+                        width: "100%",
+                        backgroundColor: "#D11A2A",
+                    }}
+                    onPress={() => handleDelete(pass.eventData._id)
+                        .then((res) => {
+                            props.navigation.navigate("DashboardNavigation", { newData: ReduxStore.getState().events, change: "lol" })
+                        })
+                    }
+                    key="Delete"
+                />
             </Box>
     }
     else
@@ -63,14 +68,14 @@ const EventGuestList = (props) => {
 
     // Handle Add Guest
     const handleSearch = () => {
-        props.navigation.navigate("SearchFriendsPage", { eventID: pass.eventData._id, eventData: pass.eventData, isAdmin: pass.isAdmin})
+        props.navigation.navigate("SearchFriendsPage", { eventID: pass.eventData._id, eventData: pass.eventData, isAdmin: pass.isAdmin })
     }
 
     // Handle Delete
     const handleDelete = async () => {
         console.log("Deleting: " + pass.eventData._id);
         const url = 'https://primalpartybackend.azurewebsites.net/events/' + pass.eventData._id
-        let newState = dispatch(eventDELETE({eventID: pass.eventData._id}));
+        let newState = dispatch(eventDELETE({ eventID: pass.eventData._id }));
         let details = [pass.eventData._id];
         let formBody = [];
         for (let property in details) {
@@ -119,13 +124,13 @@ const EventGuestList = (props) => {
                 .then((res) => {
 
 
-                    dispatch(eventPUT({_id: res.updatedEvent._id, eventData: res.updatedEvent} ))
+                    dispatch(eventPUT({ _id: res.updatedEvent._id, eventData: res.updatedEvent }))
 
                     let findEvent = ReduxStore.getState().events.findIndex((obj) => obj._id === pass.eventData._id);
                     let eventArray = ReduxStore.getState().events[findEvent];
 
-                    setPass({eventData: eventArray});
-                    props.navigation.getState().routes[0].params = {newData: eventArray};
+                    setPass({ eventData: eventArray });
+                    props.navigation.getState().routes[0].params = { newData: eventArray };
 
 
                     // props.navigation.setParams({
@@ -144,14 +149,17 @@ const EventGuestList = (props) => {
         // Else, clear form
         setData({ name: pass.eventData.name, date: initDate, location: pass.eventData.address, description: pass.eventData.description });
         setErrors({});
+        return () => {
+            abortController.abort()
+        }
     }, [showModal]);
 
     // End of CreateEventModal Logic
 
     // Edit Modal
     let editModal = {}
-    if (useContext(CredentialsContext).storedCredentials._id === pass.eventData.admin._id){
-        editModal =<View>
+    if (useContext(CredentialsContext).storedCredentials._id === pass.eventData.admin._id) {
+        editModal = <View>
             <Button onPress={() => setShowModal(true)}>
                 Edit your event!
             </Button>
@@ -185,7 +193,7 @@ const EventGuestList = (props) => {
                                 onSelect={nextDate => setData({
                                     name: formData.name,
                                     date: nextDate, location:
-                                    formData.location,
+                                        formData.location,
                                     description: formData.description
                                 })}
                             />
@@ -230,7 +238,7 @@ const EventGuestList = (props) => {
             </Modal>
         </View>
     }
-    else{
+    else {
         editModal = <></>
     }
 
@@ -250,9 +258,9 @@ const EventGuestList = (props) => {
         }}>
             <VStack space={"2%"} flex={1}>
                 <>
-                    <EventHeading props={pass}/>
+                    <EventHeading props={pass} />
                     {editModal}
-                    <GuestList props = {pass} route = {newRoute} isAdmin={(useContext(CredentialsContext).storedCredentials._id === pass.eventData.admin._id)} />
+                    <GuestList props={pass} route={newRoute} isAdmin={(useContext(CredentialsContext).storedCredentials._id === pass.eventData.admin._id)} />
                     {delButton}
                 </>
             </VStack>

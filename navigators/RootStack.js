@@ -9,6 +9,7 @@ import { SSRProvider } from '@react-aria/ssr'
 
 
 const Stack = createNativeStackNavigator()
+const abortController = new AbortController()
 
 //screens
 import Login from '../pages/Login'
@@ -76,6 +77,9 @@ const RootStack = () => {
 
     useEffect(() => {
         init();
+        return () => {
+            abortController.abort()
+        }
     }, []);
 
 

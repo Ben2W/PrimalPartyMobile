@@ -22,6 +22,8 @@ import { taskSET } from "../redux/tasksReducer";
 
 const { darkLight, primary } = Colors;
 
+const abortController = new AbortController()
+
 const Login = ({ navigation }) => {
 
     const [hidePassword, setHidePassword] = useState(true)
@@ -81,9 +83,9 @@ const Login = ({ navigation }) => {
                     return res.json();
                 })
                 .then(data => {
-                    init();
-                    setIsSubmitting(false)
                     persistLogin({ ...data.user })
+                    setIsSubmitting(false)
+                    init();
                 })
                 .catch(err => {
                     setIsSubmitting(false)

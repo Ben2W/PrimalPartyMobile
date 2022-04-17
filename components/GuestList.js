@@ -1,24 +1,26 @@
-import {Box, Button, Center, Divider, Heading, HStack, Image, ScrollView, Text, View, VStack, FlatList} from "native-base";
+import { Box, Button, Center, Divider, Heading, HStack, Image, ScrollView, Text, View, VStack, FlatList } from "native-base";
 import * as React from "react";
-import {useEffect, useState} from "react";
-import {useDispatch} from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import PeopleCard from "./PeopleCard";
-import {guestREMOVE} from "../redux/eventsReducer";
+import { guestREMOVE } from "../redux/eventsReducer";
 import ReduxStore from "../redux/ReduxStore";
 import RemoveUser from "./API Calls/RemoveUser";
 
-const GuestList = (pass) =>{
+const GuestList = (pass) => {
     const [props, setProps] = useState(pass.props.eventData)
     const [guests, setGuests] = useState(pass.props.eventData.guests)
     const [removing, setRemoving] = useState(false);
     const dispatch = useDispatch();
+
+    const abortController = new AbortController()
 
     const handleRemove = (guestID, eventID) => {
         // console.log(guestID)
         // console.log(eventID)
         // console.log(guests.length)
         // remove from local storage
-        dispatch(guestREMOVE({guestID: guestID, eventID: eventID}));
+        dispatch(guestREMOVE({ guestID: guestID, eventID: eventID }));
         setRemoving(true);
         // remove from API storage
         RemoveUser(eventID, guestID)
@@ -27,7 +29,7 @@ const GuestList = (pass) =>{
 
 
     useEffect(() => {
-        if (removing === true){
+        if (removing === true) {
             let findEvent = ReduxStore.getState().events.findIndex((obj) => obj._id === props._id);
             let eventArray = ReduxStore.getState().events[findEvent];
             // console.log(eventArray.guests)
@@ -36,11 +38,19 @@ const GuestList = (pass) =>{
             setProps(eventArray);
             setRemoving(false);
         }
+
+        return () => {
+            abortController.abort()
+        }
     }, [removing])
 
     useEffect(() => {
         setProps(pass.route.params.eventData)
         setGuests(pass.route.params.eventData.guests);
+
+        return () => {
+            abortController.abort()
+        }
     }, [pass.route.params])
 
 
@@ -48,16 +58,16 @@ const GuestList = (pass) =>{
 
 
     let insideStuff = {};
-    if (!pass.isAdmin){
+    if (!pass.isAdmin) {
         insideStuff =
             <>
                 <FlatList
-                    data = {guests}
+                    data={guests}
                     renderItem={({ item }) => (
                         <Box flexDirection={"row"} marginLeft="5%" pb={"3%"} pt={"3%"} alignItems={'center'}
-                            // background={'fuchsia.200'}
+                        // background={'fuchsia.200'}
                         >
-                            <HStack space={"2%"} flex={1} alignItems={'center'}                     justifyContent={'center'}
+                            <HStack space={"2%"} flex={1} alignItems={'center'} justifyContent={'center'}
                             >
                                 <Heading textAlign={"center"} width={"50%"} pt="2%" size={'sm'} flexWrap={'wrap'}>
                                     {item.firstName} {item.lastName}
@@ -71,7 +81,7 @@ const GuestList = (pass) =>{
                     borderColor={"black"}
                     rounded="md"
                     bg="violet.300"
-                    maxH={"85%"} marginLeft= "5%" marginRight="5%"
+                    maxH={"85%"} marginLeft="5%" marginRight="5%"
                     textAlign={"center"}
                     lineHeight={10}
                 />
@@ -82,9 +92,9 @@ const GuestList = (pass) =>{
             <>
                 <FlatList
                     data={guests}
-                    renderItem={({item}) => (
+                    renderItem={({ item }) => (
                         <Box flexDirection={"row"} marginLeft="5%" pb={"3%"} pt={"3%"}
-                            // background={'fuchsia.200'}
+                        // background={'fuchsia.200'}
                         >
                             <HStack space={"2%"} flex={1} alignItems={'center'}>
                                 <Heading textAlign={"left"} width={"50%"} pt="2%" size={'sm'} flexWrap={'wrap'}>
@@ -117,19 +127,19 @@ const GuestList = (pass) =>{
 
 
     let flatList;
-    if (guests.length === 0){
+    if (guests.length === 0) {
         flatList =
             <Center>
-                <Image source={img} alt = "PrimalParty" size = '2xl'/>
+                <Image source={img} alt="PrimalParty" size='2xl' />
                 <Heading>{'\n'}Let's get this PrimalParty started!</Heading>
             </Center>
 
     }
-    else{
+    else {
         flatList = insideStuff;
     }
 
-    return(
+    return (
         <Box flexGrow={1} maxW="100%" maxH={"50%"} bg="violet.400" rounded="md" shadow={3}>
             <Box>
                 <Heading pb="3" size="lg" textAlign={"center"}>

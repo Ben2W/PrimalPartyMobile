@@ -15,6 +15,8 @@ const InitDashboard = ({ navigation, route }) => {
     const [showModal, setShowModal] = useState(false);
     const [routePush, setRoutePush] = useState(route.params)
 
+    const abortController = new AbortController()
+
     // Redux Initialization
     const dispatch = useDispatch();
     const init = () => {
@@ -25,6 +27,9 @@ const InitDashboard = ({ navigation, route }) => {
     }
     useEffect(() => {
         init();
+        return () => {
+            abortController.abort()
+        }
     }, []);
 
     useEffect(() => {
@@ -33,11 +38,17 @@ const InitDashboard = ({ navigation, route }) => {
             console.log("bruh")
             // console.log(route.params)
         }
+        return () => {
+            abortController.abort()
+        }
     }, [route.params]);
 
     useEffect(() => {
         console.log('wierjoiqwer')
         // console.log(navigation.getState())
+        return () => {
+            abortController.abort()
+        }
     }, [navigation.getState().routes[0]]);
 
     // End of Redux Initialization
@@ -74,6 +85,9 @@ const InitDashboard = ({ navigation, route }) => {
         // Else, clear form
         setData({ date: initDate, location: "", description: "" });
         setErrors({});
+        return () => {
+            abortController.abort()
+        }
     }, [showModal]);
 
     // End of CreateEventModal Logic

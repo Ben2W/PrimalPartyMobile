@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import GetTasks from "../components/API Calls/GetTasks";
 import { taskPOST, taskSET } from "../redux/tasksReducer";
 
-
+const abortController = new AbortController()
 const DashboardTasksList = ({ navigation }) => {
 
     const [taskData, setTaskData] = useState([])
@@ -20,6 +20,9 @@ const DashboardTasksList = ({ navigation }) => {
     useEffect(async () => {
         setTaskData(ReduxStore.getState().tasks)
         setTaskList()
+        return () => {
+            abortController.abort()
+        }
     }, [taskData]);
 
     const setTaskList = () => {
