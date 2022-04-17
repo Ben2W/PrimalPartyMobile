@@ -29,7 +29,7 @@ const CustomCard = ({navigation, data, route}) => {
                 let curState = ReduxStore.getState().events;
                 let findEvent = curState.findIndex((obj) => obj._id === data._id);
                 setCurData(curState[findEvent]);
-                console.log(curState[findEvent]);
+
                 if (curState[findEvent] !== undefined){
                     setTitle(curState[findEvent].name);
                     setAddress(curState[findEvent].address);
