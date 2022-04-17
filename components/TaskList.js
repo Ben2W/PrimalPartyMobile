@@ -14,6 +14,10 @@ const TaskList = (pass) =>{
     const dispatch = useDispatch();
 
     useEffect(() => {
+        setProps(pass.props.eventData)
+    }, [])
+
+    useEffect(() => {
         setProps(pass.route.params.eventData)
         setGuests(pass.route.params.eventData.guests);
         setTasks(pass.route.params.eventData.tasks)
@@ -26,15 +30,15 @@ const TaskList = (pass) =>{
         insideStuff =
             <>
                 <Text>
-                    {JSON.parse(JSON.stringify(Object.values(tasks))).map(obj => obj.name).join('\r\n')}
+                    {JSON.parse(JSON.stringify(Object.values(tasks))).map(obj => 'Name: ' + obj.name + ' Description: ' + obj.description).join('\r\n')}
                 </Text>
             </>
     }
     else {
         insideStuff =
             <>
-                <Text>
-                    {JSON.parse(JSON.stringify(Object.values(tasks))).map(obj => obj.name).join('\r\n')}
+                <Text fontSize={'xl'}>
+                    {JSON.parse(JSON.stringify(Object.values(tasks))).map(obj => 'Name: ' + obj.name + ' Description: ' + obj.description).join('\r\n')}
                 </Text>
             </>
     }

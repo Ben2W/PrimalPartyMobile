@@ -5,7 +5,7 @@ import React, {useContext, useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
 import ReduxStore from "../redux/ReduxStore";
 import {FAB} from "react-native-paper";
-import {eventDELETE, eventPOST, eventPUT} from "../redux/eventsReducer";
+import {eventDELETE, eventPOST, eventPUT, eventTaskPOST} from "../redux/eventsReducer";
 import {StackActions as navigation} from "react-navigation";
 import {CredentialsContext} from "../components/CredentialsContext";
 import {Datepicker, NativeDateService} from "@ui-kitten/components";
@@ -18,6 +18,7 @@ const EventTaskList = (props) => {
     const [newRoute, setNewRoute] = useState(props.route);
     const [pass, setPass] = useState(props.route.params);
     const [userID, setUserID] = useState(useContext(CredentialsContext).storedCredentials._id)
+
     useEffect(() => {
         // console.log("!69~")
         setPass(props.route.params);
@@ -30,7 +31,7 @@ const EventTaskList = (props) => {
     const initDate = new Date(pass.eventData.date);
     const formatDateService = new NativeDateService('en', { format: 'MM-DD-YYYY' });
 
-    const [formData, setData] = useState({ name: "", description: ""});
+    const [formData, setData] = useState({ name: "TBD", description: "TBD"});
     const [errors, setErrors] = useState({});
 
     const validate = ({ formData }) => {
@@ -42,33 +43,34 @@ const EventTaskList = (props) => {
             return false;
         }
         else {
-            // I need to convert to edit
             AddNewTask({ formData }, props.eventData._id, userID)
                 .then((res) => {
-                    console.log(res.retval.tasks);
-                    // dispatch(eventPUT({_id: res.updatedEvent._id, eventData: res.updatedEvent} ))
-                    //
-                    // let findEvent = ReduxStore.getState().events.findIndex((obj) => obj._id === pass.eventData._id);
-                    // let eventArray = ReduxStore.getState().events[findEvent];
-                    //
-                    // setPass({eventData: eventArray});
-                    // props.navigation.getState().routes[0].params = {newData: eventArray};
-                    //
+                    dispatch(eventTaskPOST({eventID: res.retval._id, eventData: res.retval, } ))
+                    setAdding(true);
                 })
             return true;
         }
     };
 
+    const [adding, setAdding] = useState(false);
 
+    useEffect(() => {
+        if (adding){
+            let findEvent = ReduxStore.getState().events.findIndex((obj) => obj._id === pass.eventData._id);
+            let eventArray = ReduxStore.getState().events[findEvent];
+            setPass({eventData: eventArray});
+            setAdding(false);
+        }
+    }, [adding])
     useEffect(() => {
         if (showModal) return; // If shown, do nothing
 
         // Else, clear form
-        setData({ name: "TBD", description: "TBD" });
+        setData({ name: "", description: "" });
         setErrors({});
     }, [showModal]);
 
-    // End of CreateEventModal Logic
+    // End of AddTaskModal Logic
 
     // Add Modal
     let addModal = {}
@@ -101,7 +103,7 @@ const EventTaskList = (props) => {
                             <FormControl.Label>Description</FormControl.Label>
                             <Input
                                 size="md"
-                                placeholder="Let's code collaboratively!"
+                                placeholder="Maltese Puppies Preferred"
                                 value={formData.description}
                                 onChangeText={value => setData({
                                     ...formData,
@@ -127,11 +129,6 @@ const EventTaskList = (props) => {
     }
     else{
         addModal = <></>
-    }
-
-    const editClick = () => {
-        console.log("editing my shit");
-
     }
 
     return (
