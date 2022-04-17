@@ -40,10 +40,6 @@ const Login = ({ navigation }) => {
         GetEvents.then((res) => {
             dispatch(eventSET({ res }))
         })
-        GetTasks.then((res) => {
-            dispatch(taskSET({ res }))
-            console.log(ReduxStore.getState())
-        })
     }
 
     const handleLogin = async (credentials) => {

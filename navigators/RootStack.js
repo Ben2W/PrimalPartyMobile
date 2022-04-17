@@ -70,9 +70,6 @@ const RootStack = () => {
         GetEvents.then((res) => {
             dispatch(eventSET({ res }))
         })
-        GetTasks.then((res) => {
-            dispatch(taskSET({ res }))
-        })
     }
 
     useEffect(() => {
@@ -96,7 +93,7 @@ const RootStack = () => {
 
                                         {storedCredentials ?
                                             <>
-                                                <Stack.Screen name="DashboardNavigation" component={DashboardNavigation} navigationKey={'DBKey'}/>
+                                                <Stack.Screen name="DashboardNavigation" component={DashboardNavigation} navigationKey={'DBKey'} />
                                                 <Stack.Screen name='InitialLoadingScreen' component={InitDashboard} />
                                                 <Stack.Screen name="DashboardTasksList" component={DashboardTasksList} />
                                                 <Stack.Screen name="DashboardFriendsList" component={DashboardFriendsList} />
