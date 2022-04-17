@@ -1,7 +1,7 @@
 import { Box, Button, Center, FormControl, Heading, Input, Modal, Spinner, Text, View, FlatList } from "native-base"
 import ReduxStore from "../redux/ReduxStore";
 import { useDispatch } from "react-redux";
-import getEvents from "./API Calls/GetEvents";
+import GetEvents from "./API Calls/GetEvents";
 import { eventPOST, eventSET } from "../redux/eventsReducer";
 import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
 import { CredentialsContext } from "./CredentialsContext";
@@ -14,28 +14,24 @@ const InitDashboard = ({ navigation, route }) => {
     const [username, setUsername] = useState(useContext(CredentialsContext).storedCredentials.firstName)
     const [showModal, setShowModal] = useState(false);
     const [routePush, setRoutePush] = useState(route.params)
-    const { storedCredentials, setStoredCredentials } = useContext(CredentialsContext)
 
     const abortController = new AbortController()
 
     // Redux Initialization
     const dispatch = useDispatch();
-    const init = async () => {
-        if (ReduxStore.getState().events == null) {
-            const events = await GetEvents()
-            console.log('events from initdashboard init function',)
+    const init = () => {
+        GetEvents.then((events) => {
             dispatch(eventSET({ events }))
             setEventData(events)
-        }
+        })
     }
-    useEffect(async () => {
-        await init();
-        console.log(eventData)
+    useEffect(() => {
+        init();
         return () => {
             abortController.abort()
         }
     }, []);
-
+    
     // End of Redux Initialization
 
     // Start of CreateEventModal Logic

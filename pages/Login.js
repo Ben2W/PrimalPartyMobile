@@ -40,6 +40,10 @@ const Login = ({ navigation }) => {
         GetEvents.then((res) => {
             dispatch(eventSET({ res }))
         })
+        GetTasks.then((res) => {
+            dispatch(taskSET({ res }))
+            console.log(ReduxStore.getState())
+        })
     }
 
     const handleLogin = async (credentials) => {
@@ -81,7 +85,7 @@ const Login = ({ navigation }) => {
                 .then(data => {
                     persistLogin({ ...data.user })
                     setIsSubmitting(false)
-                    // init();
+                    init();
                 })
                 .catch(err => {
                     setIsSubmitting(false)
