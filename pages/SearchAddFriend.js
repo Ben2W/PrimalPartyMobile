@@ -1,19 +1,21 @@
 import {Box, Button, Center, Input, Text, View, VStack} from "native-base";
 import { StyledImageContainer, InnerContainer, PageLogo, PageTitle, StyledFormArea, Subtitle, Colors, StyledAddButton, ButtonText, MsgBox, ExtraView, ExtraText, TextLink, TextLinkContent, StyledContainer } from '../components/styles'
 import {FAB} from "react-native-paper";
-import React, { useState } from 'react';
+import React, {useContext, useState} from 'react';
 import SearchUsers from "../components/API Calls/SearchUsers";
 import {FlatList} from "react-native";
 import AddFriendCard from "../components/AddFriendCard";
+import {CredentialsContext} from "../components/CredentialsContext";
 //import { TextInput } from 'react-native';
 
 const SearchAddFriend = () => {
 
     const [people, setPeople] = useState()
     const [formData, setData] = useState({search: ' '} );
+    const [myID, setMyID] = useState(useContext(CredentialsContext).storedCredentials._id)
 
-    async function handleClick() {
-        const temp = await SearchUsers(formData.search)
+    async function handleClick(value) {
+        const temp = await SearchUsers(value)
             .then((res) => {
                 let parseMap = res.map((obj) => obj)
                 setPeople(parseMap);
@@ -38,11 +40,11 @@ const SearchAddFriend = () => {
             size="md"
             placeholder="Type here to search!"
             value = {formData.search}
-            onChangeText={value => setData({ ...formData, search: value})}
+            onChangeText={value => {
+                setData({...formData, search: value})
+                handleClick(value)
+            }}
         />
-        <Button onPress={() => handleClick()}>
-                        Get Users
-                    </Button>
                     <Box flexGrow={1} maxW="100%" maxH={"75%"} bg="violet.400" rounded="md" shadow={3}
                     >
                         <FlatList

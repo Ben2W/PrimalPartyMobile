@@ -54,6 +54,7 @@ const SearchFriendsPage = ({ navigation, route }) => {
             <VStack space={3}>
                 <Input
                     size="md"
+                    style={{height: 40, borderWidth: 1}}
                     placeholder="Search for a new guest!"
                     value={formData.search}
                     onChangeText={value => {
@@ -65,9 +66,6 @@ const SearchFriendsPage = ({ navigation, route }) => {
                     }
                     }
                 />
-                {/*<Button onPress={() => handleClick()}>*/}
-                {/*    Get Users*/}
-                {/*</Button>*/}
                 <Box flexGrow={1} maxW="100%" maxH={"90%"} minH={'80%'} bg="violet.400" rounded="md" shadow={3}
                 >
                     <FlatList
