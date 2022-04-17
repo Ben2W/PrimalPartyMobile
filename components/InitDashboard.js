@@ -31,26 +31,7 @@ const InitDashboard = ({ navigation, route }) => {
             abortController.abort()
         }
     }, []);
-
-    useEffect(() => {
-        if (route.params !== undefined) {
-            setEventData(route.params.newData);
-            console.log("bruh")
-            // console.log(route.params)
-        }
-        return () => {
-            abortController.abort()
-        }
-    }, [route.params]);
-
-    useEffect(() => {
-        console.log('wierjoiqwer')
-        // console.log(navigation.getState())
-        return () => {
-            abortController.abort()
-        }
-    }, [navigation.getState().routes[0]]);
-
+    
     // End of Redux Initialization
 
     // Start of CreateEventModal Logic
