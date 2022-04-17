@@ -9,6 +9,7 @@ import { SSRProvider } from '@react-aria/ssr'
 
 
 const Stack = createNativeStackNavigator()
+const abortController = new AbortController()
 
 //screens
 import Login from '../pages/Login'
@@ -21,6 +22,7 @@ import SearchAddFriend from "../pages/SearchAddFriend"
 import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
 import * as eva from '@eva-design/eva';
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
+import SendResetEmail from '../pages/SendResetEmail'
 
 //colors
 import { Colors } from '../components/styles'
@@ -68,13 +70,13 @@ const RootStack = () => {
         GetEvents.then((res) => {
             dispatch(eventSET({ res }))
         })
-        GetTasks.then((res) => {
-            dispatch(taskSET({ res }))
-        })
     }
 
     useEffect(() => {
         init();
+        return () => {
+            abortController.abort()
+        }
     }, []);
 
 
@@ -91,7 +93,7 @@ const RootStack = () => {
 
                                         {storedCredentials ?
                                             <>
-                                                <Stack.Screen name="DashboardNavigation" component={DashboardNavigation} />
+                                                <Stack.Screen name="DashboardNavigation" component={DashboardNavigation} navigationKey={'DBKey'} />
                                                 <Stack.Screen name='InitialLoadingScreen' component={InitDashboard} />
                                                 <Stack.Screen name="DashboardTasksList" component={DashboardTasksList} />
                                                 <Stack.Screen name="DashboardFriendsList" component={DashboardFriendsList} />
@@ -105,6 +107,7 @@ const RootStack = () => {
                                                 <Stack.Screen name='Login' component={Login} />
                                                 <Stack.Screen name='Register' component={Register} />
                                                 <Stack.Screen name='VerifyEmail' component={VerifyEmail} />
+                                                <Stack.Screen name='SendResetEmail' component={SendResetEmail} />
                                             </>)
                                         }
                                     </Stack.Navigator>

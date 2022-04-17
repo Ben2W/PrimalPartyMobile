@@ -10,6 +10,7 @@ import FriendCard from "../components/FriendCard"
 
 const DashboardFriendsList = ({ navigation }) => {
     const url = 'https://primalpartybackend.azurewebsites.net/friends';
+    const abortController = new AbortController()
 
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState([]);
@@ -33,16 +34,16 @@ const DashboardFriendsList = ({ navigation }) => {
     useEffect(() => {
         getFriends();
         return () => {
-            abortController.abort();
+            abortController.abort()
         }
     }, []);
 
     useEffect(() => {
         getFriends();
         return () => {
-            abortController.abort();
+            abortController.abort()
         }
-    }, [data]);
+    }, [data])
 
     //console.log(data)
     return (

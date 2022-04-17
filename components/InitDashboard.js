@@ -10,10 +10,19 @@ import { Datepicker, NativeDateService } from "@ui-kitten/components";
 import CreateNewEvent from "./API Calls/CreateNewEvent";
 
 const InitDashboard = ({ navigation, route }) => {
-    const [eventData, setEventData] = useState([]);
+    let bruh = ReduxStore.getState().events;
+    const [eventData, setEventData] = useState(bruh);
     const [username, setUsername] = useState(useContext(CredentialsContext).storedCredentials.firstName)
     const [showModal, setShowModal] = useState(false);
     const [routePush, setRoutePush] = useState(route.params)
+
+    const abortController = new AbortController()
+
+    useEffect(() => {
+        console.log('lol')
+        bruh = ReduxStore.getState().events;
+        setEventData(bruh);
+    }, [ReduxStore.getState().events])
 
     // Redux Initialization
     const dispatch = useDispatch();
@@ -25,21 +34,11 @@ const InitDashboard = ({ navigation, route }) => {
     }
     useEffect(() => {
         init();
-    }, []);
-
-    useEffect(() => {
-        if (route.params !== undefined) {
-            setEventData(route.params.newData);
-            console.log("bruh")
-            // console.log(route.params)
+        return () => {
+            abortController.abort()
         }
-    }, [route.params]);
-
-    useEffect(() => {
-        console.log('wierjoiqwer')
-        // console.log(navigation.getState())
-    }, [navigation.getState().routes[0]]);
-
+    }, []);
+    
     // End of Redux Initialization
 
     // Start of CreateEventModal Logic
@@ -74,6 +73,9 @@ const InitDashboard = ({ navigation, route }) => {
         // Else, clear form
         setData({ date: initDate, location: "", description: "" });
         setErrors({});
+        return () => {
+            abortController.abort()
+        }
     }, [showModal]);
 
     // End of CreateEventModal Logic

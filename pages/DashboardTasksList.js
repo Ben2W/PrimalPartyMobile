@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import GetTasks from "../components/API Calls/GetTasks";
 import { taskPOST, taskSET } from "../redux/tasksReducer";
 
-
+const abortController = new AbortController()
 const DashboardTasksList = ({ navigation }) => {
 
     const [taskData, setTaskData] = useState([])
@@ -16,10 +16,29 @@ const DashboardTasksList = ({ navigation }) => {
     const [loading, setLoading] = useState(true)
     const [username, setUsername] = useState(useContext(CredentialsContext).storedCredentials.username)
 
-
     useEffect(async () => {
-        setTaskData(ReduxStore.getState().tasks)
-        setTaskList()
+        const url = 'https://primalpartybackend.azurewebsites.net/tasks'
+
+        try {
+            const res = await fetch(url,
+                {
+                    method: 'GET',
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+                    },
+                    credentials: 'include'
+                })
+            const tasks = await res.json()
+            setTaskData(tasks.tasks)
+            setTaskList()
+            return () => {
+                abortController.abort()
+            }
+        } catch (e) {
+            return () => {
+                abortController.abort()
+            }
+        }
     }, [taskData]);
 
     const setTaskList = () => {

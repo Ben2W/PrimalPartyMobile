@@ -1,18 +1,20 @@
 import GuestList from "../components/GuestList";
 import EventHeading from "../components/EventHeading";
-import {Box, Button, FormControl, Input, Modal, Text, View, VStack} from "native-base";
-import React, {useContext, useEffect, useState} from "react";
-import {useDispatch} from "react-redux";
+import { Box, Button, FormControl, Input, Modal, Text, View, VStack } from "native-base";
+import React, { useContext, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import ReduxStore from "../redux/ReduxStore";
-import {FAB} from "react-native-paper";
-import {eventDELETE, eventPOST, eventPUT, eventTaskPOST} from "../redux/eventsReducer";
-import {StackActions as navigation} from "react-navigation";
-import {CredentialsContext} from "../components/CredentialsContext";
-import {Datepicker, NativeDateService} from "@ui-kitten/components";
+import { FAB } from "react-native-paper";
+import { eventDELETE, eventPOST, eventPUT, eventTaskPOST } from "../redux/eventsReducer";
+import { StackActions as navigation } from "react-navigation";
+import { CredentialsContext } from "../components/CredentialsContext";
+import { Datepicker, NativeDateService } from "@ui-kitten/components";
 import CreateNewEvent from "../components/API Calls/CreateNewEvent";
 import EditEvent from "../components/API Calls/EditEvent";
 import TaskList from "../components/TaskList";
 import AddNewTask from "../components/API Calls/AddNewTask";
+
+const abortController = new AbortController()
 
 const EventTaskList = (props) => {
     const [newRoute, setNewRoute] = useState(props.route);
@@ -23,6 +25,9 @@ const EventTaskList = (props) => {
         // console.log("!69~")
         setPass(props.route.params);
         setNewRoute(props.route);
+        return () => {
+            abortController.abort()
+        }
     }, [props.route.params])
 
     const dispatch = useDispatch();
@@ -31,7 +36,7 @@ const EventTaskList = (props) => {
     const initDate = new Date(pass.eventData.date);
     const formatDateService = new NativeDateService('en', { format: 'MM-DD-YYYY' });
 
-    const [formData, setData] = useState({ name: "TBD", description: "TBD"});
+    const [formData, setData] = useState({ name: "TBD", description: "TBD" });
     const [errors, setErrors] = useState({});
 
     const validate = ({ formData }) => {
@@ -45,7 +50,7 @@ const EventTaskList = (props) => {
         else {
             AddNewTask({ formData }, props.eventData._id, userID)
                 .then((res) => {
-                    dispatch(eventTaskPOST({eventID: res.retval._id, eventData: res.retval, } ))
+                    dispatch(eventTaskPOST({ eventID: res.retval._id, eventData: res.retval, }))
                     setAdding(true);
                 })
             return true;
@@ -55,11 +60,14 @@ const EventTaskList = (props) => {
     const [adding, setAdding] = useState(false);
 
     useEffect(() => {
-        if (adding){
+        if (adding) {
             let findEvent = ReduxStore.getState().events.findIndex((obj) => obj._id === pass.eventData._id);
             let eventArray = ReduxStore.getState().events[findEvent];
-            setPass({eventData: eventArray});
+            setPass({ eventData: eventArray });
             setAdding(false);
+        }
+        return () => {
+            abortController.abort()
         }
     }, [adding])
     useEffect(() => {
@@ -67,15 +75,17 @@ const EventTaskList = (props) => {
 
         // Else, clear form
         setData({ name: "", description: "" });
-        setErrors({});
+        setErrors({}); return () => {
+            abortController.abort()
+        }
     }, [showModal]);
 
     // End of AddTaskModal Logic
 
     // Add Modal
     let addModal = {}
-    if (useContext(CredentialsContext).storedCredentials._id === pass.eventData.admin._id){
-        addModal =<View>
+    if (useContext(CredentialsContext).storedCredentials._id === pass.eventData.admin._id) {
+        addModal = <View>
             <Button onPress={() => setShowModal(true)}>
                 Add a task for your friend's poor souls!
             </Button>
@@ -127,7 +137,7 @@ const EventTaskList = (props) => {
             </Modal>
         </View>
     }
-    else{
+    else {
         addModal = <></>
     }
 
@@ -142,9 +152,9 @@ const EventTaskList = (props) => {
         }}>
             <VStack space={"2%"} flex={1}>
                 <>
-                    <EventHeading props={pass}/>
+                    <EventHeading props={pass} />
                     {addModal}
-                    <TaskList props = {pass} route = {newRoute} isAdmin={(useContext(CredentialsContext).storedCredentials._id === pass.eventData.admin._id)} />
+                    <TaskList props={pass} route={newRoute} isAdmin={(useContext(CredentialsContext).storedCredentials._id === pass.eventData.admin._id)} />
                 </>
             </VStack>
         </View>

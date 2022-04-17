@@ -1,15 +1,16 @@
-import {View} from "react-native";
-import React, {useEffect, useState} from "react";
+import { View } from "react-native";
+import React, { useEffect, useState } from "react";
 import EventGuestList from "./EventGuestList";
-import {createMaterialBottomTabNavigator} from "@react-navigation/material-bottom-tabs";
+import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import EventTaskList from "./EventTaskList";
-import {MaterialCommunityIcons} from "@expo/vector-icons";
-import {useDispatch} from "react-redux";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useDispatch } from "react-redux";
 import ReduxStore from "../redux/ReduxStore";
 
 const Tab = createMaterialBottomTabNavigator();
+const abortController = new AbortController()
 
-const EventGuestNavigation = ({navigation, route}) => {
+const EventGuestNavigation = ({ navigation, route }) => {
     const dispatch = useDispatch();
     const [eventID, setEventID] = useState(route.params.eventID)
     const [newRoute, setNewRoute] = useState(route)
@@ -23,6 +24,9 @@ const EventGuestNavigation = ({navigation, route}) => {
         setNewRoute(route);
         setEventData(route.params.eventData);
         setIsAdmin(route.params.isAdmin)
+        return () => {
+            abortController.abort()
+        }
     }, [route.params.eventData])
 
     return (
@@ -33,42 +37,42 @@ const EventGuestNavigation = ({navigation, route}) => {
                 initialRouteName="EventGuestList"
                 shifting={true}
             >
-            <Tab.Screen
-                name = "EventGuestList"
-                children={() => (
-                    <EventGuestList
-                        eventID={eventID}
-                        eventData={eventData}
-                        navigation={navigation}
-                        route={newRoute}
-                        isAdmin={isAdmin}
-                    />)}
-                options={{
-                    tabBarLabel: 'EventGuestList',
-                    tabBarColor: "#1F44EA",
-                    tabBarIcon: ({ color }) => (
-                        <MaterialCommunityIcons name="account-group" color={color} size={26} />
-                    ),
-                }}
-            />
-            <Tab.Screen
-                name = "EventTaskList"
-                children={() => (
-                    <EventTaskList
-                        eventID={eventID}
-                        eventData={eventData}
-                        navigation={navigation}
-                        route={newRoute}
-                        isAdmin={isAdmin}
-                    />)}
-                options={{
-                    tabBarLabel: 'EventTasksList',
-                    tabBarColor: "#397367",
-                    tabBarIcon: ({ color }) => (
-                        <MaterialCommunityIcons name="format-list-checks" color={color} size={26} />
-                    ),
-                }}
-            />
+                <Tab.Screen
+                    name="EventGuestList"
+                    children={() => (
+                        <EventGuestList
+                            eventID={eventID}
+                            eventData={eventData}
+                            navigation={navigation}
+                            route={newRoute}
+                            isAdmin={isAdmin}
+                        />)}
+                    options={{
+                        tabBarLabel: 'EventGuestList',
+                        tabBarColor: "#1F44EA",
+                        tabBarIcon: ({ color }) => (
+                            <MaterialCommunityIcons name="account-group" color={color} size={26} />
+                        ),
+                    }}
+                />
+                <Tab.Screen
+                    name="EventTaskList"
+                    children={() => (
+                        <EventTaskList
+                            eventID={eventID}
+                            eventData={eventData}
+                            navigation={navigation}
+                            route={newRoute}
+                            isAdmin={isAdmin}
+                        />)}
+                    options={{
+                        tabBarLabel: 'EventTasksList',
+                        tabBarColor: "#397367",
+                        tabBarIcon: ({ color }) => (
+                            <MaterialCommunityIcons name="format-list-checks" color={color} size={26} />
+                        ),
+                    }}
+                />
             </Tab.Navigator>
         </View>
     )

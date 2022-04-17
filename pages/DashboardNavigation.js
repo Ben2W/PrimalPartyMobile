@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, Text } from "react-native";
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -14,12 +14,15 @@ import DashboardAccount from "./DashboardAccount";
 import ReduxTesting from "./ReduxTesting";
 import InitDashboard from "../components/InitDashboard";
 
-
+const abortController = new AbortController()
 const Tab = createMaterialBottomTabNavigator();
 
 const DashboardNavigation = ({ navigation, route }) => {
     useEffect(() => {
         console.log('23854u69284576894375967')
+        return () => {
+            abortController.abort()
+        }
     }, [navigation.getState().routes[0]])
 
     const { storedCredentials, setStoredCredentials } = useContext(CredentialsContext)
