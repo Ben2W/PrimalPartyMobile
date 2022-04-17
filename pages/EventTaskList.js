@@ -17,7 +17,7 @@ import AddNewTask from "../components/API Calls/AddNewTask";
 const EventTaskList = (props) => {
     const [newRoute, setNewRoute] = useState(props.route);
     const [pass, setPass] = useState(props.route.params);
-
+    const [userID, setUserID] = useState(useContext(CredentialsContext).storedCredentials._id)
     useEffect(() => {
         // console.log("!69~")
         setPass(props.route.params);
@@ -43,7 +43,7 @@ const EventTaskList = (props) => {
         }
         else {
             // I need to convert to edit
-            AddNewTask({ formData }, props.eventData._id, useContext(CredentialsContext).storedCredentials._id)
+            AddNewTask({ formData }, props.eventData._id, userID)
                 .then((res) => {
                     console.log(res.retval.tasks);
                     // dispatch(eventPUT({_id: res.updatedEvent._id, eventData: res.updatedEvent} ))

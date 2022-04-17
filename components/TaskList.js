@@ -26,7 +26,7 @@ const TaskList = (pass) =>{
         insideStuff =
             <>
                 <Text>
-                    {JSON.stringify(Object.values(tasks))}
+                    {JSON.parse(JSON.stringify(Object.values(tasks))).map(obj => obj.name).join('\r\n')}
                 </Text>
             </>
     }
@@ -34,7 +34,7 @@ const TaskList = (pass) =>{
         insideStuff =
             <>
                 <Text>
-                    {JSON.stringify(Object.values(tasks))}
+                    {JSON.parse(JSON.stringify(Object.values(tasks))).map(obj => obj.name).join('\r\n')}
                 </Text>
             </>
     }
