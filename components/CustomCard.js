@@ -30,10 +30,12 @@ const CustomCard = ({navigation, data, route}) => {
                 let findEvent = curState.findIndex((obj) => obj._id === data._id);
                 setCurData(curState[findEvent]);
 
-                setTitle(curState[findEvent].name);
-                setAddress(curState[findEvent].address);
-                setDate(new Date(curState[findEvent].date));
-                setDesc(curState[findEvent].description);
+                if (curState[findEvent] !== undefined){
+                    setTitle(curState[findEvent].name);
+                    setAddress(curState[findEvent].address);
+                    setDate(new Date(curState[findEvent].date));
+                    setDesc(curState[findEvent].description);
+                }
             }
 
             bruh();
