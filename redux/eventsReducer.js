@@ -24,7 +24,8 @@ export const eventsSlice = createSlice({
         eventPUT: (state, action) => {
             let temp = [...state]
             let editEvent = temp.findIndex(obj => obj._id === action.payload._id)
-            temp[editEvent] = action.payload;
+            temp[editEvent] = action.payload.eventData;
+            state = temp;
             return temp;
         },
         eventDELETE: (state, action) => {
@@ -79,10 +80,20 @@ export const eventsSlice = createSlice({
         logoutRESET: (state, action) => {
             state = undefined;
             return;
-        }
+        },
+        eventTaskPOST: (state, action) => {
+            let temp = [...state];
+            let findEvent = temp.findIndex((obj) => obj._id === action.payload.eventID);
+            temp[findEvent] = action.payload.eventData;
+            state = temp;
+            return
+        },
     }
 })
 
-export const { eventGET, eventPOST, eventPUT, eventDELETE, eventSET, eventDataGET, guestGET, guestADD, guestREMOVE, individualEventGet, logoutRESET } = eventsSlice.actions
+export const {
+    eventGET, eventPOST, eventPUT, eventDELETE, eventSET, eventDataGET,
+    guestGET, guestADD, guestREMOVE, individualEventGet,
+    logoutRESET, eventTaskPOST } = eventsSlice.actions
 
 export default eventsSlice.reducer

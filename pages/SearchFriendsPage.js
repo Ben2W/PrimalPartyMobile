@@ -1,17 +1,20 @@
 import {Box, Button, Center, Input, Text, View, VStack, FlatList} from "native-base";
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import SearchUsers from "../components/API Calls/SearchUsers";
 import CustomCard from "../components/CustomCard";
 import PeopleCard from "../components/PeopleCard";
+import {CredentialsContext} from "../components/CredentialsContext";
 
 const SearchFriendsPage = ({navigation, route}) => {
     const [eventID, setEventID] = useState(route.params.eventID);
     const [people, setPeople] = useState()
     const [formData, setData] = useState({search: ' '} );
+    const [myID, setMyID] = useState(useContext(CredentialsContext).storedCredentials._id)
 
-    async function handleClick() {
-        const temp = await SearchUsers(formData.search)
+    async function handleClick(value) {
+        const temp = await SearchUsers(value)
             .then((res) => {
+                // list of user objects
                 let parseMap = res.map((obj) => obj)
                 
                 // filter duplicates
@@ -19,6 +22,11 @@ const SearchFriendsPage = ({navigation, route}) => {
                     return !route.params.eventData.guests.find(el => {
                         return element._id === el._id;
                     })
+                })
+
+                // filter friends
+                parseMap = parseMap.filter(element => {
+                    return element.friends.includes(myID);
                 })
 
                 setPeople(parseMap);
@@ -44,14 +52,17 @@ const SearchFriendsPage = ({navigation, route}) => {
                         size="md"
                         placeholder = "Search for a new guest!"
                         value = {formData.search}
-                        onChangeText={value => setData({ ...formData,
-                            search: value})
+                        onChangeText={value => {
+                            setData({ ...formData,
+                                search: value})
+                            handleClick(value);
+                        }
                         }
                     />
-                    <Button onPress={() => handleClick()}>
-                        Get Users
-                    </Button>
-                    <Box flexGrow={1} maxW="100%" maxH={"75%"} minH={'80%'} bg="violet.400" rounded="md" shadow={3}
+                    {/*<Button onPress={() => handleClick()}>*/}
+                    {/*    Get Users*/}
+                    {/*</Button>*/}
+                    <Box flexGrow={1} maxW="100%" maxH={"90%"} minH={'80%'} bg="violet.400" rounded="md" shadow={3}
                     >
                         <FlatList
                             data = {people}

@@ -56,6 +56,10 @@ const EventGuestNavigation = ({navigation, route}) => {
                 children={() => (
                     <EventTaskList
                         eventID={eventID}
+                        eventData={eventData}
+                        navigation={navigation}
+                        route={newRoute}
+                        isAdmin={isAdmin}
                     />)}
                 options={{
                     tabBarLabel: 'EventTasksList',

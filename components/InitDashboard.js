@@ -33,7 +33,12 @@ const InitDashboard = ({ navigation, route }) => {
             console.log("bruh")
             // console.log(route.params)
         }
-    }, [route]);
+    }, [route.params]);
+
+    useEffect(() => {
+        console.log('wierjoiqwer')
+        // console.log(navigation.getState())
+    }, [navigation.getState().routes[0]]);
 
     // End of Redux Initialization
 
@@ -93,6 +98,7 @@ const InitDashboard = ({ navigation, route }) => {
                                 navigation={navigation}
                                 data={item}
                                 key={item._id}
+                                route={route}
                             />
                         )}
                         keyExtractor={item => item._id}

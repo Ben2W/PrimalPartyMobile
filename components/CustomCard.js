@@ -7,9 +7,11 @@ import EventGuestNavigation from "../pages/EventGuestNavigation";
 import {CredentialsContext} from "./CredentialsContext";
 import Moment from "react-moment";
 import {Text} from "native-base";
+import ReduxStore from "../redux/ReduxStore";
+import {find} from "styled-components/test-utils";
+import {useFocusEffect} from "@react-navigation/native";
 
-const CustomCard = ({navigation, data}) => {
-
+const CustomCard = ({navigation, data, route}) => {
     const [title, setTitle] = useState(data.name);
     const [address, setAddress] = useState(data.address);
     const [date, setDate] = useState(new Date(data.date));
@@ -21,13 +23,35 @@ const CustomCard = ({navigation, data}) => {
 
     const [curEventID, setCurEventID] = useState(data._id);
 
+    useFocusEffect(
+        useCallback(() => {
+            const bruh = () => {
+                let curState = ReduxStore.getState().events;
+                let findEvent = curState.findIndex((obj) => obj._id === data._id);
+                setCurData(curState[findEvent]);
+
+                if (curState[findEvent] !== undefined){
+                    setTitle(curState[findEvent].name);
+                    setAddress(curState[findEvent].address);
+                    setDate(new Date(curState[findEvent].date));
+                    setDesc(curState[findEvent].description);
+                }
+            }
+
+            bruh();
+            return () => bruh;
+        }, [])
+    );
+
     const handleClick = ({navigation}) => {
-        navigation.navigate("EventGuestNavigation", {eventID: curEventID, eventData: curData, isAdmin: isAdmin});
+        let curState = ReduxStore.getState().events;
+        let findEvent = curState.findIndex((obj) => obj._id === data._id);
+        setCurData(curState[findEvent]);
+
+        navigation.navigate("EventGuestNavigation", {eventID: curEventID, eventData: curState[findEvent], isAdmin: isAdmin});
         // navigation.navigate("TestingViewMore")
         // navigation.navigate("EventGuestNavigation", {data:{curData}} )
     }
-
-
 
     let AdminButton;
     if (isAdmin){

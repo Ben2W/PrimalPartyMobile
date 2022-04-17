@@ -1,6 +1,5 @@
 const SearchUsers = async (input) => {
-    input = input.trim()
-    let url = 'https://primalpartybackend.azurewebsites.net/users' + '?q=' + input;
+    let url = 'https://primalpartybackend.azurewebsites.net/users' + '?q=' + input.trim();
     console.log(url)
     // return url.json();
 

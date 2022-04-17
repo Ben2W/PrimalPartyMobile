@@ -8,7 +8,6 @@ import ReduxStore from "../redux/ReduxStore";
 import RemoveUser from "./API Calls/RemoveUser";
 
 const GuestList = (pass) =>{
-    console.log(pass.isAdmin);
     const [props, setProps] = useState(pass.props.eventData)
     const [guests, setGuests] = useState(pass.props.eventData.guests)
     const [removing, setRemoving] = useState(false);
