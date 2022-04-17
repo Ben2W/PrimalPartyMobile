@@ -243,11 +243,6 @@ const EventGuestList = (props) => {
         editModal = <></>
     }
 
-    const editClick = () => {
-        console.log("editing my shit");
-
-    }
-
     return (
         <View style={{
             flex: 1,
