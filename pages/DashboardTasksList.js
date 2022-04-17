@@ -16,12 +16,28 @@ const DashboardTasksList = ({ navigation }) => {
     const [loading, setLoading] = useState(true)
     const [username, setUsername] = useState(useContext(CredentialsContext).storedCredentials.username)
 
-
     useEffect(async () => {
-        setTaskData(ReduxStore.getState().tasks)
-        setTaskList()
-        return () => {
-            abortController.abort()
+        const url = 'https://primalpartybackend.azurewebsites.net/tasks'
+
+        try {
+            const res = await fetch(url,
+                {
+                    method: 'GET',
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+                    },
+                    credentials: 'include'
+                })
+            const tasks = await res.json()
+            setTaskData(tasks.tasks)
+            setTaskList()
+            return () => {
+                abortController.abort()
+            }
+        } catch (e) {
+            return () => {
+                abortController.abort()
+            }
         }
     }, [taskData]);
 
