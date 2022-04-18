@@ -14,6 +14,7 @@ const DashboardFriendsList = ({ navigation }) => {
 
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState([]);
+    
     //Function used to rerender the friends list every time a friend is added or deleted
     const setDataState = () => {
         setData([])
@@ -45,7 +46,6 @@ const DashboardFriendsList = ({ navigation }) => {
         }
     }, [data])
 
-    //console.log(data)
     return (
         <View style={{
             flex: 1,
@@ -66,7 +66,6 @@ const DashboardFriendsList = ({ navigation }) => {
                         </ButtonText>
                     </StyledAddButton>
                     <FlatList
-                        //style={{width: "100%"}}
                         data={data}
                         keyExtractor={({ id }, index) => index}
                         renderItem={({ item }) => (

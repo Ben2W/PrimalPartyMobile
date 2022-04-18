@@ -1,11 +1,12 @@
 import * as React from 'react';
-import {Box, Container, Heading, ScrollView, VStack, Text, View, NativeBaseProvider} from "native-base";
+import {Box, Container, Heading, ScrollView, VStack, Text, View, NativeBaseProvider, Center} from "native-base";
 import {useState} from "react";
 import { StyleSheet } from "react-native";
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { StyledImageContainer, InnerContainer, PageLogo, PageTitle, StyledFormArea, Subtitle, Colors, StyledButton, ButtonText, StyledDeleteButton, DeleteButtonText, MsgBox, ExtraView, ExtraText, TextLink, TextLinkContent, StyledContainer } from '../components/styles'
 import { inlineStyles } from 'react-native-svg';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const FriendCard = ({ navigation, friend, setDataState }) => {
     const [firstNames, setFirstNames] = useState(friend.firstName)
@@ -33,15 +34,14 @@ const FriendCard = ({ navigation, friend, setDataState }) => {
 
     return(
         <Container maxW={"100%"} maxH="100%" bg={"indigo.300"} rounded="md" shadow={3} flexGrow="1" borderColor="red" borderWidth="0" margin="1">
+            
             <View style={styles.row}>
                 <Heading style={styles.heading}>
                     {firstNames} {lastNames}
                 </Heading>
-
                 <View style={styles.space}/>
-                
                 <StyledDeleteButton onPress={handleFriendDelete}>
-                <MaterialCommunityIcons name="delete" size={30} color="white" />
+                    <MaterialCommunityIcons name="delete" size={30} color="white" />
                 </StyledDeleteButton>
             </View>
         </Container>
@@ -51,7 +51,7 @@ const FriendCard = ({ navigation, friend, setDataState }) => {
 const styles = StyleSheet.create({
 
     space: {
-        width: "4%", 
+        width: "6%", 
     },
 
     row: {
@@ -62,16 +62,13 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        //borderBottomWidth: 0,
+        alignItems: 'center',
         borderWidth: 0
-       // borderBottomColor: 'white'
+       
     },
 
     heading: {
         fontSize: 25,
-        marginLeft: "2%",
-        borderColor: "black",
-        borderWidth: 0,
         width: "80%"
     },
 
