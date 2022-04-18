@@ -19,7 +19,6 @@ const InitDashboard = ({ navigation, route }) => {
     const abortController = new AbortController()
 
     useEffect(() => {
-        console.log('lol')
         bruh = ReduxStore.getState().events;
         setEventData(bruh);
     }, [ReduxStore.getState().events])

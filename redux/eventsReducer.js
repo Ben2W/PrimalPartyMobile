@@ -84,9 +84,9 @@ export const eventsSlice = createSlice({
         eventTaskPOST: (state, action) => {
             let temp = [...state];
             let findEvent = temp.findIndex((obj) => obj._id === action.payload.eventID);
-            temp[findEvent] = action.payload.eventData;
+            temp[findEvent].tasks = action.payload.eventData.tasks;
             state = temp;
-            return
+            return;
         },
     }
 })

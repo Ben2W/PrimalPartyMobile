@@ -18,12 +18,12 @@ const abortController = new AbortController()
 const Tab = createMaterialBottomTabNavigator();
 
 const DashboardNavigation = ({ navigation, route }) => {
-    useEffect(() => {
-        console.log('23854u69284576894375967')
-        return () => {
-            abortController.abort()
-        }
-    }, [navigation.getState().routes[0]])
+    // useEffect(() => {
+    //     console.log('23854u69284576894375967')
+    //     return () => {
+    //         abortController.abort()
+    //     }
+    // }, [navigation.getState().routes[0]])
 
     const { storedCredentials, setStoredCredentials } = useContext(CredentialsContext)
 

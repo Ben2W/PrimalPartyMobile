@@ -20,15 +20,20 @@ const EventTaskList = (props) => {
     const [newRoute, setNewRoute] = useState(props.route);
     const [pass, setPass] = useState(props.route.params);
     const [userID, setUserID] = useState(useContext(CredentialsContext).storedCredentials._id)
+    const [adminID, setAdminID] = useState(pass.eventData.admin._id)
 
-    useEffect(() => {
-        // console.log("!69~")
-        setPass(props.route.params);
-        setNewRoute(props.route);
-        return () => {
-            abortController.abort()
-        }
-    }, [props.route.params])
+    // console.log(userID);
+    // console.log(adminID);
+
+
+    // useEffect(() => {
+    //     // console.log("!69~")
+    //     setPass(props.route.params);
+    //     setNewRoute(props.route);
+    //     return () => {
+    //         abortController.abort()
+    //     }
+    // }, [props.route.params])
 
     const dispatch = useDispatch();
     // Start of EditModal Logic
@@ -51,25 +56,31 @@ const EventTaskList = (props) => {
             AddNewTask({ formData }, props.eventData._id, userID)
                 .then((res) => {
                     dispatch(eventTaskPOST({ eventID: res.retval._id, eventData: res.retval, }))
-                    setAdding(true);
+                    let findEvent = ReduxStore.getState().events.findIndex((obj) => obj._id === pass.eventData._id);
+                    let eventArray = ReduxStore.getState().events[findEvent];
+                    setPass({eventData: eventArray} );
                 })
             return true;
         }
     };
 
-    const [adding, setAdding] = useState(false);
+    // const [adding, setAdding] = useState(false);
+    //
+    // useEffect(() => {
+    //     if (adding) {
+    //         let findEvent = ReduxStore.getState().events.findIndex((obj) => obj._id === pass.eventData._id);
+    //         let eventArray = ReduxStore.getState().events[findEvent];
+    //         console.log(eventArray.tasks);
+    //         setPass({ eventData: eventArray} );
+    //         setAdding(false);
+    //     }
+    //     return () => {
+    //         abortController.abort()
+    //     }
+    // }, [adding])
 
-    useEffect(() => {
-        if (adding) {
-            let findEvent = ReduxStore.getState().events.findIndex((obj) => obj._id === pass.eventData._id);
-            let eventArray = ReduxStore.getState().events[findEvent];
-            setPass({ eventData: eventArray });
-            setAdding(false);
-        }
-        return () => {
-            abortController.abort()
-        }
-    }, [adding])
+
+
     useEffect(() => {
         if (showModal) return; // If shown, do nothing
 
@@ -84,7 +95,7 @@ const EventTaskList = (props) => {
 
     // Add Modal
     let addModal = {}
-    if (useContext(CredentialsContext).storedCredentials._id === pass.eventData.admin._id) {
+    if (userID === adminID) {
         addModal = <View>
             <Button onPress={() => setShowModal(true)}>
                 Add a task for your friend's poor souls!
