@@ -117,6 +117,7 @@ export const StyledDeleteButton = styled.TouchableOpacity`
     align-items: center;
     border-radius: 5px;
     margin-vertical: 0px;
+    margin-right: 10%;
     height: 60px;
     width: 60px;
 `

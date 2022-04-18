@@ -66,6 +66,7 @@ const DashboardFriendsList = ({ navigation }) => {
                         </ButtonText>
                     </StyledAddButton>
                     <FlatList
+                        //style={{width: "100%"}}
                         data={data}
                         keyExtractor={({ id }, index) => index}
                         renderItem={({ item }) => (
