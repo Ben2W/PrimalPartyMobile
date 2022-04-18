@@ -93,12 +93,6 @@ const DashboardNavigation = ({ navigation, route }) => {
                         ),
                     }}
                 />
-                <Tab.Screen
-                    name="ReduxTesting"
-                    children={() => (
-                        <ReduxTesting
-                        />)}
-                />
             </Tab.Navigator>
         </View>
     )
