@@ -11,7 +11,7 @@ import ReduxStore from "../redux/ReduxStore";
 import {find} from "styled-components/test-utils";
 import {useFocusEffect} from "@react-navigation/native";
 
-const CustomCard = ({navigation, data, route}) => {
+const CustomCard = ({navigation, data, route}, props) => {
     const [title, setTitle] = useState(data.name);
     const [address, setAddress] = useState(data.address);
     const [date, setDate] = useState(new Date(data.date));
@@ -19,7 +19,9 @@ const CustomCard = ({navigation, data, route}) => {
     const [curData, setCurData] = useState(data);
     const [adminID, setAdminID] = useState(data.admin._id);
     const [userID, setUserID] = useState(useContext(CredentialsContext).storedCredentials._id)
-    const [isAdmin, setIsAdmin] = useState(() => {return adminID === userID});
+
+    const checkAdmin = userID === adminID;
+    const [isAdmin, setIsAdmin] = useState(checkAdmin);
 
     const [curEventID, setCurEventID] = useState(data._id);
 
@@ -35,6 +37,7 @@ const CustomCard = ({navigation, data, route}) => {
                     setAddress(curState[findEvent].address);
                     setDate(new Date(curState[findEvent].date));
                     setDesc(curState[findEvent].description);
+                    setAdminID(curState[findEvent].admin._id)
                 }
             }
 
@@ -54,7 +57,7 @@ const CustomCard = ({navigation, data, route}) => {
     }
 
     let AdminButton;
-    if (isAdmin){
+    if (userID === adminID){
         AdminButton =
         <View
             style={{
@@ -66,11 +69,13 @@ const CustomCard = ({navigation, data, route}) => {
                 style={{
                     width: "100%",
                     backgroundColor: '#721121',
+                    borderRadius: '500'
                 }}
                 onPress={() => handleClick({navigation})}
             />
         </View>
     }
+
     else{
         AdminButton =
             <View
@@ -82,7 +87,8 @@ const CustomCard = ({navigation, data, route}) => {
                     label={"View More"}
                     style={{
                         width: "100%",
-                        backgroundColor:'#FFC07F'
+                        backgroundColor:'#FFC07F',
+                        borderRadius: '500'
                     }}
                     onPress={() => handleClick({navigation})}
                 />
@@ -101,7 +107,7 @@ const CustomCard = ({navigation, data, route}) => {
             mode="outlined"
             elevation = {20}
             borderRadius={50}
-            >
+        >
             {/*<Card.Title title={props.title} subtitle="Card Subtitle" left={(props) => <Avatar.Icon {...props} icon="party-popper" />} />*/}
             <LinearGradient
                 colors={['#4555F2', '#878af7']}

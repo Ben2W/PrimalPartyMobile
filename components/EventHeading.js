@@ -1,26 +1,59 @@
 import * as React from 'react';
-import {Box, Container, Heading, ScrollView, VStack, Text, View} from "native-base";
+import {Box, Container, Heading, ScrollView, VStack, Text, View, Icon, AddIcon} from "native-base";
 import {useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
-import {eventDataGET} from "../redux/eventsReducer";
+import {eventDataGET, eventTaskPOST} from "../redux/eventsReducer";
 import ReduxStore from "../redux/ReduxStore";
+import {Entypo, MaterialCommunityIcons} from "@expo/vector-icons";
 
 const EventHeading = (pass) => {
-    const props = pass.props.eventData
+    const [props, setProps] = useState(pass.props.eventData)
+
+    useEffect(() => {
+        let findEvent = ReduxStore.getState().events.findIndex((obj) => obj._id === props._id);
+        let eventArray = ReduxStore.getState().events[findEvent];
+        setProps(eventArray);
+    }, [ReduxStore.getState().events])
 
     return(
-            <Container maxW={"100%"} maxH="20%" bg="indigo.300" rounded="md" shadow={3} flexGrow="1">
-                <Box flexGrow="1">
-                    <Heading pb="1" size="lg" marginLeft="2%" >
-                        {props.name}
-                    </Heading>
-                    <Text size = "md" marginLeft="2%" fontWeight="medium">
-                        Date: {new Date(props.date).toLocaleDateString("en-US")} {"\n"}
-                        Location: {props.address} {"\n"}
-                        Guests: {props.guests.length} {"\n"}
-                        Desc: {props.description}
-                        {"\n"}ID: {props._id}
-                    </Text>
+            <Container maxW={"100%"} maxH="18%" bg="indigo.300" rounded="md" shadow={3} flexGrow="1" >
+                <Box flexDir={'row'} ml={'5%'} mt={'2%'}>
+                <Box flexGrow="1" flexDir={'column'} >
+                    {/*<Heading pb="1" size="lg" marginLeft="2%" textAlign={'left'} >*/}
+                    {/*    {props.name}*/}
+                    {/*</Heading>*/}
+                    <Box flexDir={'row'} width={'50%'}>
+                            <Icon as={Entypo} name="calendar" color="coolGray.800" size={'md'} _dark={{
+                                color: "warmGray.50"
+                            }} />
+                            <Heading size={'md'}>
+                                {" " + new Date(props.date).toLocaleDateString("en-US")} {"\n"}
+                            </Heading>
+                    </Box>
+
+                    <Box flexDir={'row'}>
+                    <Icon as={Entypo} name="location-pin" color="coolGray.800" size={'md'} _dark={{
+                                color: "warmGray.50"
+                            }} />
+                            <Heading size={'md'}>
+                                {" " + props.address} {"\n"}
+                            </Heading>
+                    </Box>
+                    <Box flexDir={'row'}>
+                        <Icon as={Entypo} name="users" color="coolGray.800" size={'md'} _dark={{
+                            color: "warmGray.50"
+                        }} />
+                        <Heading size={'md'}>
+                            {" " + props.guests.length} {"\n"}
+                        </Heading>
+                    </Box>
+                </Box>
+                    <Box flexDir={'column'} width={'45%'}>
+                        <Heading size={'md'}>
+                            Description
+                        </Heading>
+                        {'\n' + props.description}
+                    </Box>
                 </Box>
             </Container>
     );

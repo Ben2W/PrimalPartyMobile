@@ -6,6 +6,7 @@ import PeopleCard from "./PeopleCard";
 import { guestREMOVE } from "../redux/eventsReducer";
 import ReduxStore from "../redux/ReduxStore";
 import RemoveUser from "./API Calls/RemoveUser";
+import {PageTitle} from "./styles";
 
 const GuestList = (pass) => {
     const [props, setProps] = useState(pass.props.eventData)
@@ -81,7 +82,7 @@ const GuestList = (pass) => {
                     borderColor={"black"}
                     rounded="md"
                     bg="violet.300"
-                    maxH={"85%"} marginLeft="5%" marginRight="5%"
+                    maxH={"85%"} marginLeft="5%" marginRight="5%" h={'85%'}
                     textAlign={"center"}
                     lineHeight={10}
                 />
@@ -93,8 +94,14 @@ const GuestList = (pass) => {
                 <FlatList
                     data={guests}
                     renderItem={({ item }) => (
+                        <Box
+                            background={'#B9F8D3'}
+                            marginBottom={'5%'}
+                            width={'100%'}
+                            borderRadius={8}
+                            pb={"1%"} pt={"1%"}
+                        >
                         <Box flexDirection={"row"} marginLeft="5%" pb={"3%"} pt={"3%"}
-                        // background={'fuchsia.200'}
                         >
                             <HStack space={"2%"} flex={1} alignItems={'center'}>
                                 <Heading textAlign={"left"} width={"50%"} pt="2%" size={'sm'} flexWrap={'wrap'}>
@@ -110,6 +117,7 @@ const GuestList = (pass) => {
                                 </Button>
                             </HStack>
                         </Box>
+                        </Box>
                     )}
                     keyExtractor={item => item._id}
 
@@ -117,7 +125,7 @@ const GuestList = (pass) => {
                     borderColor={"black"}
                     rounded="md"
                     bg="violet.300"
-                    maxH={"85%"} marginLeft="5%" marginRight="5%"
+                    maxH={"85%"} marginLeft="5%" marginRight="5%" h={'85%'}
                     textAlign={"center"}
                     lineHeight={10}
                 />

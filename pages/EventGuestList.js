@@ -12,6 +12,7 @@ import { Datepicker, NativeDateService } from "@ui-kitten/components";
 import CreateNewEvent from "../components/API Calls/CreateNewEvent";
 import EditEvent from "../components/API Calls/EditEvent";
 import {CommonActions} from "@react-navigation/native";
+import {PageTitle} from "../components/styles";
 
 
 const abortController = new AbortController()
@@ -160,7 +161,7 @@ const EventGuestList = (props) => {
     // Edit Modal
     let editModal = {}
     if (useContext(CredentialsContext).storedCredentials._id === pass.eventData.admin._id) {
-        editModal = <View>
+        editModal = <View >
             <Button onPress={() => setShowModal(true)}>
                 Edit your event!
             </Button>
@@ -243,11 +244,6 @@ const EventGuestList = (props) => {
         editModal = <></>
     }
 
-    const editClick = () => {
-        console.log("editing my shit");
-
-    }
-
     return (
         <View style={{
             flex: 1,
@@ -258,12 +254,13 @@ const EventGuestList = (props) => {
             flexDirection: "column",
         }}>
             <VStack space={"2%"} flex={1}>
-                <>
+                    <PageTitle>
+                        {pass.eventData.name}'s Guest List
+                    </PageTitle>
                     <EventHeading props={pass} />
                     {editModal}
                     <GuestList props={pass} route={newRoute} isAdmin={(useContext(CredentialsContext).storedCredentials._id === pass.eventData.admin._id)} />
                     {delButton}
-                </>
             </VStack>
         </View>
     )

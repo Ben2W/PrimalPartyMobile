@@ -4,6 +4,7 @@ import SearchUsers from "../components/API Calls/SearchUsers";
 import CustomCard from "../components/CustomCard";
 import PeopleCard from "../components/PeopleCard";
 import { CredentialsContext } from "../components/CredentialsContext";
+import {PageTitle} from "../components/styles";
 
 const abortController = new AbortController()
 
@@ -36,6 +37,8 @@ const SearchFriendsPage = ({ navigation, route }) => {
     }
 
     useEffect(() => {
+        // preload searchList
+        handleClick(' ');
         setEventID(route.params.eventID)
         return () => {
             abortController.abort()
@@ -51,9 +54,13 @@ const SearchFriendsPage = ({ navigation, route }) => {
             marginRight: "2%",
             flexDirection: "column",
         }}>
+            <PageTitle >
+                Add Friends as Guests!
+            </PageTitle>
             <VStack space={3}>
                 <Input
                     size="md"
+                    style={{height: 40, borderWidth: 1}}
                     placeholder="Search for a new guest!"
                     value={formData.search}
                     onChangeText={value => {
@@ -65,10 +72,7 @@ const SearchFriendsPage = ({ navigation, route }) => {
                     }
                     }
                 />
-                {/*<Button onPress={() => handleClick()}>*/}
-                {/*    Get Users*/}
-                {/*</Button>*/}
-                <Box flexGrow={1} maxW="100%" maxH={"90%"} minH={'80%'} bg="violet.400" rounded="md" shadow={3}
+                <Box flexGrow={1} maxW="100%" maxH={"80%"} minH={'80%'} bg="blue.500" rounded="md" shadow={3}
                 >
                     <FlatList
                         data={people}
@@ -81,7 +85,7 @@ const SearchFriendsPage = ({ navigation, route }) => {
                         borderColor={"black"}
                         rounded="md"
                         // bg="violet.300"
-                        maxH={"90%"} marginLeft="5%" marginRight="5%"
+                        maxH={"90%"} marginLeft="5%" marginRight="5%" marginTop={'5%'}
                         textAlign={"center"}
                         lineHeight={10}
 
