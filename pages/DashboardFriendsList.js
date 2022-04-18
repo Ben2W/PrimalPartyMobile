@@ -5,6 +5,7 @@ import { StyleSheet, View, Text, ActivityIndicator, FlatList, SafeAreaView } fro
 import { StyledImageContainer, InnerContainer, PageLogo, PageTitle, StyledFormArea, Subtitle, Colors, StyledAddButton, ButtonText, MsgBox, ExtraView, ExtraText, TextLink, TextLinkContent, StyledContainer } from '../components/styles'
 import KeyboardAvoidingViewWrapper from '../components/KeyboardAvoidingWrapper';
 import FriendCard from "../components/FriendCard"
+import { getColor } from 'native-base';
 //import { SafeAreaView } from 'react-native-safe-area-context';
 //import {NativeBaseProvider, Box, Center, Heading, ScrollView, Flex, VStack, ZStack, Container, View, Text} from "native-base";
 
@@ -45,6 +46,17 @@ const DashboardFriendsList = ({ navigation }) => {
         }
     }, [data])
 
+    let color = "indigo."
+    let colornum = 0
+
+    const getColor = () => {
+        colornum = (colornum + 100) % 600
+        if (colornum == 0){
+            colornum += 100
+        }
+        return(color + colornum);
+    }
+
     //console.log(data)
     return (
         <View style={{
@@ -74,6 +86,7 @@ const DashboardFriendsList = ({ navigation }) => {
                                 friend={item}
                                 setDataState={setDataState}
                                 key={item.friends._id}
+                                color={getColor()}
                             />
                         )} /></>
             )}
