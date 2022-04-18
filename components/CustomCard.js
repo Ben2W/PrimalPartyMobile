@@ -69,11 +69,13 @@ const CustomCard = ({navigation, data, route}, props) => {
                 style={{
                     width: "100%",
                     backgroundColor: '#721121',
+                    borderRadius: '500'
                 }}
                 onPress={() => handleClick({navigation})}
             />
         </View>
     }
+
     else{
         AdminButton =
             <View
@@ -85,7 +87,8 @@ const CustomCard = ({navigation, data, route}, props) => {
                     label={"View More"}
                     style={{
                         width: "100%",
-                        backgroundColor:'#FFC07F'
+                        backgroundColor:'#FFC07F',
+                        borderRadius: '500'
                     }}
                     onPress={() => handleClick({navigation})}
                 />
@@ -104,7 +107,7 @@ const CustomCard = ({navigation, data, route}, props) => {
             mode="outlined"
             elevation = {20}
             borderRadius={50}
-            >
+        >
             {/*<Card.Title title={props.title} subtitle="Card Subtitle" left={(props) => <Avatar.Icon {...props} icon="party-popper" />} />*/}
             <LinearGradient
                 colors={['#4555F2', '#878af7']}

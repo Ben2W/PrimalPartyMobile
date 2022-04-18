@@ -8,6 +8,7 @@ import { CredentialsContext } from "./CredentialsContext";
 import CustomCard from "./CustomCard";
 import { Datepicker, NativeDateService } from "@ui-kitten/components";
 import CreateNewEvent from "./API Calls/CreateNewEvent";
+import {PageTitle} from "./styles";
 
 const InitDashboard = ({ navigation, route }) => {
     let bruh = ReduxStore.getState().events;
@@ -87,12 +88,12 @@ const InitDashboard = ({ navigation, route }) => {
             marginRight: "2%",
         }}>
             <>
-                <Box maxH={"80%"} flexGrow={1} borderWidth={"2"} borderColor={"indigo.100"} >
-                    <Heading textAlign={"center"} pb={'2%'} pt={'2%'}>
+                    <PageTitle >
                         {username}'s
                         Upcoming Events!
-                    </Heading>
-                    <FlatList
+                    </PageTitle>
+                <Box maxH={"80%"} flexGrow={1} >
+                <FlatList
                         data={eventData}
                         renderItem={({ item }) => (
                             <CustomCard
@@ -103,6 +104,7 @@ const InitDashboard = ({ navigation, route }) => {
                             />
                         )}
                         keyExtractor={item => item._id}
+                        mt={'2%'}
                     />
                 </Box>
                 <Box pt={"5%"}>
