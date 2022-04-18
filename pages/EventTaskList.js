@@ -1,6 +1,6 @@
 import GuestList from "../components/GuestList";
 import EventHeading from "../components/EventHeading";
-import { Box, Button, FormControl, Input, Modal, Text, View, VStack } from "native-base";
+import {Box, Button, CheckIcon, FormControl, Input, Modal, Text, View, VStack} from "native-base";
 import React, { useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import ReduxStore from "../redux/ReduxStore";
@@ -8,7 +8,7 @@ import { FAB } from "react-native-paper";
 import { eventDELETE, eventPOST, eventPUT, eventTaskPOST } from "../redux/eventsReducer";
 import { StackActions as navigation } from "react-navigation";
 import { CredentialsContext } from "../components/CredentialsContext";
-import { Datepicker, NativeDateService } from "@ui-kitten/components";
+import {Datepicker, IndexPath, NativeDateService, SelectItem, Select} from "@ui-kitten/components";
 import CreateNewEvent from "../components/API Calls/CreateNewEvent";
 import EditEvent from "../components/API Calls/EditEvent";
 import TaskList from "../components/TaskList";
@@ -42,7 +42,7 @@ const EventTaskList = (props) => {
     const initDate = new Date(pass.eventData.date);
     const formatDateService = new NativeDateService('en', { format: 'MM-DD-YYYY' });
 
-    const [formData, setData] = useState({ name: "TBD", description: "TBD" });
+    const [formData, setData] = useState({ name: "TBD", description: "TBD", assignees: pass.eventData.guests } );
     const [errors, setErrors] = useState({});
 
     const validate = ({ formData }) => {
@@ -56,7 +56,7 @@ const EventTaskList = (props) => {
         else {
             AddNewTask({ formData }, props.eventData._id, userID)
                 .then((res) => {
-                    dispatch(eventTaskPOST({ eventID: res.retval._id, eventData: res.retval, }))
+                    dispatch(eventTaskPOST({ eventID: res.retval._id, eventData: res.retval }))
                     let findEvent = ReduxStore.getState().events.findIndex((obj) => obj._id === pass.eventData._id);
                     let eventArray = ReduxStore.getState().events[findEvent];
                     setPass({eventData: eventArray} );
@@ -65,20 +65,25 @@ const EventTaskList = (props) => {
         }
     };
 
-    // const [adding, setAdding] = useState(false);
-    //
-    // useEffect(() => {
-    //     if (adding) {
-    //         let findEvent = ReduxStore.getState().events.findIndex((obj) => obj._id === pass.eventData._id);
-    //         let eventArray = ReduxStore.getState().events[findEvent];
-    //         console.log(eventArray.tasks);
-    //         setPass({ eventData: eventArray} );
-    //         setAdding(false);
-    //     }
-    //     return () => {
-    //         abortController.abort()
-    //     }
-    // }, [adding])
+    // MultiSelect Assignees
+    // pass.eventData.guests === total list of guests to choose from
+    const [selectedIndex, setSelectedIndex] = React.useState([]);
+    const groupDisplayValues = selectedIndex.map(index => {
+        let name = pass.eventData.guests[index.row].firstName + ' ' + pass.eventData.guests[index.row].lastName;
+        return name;
+    }).join(', ');
+
+    // FormData === selected Data
+    useEffect(() => {
+        console.log(selectedIndex);
+        setData( {...formData,
+            assignees: selectedIndex.map(index => {
+                    return pass.eventData.guests[index.row];
+                })
+        })
+
+
+    }, [selectedIndex])
 
 
 
@@ -86,7 +91,7 @@ const EventTaskList = (props) => {
         if (showModal) return; // If shown, do nothing
 
         // Else, clear form
-        setData({ name: "", description: "" });
+        setData({ name: "", description: "", assignees: pass.eventData.guests });
         setErrors({}); return () => {
             abortController.abort()
         }
@@ -132,6 +137,20 @@ const EventTaskList = (props) => {
                                     description: value
                                 })}
                             />
+                        </FormControl>
+                        <FormControl mt="3" >
+                            <FormControl.Label>Assignees</FormControl.Label>
+                            <Select
+                                multiSelect={true}
+                                selectedIndex={selectedIndex}
+                                placeholder='Dark Mode'
+                                value={groupDisplayValues}
+                                // value={formData.assignees.map(obj => obj.firstName + obj.lastName).join(', ')}
+                                onSelect={index => setSelectedIndex(index)}>
+                                {pass.eventData.guests.map((person) =>
+                                    <SelectItem title={person.firstName + " " + person.lastName} key={person._id} />
+                                )}
+                            </Select>
                         </FormControl>
                     </Modal.Body>
                     <Modal.Footer>
