@@ -111,15 +111,15 @@ export const StyledButton = styled.TouchableOpacity`
     height: 60px;
 `
 export const StyledDeleteButton = styled.TouchableOpacity`
-    padding: 15px;
+    padding: 10px;
     background-color: ${red};
     justify-content: center;
     align-items: center;
     border-radius: 5px;
     margin-vertical: 0px;
     margin-right: 10%;
-    height: 60px;
-    width: 60px;
+    height: 40px;
+    width: 40px;
 `
 
 export const StyledAddButton = styled.TouchableOpacity`

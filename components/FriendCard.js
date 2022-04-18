@@ -33,18 +33,21 @@ const FriendCard = ({ navigation, friend, setDataState }) => {
       }
 
     return(
-        <Container maxW={"100%"} maxH="100%" bg={"indigo.300"} rounded="md" shadow={3} flexGrow="1" borderColor="red" borderWidth="0" margin="1">
+        <LinearGradient colors={['#4555F2', '#6f72da']} style={styles.container}>
+            <Container maxW={"100%"} maxH="100%" rounded="md" shadow={3} flexGrow="1" borderColor="red" borderWidth="0" margin="1">
             
-            <View style={styles.row}>
-                <Heading style={styles.heading}>
+                <View style={styles.row}>
+                    <Heading style={styles.heading}>
                     {firstNames} {lastNames}
-                </Heading>
-                <View style={styles.space}/>
-                <StyledDeleteButton onPress={handleFriendDelete}>
-                    <MaterialCommunityIcons name="delete" size={30} color="white" />
-                </StyledDeleteButton>
-            </View>
-        </Container>
+                    </Heading>
+                    <View style={styles.space}/>
+                    <StyledDeleteButton onPress={handleFriendDelete}>
+                        <MaterialCommunityIcons name="delete" size={20} color="white" />
+                    </StyledDeleteButton>
+                </View>
+                
+            </Container>
+        </LinearGradient>
 );
 }
 
@@ -67,13 +70,20 @@ const styles = StyleSheet.create({
        
     },
 
+    linearGradient: {
+        flex: 1,
+        paddingLeft: 15,
+        paddingRight: 15,
+        borderRadius: 5
+      },
+
     heading: {
         fontSize: 25,
-        width: "80%"
+        color: 'white',
+        width: "85%"
     },
 
     container: {
-        backgroundColor: "blue",
         borderRadius: 5,
         flexGrow: 1,
         margin: 1
