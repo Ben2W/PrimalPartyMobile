@@ -82,7 +82,7 @@ const TaskList = (pass) => {
                     borderColor={"black"}
                     rounded="md"
                     bg="violet.300"
-                    maxH={"85%"} marginLeft="5%" marginRight="5%"
+                    h={'85%'} maxH={"85%"} marginLeft="5%" marginRight="5%"
                     textAlign={"center"}
                     lineHeight={10}
                 />
@@ -102,7 +102,7 @@ const TaskList = (pass) => {
                     borderColor={"black"}
                     rounded="md"
                     bg="violet.300"
-                    maxH={"85%"} marginLeft="5%" marginRight="5%"
+                    h={'85%'} maxH={"85%"} marginLeft="5%" marginRight="5%"
                     textAlign={"center"}
                     lineHeight={10}
                 />

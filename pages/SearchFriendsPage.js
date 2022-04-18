@@ -36,6 +36,8 @@ const SearchFriendsPage = ({ navigation, route }) => {
     }
 
     useEffect(() => {
+        // preload searchList
+        handleClick(' ');
         setEventID(route.params.eventID)
         return () => {
             abortController.abort()
@@ -79,7 +81,7 @@ const SearchFriendsPage = ({ navigation, route }) => {
                         borderColor={"black"}
                         rounded="md"
                         // bg="violet.300"
-                        maxH={"90%"} marginLeft="5%" marginRight="5%"
+                        maxH={"90%"} marginLeft="5%" marginRight="5%" marginTop={'5%'}
                         textAlign={"center"}
                         lineHeight={10}
 

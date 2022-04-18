@@ -160,7 +160,7 @@ const EventGuestList = (props) => {
     // Edit Modal
     let editModal = {}
     if (useContext(CredentialsContext).storedCredentials._id === pass.eventData.admin._id) {
-        editModal = <View>
+        editModal = <View >
             <Button onPress={() => setShowModal(true)}>
                 Edit your event!
             </Button>
@@ -253,12 +253,10 @@ const EventGuestList = (props) => {
             flexDirection: "column",
         }}>
             <VStack space={"2%"} flex={1}>
-                <>
                     <EventHeading props={pass} />
                     {editModal}
                     <GuestList props={pass} route={newRoute} isAdmin={(useContext(CredentialsContext).storedCredentials._id === pass.eventData.admin._id)} />
                     {delButton}
-                </>
             </VStack>
         </View>
     )

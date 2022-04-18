@@ -18,10 +18,11 @@ const EventTasksCard = (props) => {
             width={'100%'}
             borderRadius={8}
             pb={"1%"} pt={"1%"}
+
         >
-            <Box flexDirection={"row"} marginLeft="5%" pb={"3%"} pt={"3%"}>
+            <Box flexDirection={"row"} marginLeft="5%" pb={"3%"} pt={"3%"} >
                 <HStack space={"2%"} flex={1} alignItems={'center'} >
-                    <Box width={"50%"}>
+                    <Box width={"50%"} >
                         <Heading
                             textAlign={"left"}  pt="2%" size={'sm'} flexWrap={'wrap'}>
                             {taskData.name}
