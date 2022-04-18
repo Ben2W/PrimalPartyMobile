@@ -6,6 +6,7 @@ import PeopleCard from "./PeopleCard";
 import { guestREMOVE } from "../redux/eventsReducer";
 import ReduxStore from "../redux/ReduxStore";
 import RemoveUser from "./API Calls/RemoveUser";
+import {PageTitle} from "./styles";
 
 const GuestList = (pass) => {
     const [props, setProps] = useState(pass.props.eventData)

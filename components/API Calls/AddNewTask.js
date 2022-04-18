@@ -5,7 +5,7 @@ const AddNewTask = async ({formData}, eventID, currentUserID) => {
     const details = {
         name: formData.name,
         description: formData.description,
-        assignees: [],
+        assignees: [currentUserID],
     }
 
     let formBody = [];

@@ -1,5 +1,6 @@
 import React, {useState} from "react";
-import {Box, Button, Heading, HStack, Text} from "native-base";
+import {Box, Button, Heading, HStack, Icon, IconButton, Text} from "native-base";
+import {Entypo} from "@expo/vector-icons";
 
 const EventTasksCard = (props) => {
     // console.log(props.bruh)
@@ -8,6 +9,7 @@ const EventTasksCard = (props) => {
 
 
     const handleClick = () => {
+        console.log(taskData.assignees)
         console.log('editing');
     }
 
@@ -22,7 +24,7 @@ const EventTasksCard = (props) => {
         >
             <Box flexDirection={"row"} marginLeft="5%" pb={"3%"} pt={"3%"} >
                 <HStack space={"2%"} flex={1} alignItems={'center'} >
-                    <Box width={"50%"} >
+                    <Box width={"40%"} >
                         <Heading
                             textAlign={"left"}  pt="2%" size={'sm'} flexWrap={'wrap'}>
                             {taskData.name}
@@ -31,13 +33,19 @@ const EventTasksCard = (props) => {
                             {taskData.description}
                         </Text>
                     </Box>
-                    <Button
-                        w={'40%'}
+                    <Box w={'30%'} ml={'5%'}>
+                        <Text >
+                            Assignees: {'\n'}
+                            { taskData.assignees.map((obj) => obj.firstName) }
+                        </Text>
+                    </Box>
+                    <IconButton icon={<Icon as={Entypo} name="edit" />}
+                        w={'15%'}
                         height={'40px'}
-                        size={'sm'}
+                        size={'md'}
                         onPress={() => handleClick()}>
                         {"Edit This Task!"}
-                    </Button>
+                    </IconButton>
                 </HStack>
             </Box>
         </Box>

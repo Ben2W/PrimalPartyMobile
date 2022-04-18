@@ -13,6 +13,7 @@ import CreateNewEvent from "../components/API Calls/CreateNewEvent";
 import EditEvent from "../components/API Calls/EditEvent";
 import TaskList from "../components/TaskList";
 import AddNewTask from "../components/API Calls/AddNewTask";
+import {PageTitle} from "../components/styles";
 
 const abortController = new AbortController()
 
@@ -163,6 +164,9 @@ const EventTaskList = (props) => {
         }}>
             <VStack space={"2%"} flex={1}>
                 <>
+                    <PageTitle>
+                        {pass.eventData.name}'s Task List
+                    </PageTitle>
                     <EventHeading props={pass} />
                     {addModal}
                     <TaskList props={pass} route={newRoute} isAdmin={(useContext(CredentialsContext).storedCredentials._id === pass.eventData.admin._id)} />

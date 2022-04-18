@@ -1,10 +1,11 @@
-import {Box, Button, Heading, HStack, Text} from "native-base";
+import {Box, Button, Heading, HStack, Icon, IconButton, Text} from "native-base";
 import React, {useContext, useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
 import {eventDELETE, guestADD} from "../redux/eventsReducer";
 import {StackActions as navigation} from "react-navigation";
 import ReduxStore from "../redux/ReduxStore";
 import {CredentialsContext} from "./CredentialsContext";
+import {Entypo} from "@expo/vector-icons";
 
 const PeopleCard = (pass) => {
     const [props, setProps] = useState(pass);
@@ -63,7 +64,7 @@ const PeopleCard = (pass) => {
 
     return (
         <Box
-            background={'#B9F8D3'}
+            bg={'#f6e84b'}
             marginBottom={'5%'}
             width={'100%'}
             borderRadius={8}
@@ -75,13 +76,16 @@ const PeopleCard = (pass) => {
                         textAlign={"left"} width={"50%"} pt="2%" size={'sm'} flexWrap={'wrap'}>
                         {props.props.firstName} {props.props.lastName}
                     </Heading>
-                    <Button
-                        w={'40%'}
-                        height={'40px'}
-                        size={'sm'}
+                    <IconButton icon={<Icon as={Entypo} name="add-user" size={'md'} ml={'25%'} color={'#202020'}/>}
+                        ml={'20%'}
+                        w={'20%'}
+                        height={'43px'}
+                        size={'md'}
+                        borderWidth={2}
+                        borderRadius={50}
                         onPress={() => handleClick()}>
                         {"Add " + props.props.username}
-                    </Button>
+                    </IconButton>
                 </HStack>
             </Box>
         </Box>

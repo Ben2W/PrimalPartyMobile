@@ -4,6 +4,7 @@ import SearchUsers from "../components/API Calls/SearchUsers";
 import CustomCard from "../components/CustomCard";
 import PeopleCard from "../components/PeopleCard";
 import { CredentialsContext } from "../components/CredentialsContext";
+import {PageTitle} from "../components/styles";
 
 const abortController = new AbortController()
 
@@ -53,6 +54,9 @@ const SearchFriendsPage = ({ navigation, route }) => {
             marginRight: "2%",
             flexDirection: "column",
         }}>
+            <PageTitle >
+                Add Friends as Guests!
+            </PageTitle>
             <VStack space={3}>
                 <Input
                     size="md"
@@ -68,7 +72,7 @@ const SearchFriendsPage = ({ navigation, route }) => {
                     }
                     }
                 />
-                <Box flexGrow={1} maxW="100%" maxH={"90%"} minH={'80%'} bg="violet.400" rounded="md" shadow={3}
+                <Box flexGrow={1} maxW="100%" maxH={"80%"} minH={'80%'} bg="blue.500" rounded="md" shadow={3}
                 >
                     <FlatList
                         data={people}

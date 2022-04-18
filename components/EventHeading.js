@@ -16,21 +16,44 @@ const EventHeading = (pass) => {
     }, [ReduxStore.getState().events])
 
     return(
-            <Container maxW={"100%"} maxH="20%" bg="indigo.300" rounded="md" shadow={3} flexGrow="1">
-                <Box flexGrow="1">
-                    <Heading pb="1" size="lg" marginLeft="2%" textAlign={'left'} >
-                        {props.name}
-                    </Heading>
-                    <Text size = "md" marginLeft="2%" fontWeight="medium">
-                        <Icon as={Entypo} name="app-store" color="coolGray.800" _dark={{
+            <Container maxW={"100%"} maxH="18%" bg="indigo.300" rounded="md" shadow={3} flexGrow="1" >
+                <Box flexDir={'row'} ml={'5%'} mt={'2%'}>
+                <Box flexGrow="1" flexDir={'column'} >
+                    {/*<Heading pb="1" size="lg" marginLeft="2%" textAlign={'left'} >*/}
+                    {/*    {props.name}*/}
+                    {/*</Heading>*/}
+                    <Box flexDir={'row'} width={'50%'}>
+                            <Icon as={Entypo} name="calendar" color="coolGray.800" size={'md'} _dark={{
+                                color: "warmGray.50"
+                            }} />
+                            <Heading size={'md'}>
+                                {" " + new Date(props.date).toLocaleDateString("en-US")} {"\n"}
+                            </Heading>
+                    </Box>
+
+                    <Box flexDir={'row'}>
+                    <Icon as={Entypo} name="location-pin" color="coolGray.800" size={'md'} _dark={{
+                                color: "warmGray.50"
+                            }} />
+                            <Heading size={'md'}>
+                                {" " + props.address} {"\n"}
+                            </Heading>
+                    </Box>
+                    <Box flexDir={'row'}>
+                        <Icon as={Entypo} name="users" color="coolGray.800" size={'md'} _dark={{
                             color: "warmGray.50"
                         }} />
-                        Date: {new Date(props.date).toLocaleDateString("en-US")} {"\n"}
-                        Location: {props.address} {"\n"}
-                        Guests: {props.guests.length} {"\n"}
-                        Desc: {props.description}
-                        {"\n"}ID: {props._id}
-                    </Text>
+                        <Heading size={'md'}>
+                            {" " + props.guests.length} {"\n"}
+                        </Heading>
+                    </Box>
+                </Box>
+                    <Box flexDir={'column'} width={'45%'}>
+                        <Heading size={'md'}>
+                            Description
+                        </Heading>
+                        {'\n' + props.description}
+                    </Box>
                 </Box>
             </Container>
     );
