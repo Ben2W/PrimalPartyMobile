@@ -10,34 +10,39 @@ import { Datepicker, NativeDateService } from "@ui-kitten/components";
 import CreateNewEvent from "./API Calls/CreateNewEvent";
 import {PageTitle} from "./styles";
 
-const InitDashboard = ({ navigation, route }) => {
-    let bruh = ReduxStore.getState().events;
-    const [eventData, setEventData] = useState(bruh);
+const InitDashboard = ({ navigation, route, newState }) => {
+    console.log('NEWWWWWW')
+    console.log(newState.events);
+    const [eventData, setEventData] = useState(newState.events);
     const [username, setUsername] = useState(useContext(CredentialsContext).storedCredentials.firstName)
     const [showModal, setShowModal] = useState(false);
     const [routePush, setRoutePush] = useState(route.params)
+    // const [oldState, setOldState] = useState(ReduxStore.getState().events);
 
     const abortController = new AbortController()
 
     useEffect(() => {
-        bruh = ReduxStore.getState().events;
-        setEventData(bruh);
-    }, [ReduxStore.getState().events])
+        console.log('init dashboard !!')
+        if (newState.events !== null){
+            setEventData(newState.events)
+        }
+    }, [newState])
 
     // Redux Initialization
-    const dispatch = useDispatch();
-    const init = () => {
-        GetEvents.then((events) => {
-            dispatch(eventSET({ events }))
-            setEventData(events)
-        })
-    }
-    useEffect(() => {
-        init();
-        return () => {
-            abortController.abort()
-        }
-    }, []);
+
+    // const dispatch = useDispatch();
+    // const init = () => {
+    //     GetEvents().then((events) => {
+    //         dispatch(eventSET({ events }))
+    //         setEventData(events)
+    //     })
+    // }
+    // useEffect(() => {
+    //     init();
+    //     return () => {
+    //         abortController.abort()
+    //     }
+    // }, []);
     
     // End of Redux Initialization
 

@@ -1,5 +1,6 @@
-const getEvents = async () => {
+const GetEvents = async () => {
     const url = 'https://primalpartybackend.azurewebsites.net/events'
+    console.log('im emin');
 
     try {
         const res = await fetch(url,
@@ -17,4 +18,4 @@ const getEvents = async () => {
     }
 }
 
-export default getEvents()
+export default GetEvents

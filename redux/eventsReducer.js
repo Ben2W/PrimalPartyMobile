@@ -38,7 +38,8 @@ export const eventsSlice = createSlice({
             return temp
         },
         eventSET: (state, action) => {
-            return action.payload.res;
+            state = action.payload.events
+            return state;
         },
         guestGET: (state, action) => {
             let temp = [...state];
