@@ -2,17 +2,29 @@
 const AddNewTask = async ({formData}, eventID, currentUserID) => {
     const url = 'https://primalpartybackend.azurewebsites.net/events/' + eventID + '/tasks'
     console.log(url);
+
     const details = {
         name: formData.name,
         description: formData.description,
-        assignees: [currentUserID],
+        assignees: formData.assignees.map(obj => obj._id),
     }
 
     let formBody = [];
     for (let property in details) {
-        let encodedKey = encodeURIComponent(property);
-        let encodedValue = encodeURIComponent(details[property]);
-        formBody.push(encodedKey + "=" + encodedValue);
+        if (property == 'assignees'){
+            for (let i = 0; i < details.assignees.length; i++){
+                console.log(details.assignees.length)
+                let encodedKey = encodeURIComponent(`assignees[${i}]`);
+                let encodedValue = encodeURIComponent(details.assignees[i]);
+                formBody.push(encodedKey + "=" + encodedValue);
+            }
+            break;
+        }
+        else {
+            let encodedKey = encodeURIComponent(property);
+            let encodedValue = encodeURIComponent(details[property]);
+            formBody.push(encodedKey + "=" + encodedValue);
+        }
     }
     formBody = formBody.join("&");
 
@@ -26,7 +38,9 @@ const AddNewTask = async ({formData}, eventID, currentUserID) => {
                 credentials: 'include',
                 body: formBody
             })
-        return await res.json();
+        let bread = await res.json();
+        // console.log(bread);
+        return bread
     } catch (e) {
         return e
     }

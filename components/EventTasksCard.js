@@ -36,7 +36,7 @@ const EventTasksCard = (props) => {
                     <Box w={'30%'} ml={'5%'}>
                         <Text >
                             Assignees: {'\n'}
-                            { taskData.assignees.map((obj) => obj.firstName) }
+                            { taskData.assignees.map((obj) => obj.firstName + ' ' + obj.lastName) }
                         </Text>
                     </Box>
                     <IconButton icon={<Icon as={Entypo} name="edit" />}
