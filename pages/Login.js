@@ -33,14 +33,14 @@ const Login = ({ navigation }) => {
 
     const { storedCredentials, setStoredCredentials } = useContext(CredentialsContext)
 
-    const dispatch = useDispatch();
-
-    const init = () => {
-        console.log(ReduxStore.getState())
-        GetEvents.then((res) => {
-            dispatch(eventSET({ res }))
-        })
-    }
+    // const dispatch = useDispatch();
+    //
+    // const init = () => {
+    //     console.log(ReduxStore.getState())
+    //     GetEvents.then((res) => {
+    //         dispatch(eventSET({ res }))
+    //     })
+    // }
 
     const handleLogin = async (credentials) => {
         handleMessage(null)
@@ -81,7 +81,6 @@ const Login = ({ navigation }) => {
                 .then(data => {
                     persistLogin({ ...data.user })
                     setIsSubmitting(false)
-                    init();
                 })
                 .catch(err => {
                     setIsSubmitting(false)

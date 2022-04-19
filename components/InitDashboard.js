@@ -10,24 +10,32 @@ import { Datepicker, NativeDateService } from "@ui-kitten/components";
 import CreateNewEvent from "./API Calls/CreateNewEvent";
 import {PageTitle} from "./styles";
 
-const InitDashboard = ({ navigation, route }) => {
-    let bruh = ReduxStore.getState().events;
-    const [eventData, setEventData] = useState(bruh);
+const InitDashboard = ({ navigation, route, newState }) => {
+    const [eventData, setEventData] = useState(newState.events);
     const [username, setUsername] = useState(useContext(CredentialsContext).storedCredentials.firstName)
     const [showModal, setShowModal] = useState(false);
     const [routePush, setRoutePush] = useState(route.params)
+    const [loading, setLoading] = useState(true);
+    const [deleteState, setDeleteState] = useState(ReduxStore.getState());
+    // const [oldState, setOldState] = useState(ReduxStore.getState().events);
 
     const abortController = new AbortController()
 
     useEffect(() => {
-        bruh = ReduxStore.getState().events;
-        setEventData(bruh);
-    }, [ReduxStore.getState().events])
+        if (newState.events !== null){
+            setEventData(newState.events)
+            setLoading(false);
+        }
+        return () => {
+            abortController.abort()
+        }
+    }, [newState])
 
     // Redux Initialization
+
     const dispatch = useDispatch();
     const init = () => {
-        GetEvents.then((events) => {
+        GetEvents().then((events) => {
             dispatch(eventSET({ events }))
             setEventData(events)
         })
@@ -37,7 +45,7 @@ const InitDashboard = ({ navigation, route }) => {
         return () => {
             abortController.abort()
         }
-    }, []);
+    }, [route.params]);
     
     // End of Redux Initialization
 
@@ -81,6 +89,16 @@ const InitDashboard = ({ navigation, route }) => {
     // End of CreateEventModal Logic
 
     return (
+    loading ? (
+        <Center h="100%">
+            < Box >
+                <Spinner size="lg" />
+                <Heading color="#397367" fontSize="md">
+                    Welcome to PrimalParty {username}!
+                </Heading>
+            </Box >
+        </Center >
+    ) :(
         <View style={{
             flex: 1,
             top: "5%",
@@ -189,6 +207,7 @@ const InitDashboard = ({ navigation, route }) => {
                 </Box>
             </>
         </View>
+    )
     )
 }
 

@@ -27,14 +27,14 @@ const EventTaskList = (props) => {
     // console.log(adminID);
 
 
-    // useEffect(() => {
-    //     // console.log("!69~")
-    //     setPass(props.route.params);
-    //     setNewRoute(props.route);
-    //     return () => {
-    //         abortController.abort()
-    //     }
-    // }, [props.route.params])
+    useEffect(() => {
+        // console.log("!69~")
+        setPass(props.route.params);
+        setNewRoute(props.route);
+        return () => {
+            abortController.abort()
+        }
+    }, [props.route.params])
 
     const dispatch = useDispatch();
     // Start of EditModal Logic
@@ -143,7 +143,7 @@ const EventTaskList = (props) => {
                             <Select
                                 multiSelect={true}
                                 selectedIndex={selectedIndex}
-                                placeholder='Dark Mode'
+                                placeholder='Rick Leinecker'
                                 value={groupDisplayValues}
                                 // value={formData.assignees.map(obj => obj.firstName + obj.lastName).join(', ')}
                                 onSelect={index => setSelectedIndex(index)}>

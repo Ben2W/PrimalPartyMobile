@@ -31,13 +31,10 @@ const DashboardTasksList = ({ navigation }) => {
             const tasks = await res.json()
             setTaskData(tasks.tasks)
             setTaskList()
-            return () => {
-                abortController.abort()
-            }
         } catch (e) {
-            return () => {
-                abortController.abort()
-            }
+        }
+        return () => {
+            abortController.abort()
         }
     }, [taskData]);
 

@@ -64,20 +64,20 @@ const customTheme = {
 
 
 const RootStack = () => {
-    const dispatch = useDispatch();
-
-    const init = () => {
-        GetEvents.then((res) => {
-            dispatch(eventSET({ res }))
-        })
-    }
-
-    useEffect(() => {
-        init();
-        return () => {
-            abortController.abort()
-        }
-    }, []);
+    // const dispatch = useDispatch();
+    //
+    // const init = () => {
+    //     GetEvents.then((res) => {
+    //         dispatch(eventSET({ res }))
+    //     })
+    // }
+    //
+    // useEffect(() => {
+    //     init();
+    //     return () => {
+    //         abortController.abort()
+    //     }
+    // }, []);
 
 
     return (
