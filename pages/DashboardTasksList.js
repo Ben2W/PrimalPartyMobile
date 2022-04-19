@@ -72,7 +72,7 @@ const DashboardTasksList = ({ navigation }) => {
                             Your tasks
                         </Heading>
                         <ScrollView>
-                            {taskArray.length > 0 ? taskArray : <Text>You have no tasks</Text>}
+                            {taskData.length > 0 ? taskArray : <Text>You have no tasks</Text>}
                         </ScrollView>
                     </Box>
                 </View>
