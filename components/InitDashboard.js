@@ -17,6 +17,8 @@ const InitDashboard = ({ navigation, route, newState }) => {
     const [username, setUsername] = useState(useContext(CredentialsContext).storedCredentials.firstName)
     const [showModal, setShowModal] = useState(false);
     const [routePush, setRoutePush] = useState(route.params)
+    const [loading, setLoading] = useState(true);
+    const [deleteState, setDeleteState] = useState(ReduxStore.getState());
     // const [oldState, setOldState] = useState(ReduxStore.getState().events);
 
     const abortController = new AbortController()
@@ -25,24 +27,28 @@ const InitDashboard = ({ navigation, route, newState }) => {
         console.log('init dashboard !!')
         if (newState.events !== null){
             setEventData(newState.events)
+            setLoading(false);
+        }
+        return () => {
+            abortController.abort()
         }
     }, [newState])
 
     // Redux Initialization
 
-    // const dispatch = useDispatch();
-    // const init = () => {
-    //     GetEvents().then((events) => {
-    //         dispatch(eventSET({ events }))
-    //         setEventData(events)
-    //     })
-    // }
-    // useEffect(() => {
-    //     init();
-    //     return () => {
-    //         abortController.abort()
-    //     }
-    // }, []);
+    const dispatch = useDispatch();
+    const init = () => {
+        GetEvents().then((events) => {
+            dispatch(eventSET({ events }))
+            setEventData(events)
+        })
+    }
+    useEffect(() => {
+        init();
+        return () => {
+            abortController.abort()
+        }
+    }, [route.params]);
     
     // End of Redux Initialization
 
@@ -86,6 +92,16 @@ const InitDashboard = ({ navigation, route, newState }) => {
     // End of CreateEventModal Logic
 
     return (
+    loading ? (
+        <Center h="100%">
+            < Box >
+                <Spinner size="lg" />
+                <Heading color="#397367" fontSize="md">
+                    Welcome to {username}'s tasks!
+                </Heading>
+            </Box >
+        </Center >
+    ) :(
         <View style={{
             flex: 1,
             top: "5%",
@@ -194,6 +210,7 @@ const InitDashboard = ({ navigation, route, newState }) => {
                 </Box>
             </>
         </View>
+    )
     )
 }
 
