@@ -18,6 +18,7 @@ const CustomCard = ({navigation, data, route}, props) => {
     const [address, setAddress] = useState(data.address);
     const [date, setDate] = useState(new Date(data.date));
     const [desc, setDesc] = useState(data.description);
+    const [guests, setGuests] = useState(data.guests.length);
     const [curData, setCurData] = useState(data);
     const [adminID, setAdminID] = useState(data.admin._id);
     const [userID, setUserID] = useState(useContext(CredentialsContext).storedCredentials._id)
@@ -40,6 +41,7 @@ const CustomCard = ({navigation, data, route}, props) => {
                     setDate(new Date(curState[findEvent].date));
                     setDesc(curState[findEvent].description);
                     setAdminID(curState[findEvent].admin._id)
+                    setGuests(curState[findEvent].guests.length)
                 }
             }
 
@@ -154,7 +156,7 @@ const CustomCard = ({navigation, data, route}, props) => {
                         color: "warmGray.50"
                     }} />
                     <Heading size={'lg'} color={'#FFFFFF'}>
-                            {"  " + curData.guests.length + " Guests"} {"\n"}
+                            {"  " + guests + " Guests"} {"\n"}
                     </Heading>
                 </Box>
             </Box>
