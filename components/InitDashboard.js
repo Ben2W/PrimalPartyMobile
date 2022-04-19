@@ -90,16 +90,16 @@ const InitDashboard = ({ navigation, route, newState }) => {
 
     return (
     loading ? (
-        <Center h="100%" bg={'#272727'}>
+        <Center h="100%">
             < Box >
-                <Heading color="#397367" fontSize="xl">
+                <Heading fontSize="xl">
                     Welcome to PrimalParty, {username}!
                 </Heading>
                 <Spinner size="lg" />
             </Box >
         </Center >
     ) :(
-    <Center h="100%" bg={'#272727'}>
+    <Center h="100%">
         <View
             style={{
             flex: 1,
@@ -108,9 +108,7 @@ const InitDashboard = ({ navigation, route, newState }) => {
             marginRight: "2%",
         }}>
             <>
-                    <PageTitle style={{
-                        color: "#EBECEE",
-                    }}>
+                    <PageTitle>
                         {username}'s
                         Upcoming Events!
                     </PageTitle>
