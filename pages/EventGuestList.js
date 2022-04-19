@@ -1,6 +1,6 @@
 import GuestList from "../components/GuestList";
 import EventHeading from "../components/EventHeading";
-import { Box, Button, FormControl, Input, Modal, Text, View, VStack } from "native-base";
+import {Box, Button, Center, Container, FormControl, Input, Modal, Text, View, VStack} from "native-base";
 import React, { useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import ReduxStore from "../redux/ReduxStore";
@@ -245,7 +245,9 @@ const EventGuestList = (props) => {
     }
 
     return (
-        <View style={{
+        <Box h="100%" bg={'#FFFFFF'}>
+        <View
+            style={{
             flex: 1,
             alignContent: "center",
             top: "5%",
@@ -263,6 +265,7 @@ const EventGuestList = (props) => {
                     {delButton}
             </VStack>
         </View>
+        </Box>
     )
 }
 

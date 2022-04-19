@@ -89,12 +89,30 @@ export const eventsSlice = createSlice({
             state = temp;
             return;
         },
+        eventTaskPUT: (state, action) => {
+            let temp = [...state];
+            let findEvent = temp.findIndex((obj) => obj._id === action.payload.eventID);
+            let findTask = temp[findEvent].tasks.findIndex((obj) => obj._id === action.payload.taskID);
+            temp[findEvent].tasks[findTask] = action.payload.taskData;
+            console.log(temp[findEvent].tasks[findTask]);
+
+            state = temp;
+            return;
+        },
+        eventTaskDelete: (state, action) => {
+            let temp = [...state];
+            let findEvent = temp.findIndex((obj) => obj._id === action.payload.eventID);
+            let findTask = temp[findEvent].tasks.findIndex((obj) => obj._id === action.payload.taskID);
+            temp[findEvent].tasks = temp[findEvent].tasks.filter((obj) => obj._id !== action.payload.taskID);
+            state = temp;
+            return;
+        }
     }
 })
 
 export const {
     eventGET, eventPOST, eventPUT, eventDELETE, eventSET, eventDataGET,
     guestGET, guestADD, guestREMOVE, individualEventGet,
-    logoutRESET, eventTaskPOST } = eventsSlice.actions
+    logoutRESET, eventTaskPOST, eventTaskPUT, eventTaskDelete } = eventsSlice.actions
 
 export default eventsSlice.reducer

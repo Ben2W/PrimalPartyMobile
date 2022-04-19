@@ -22,10 +22,7 @@ const EventTaskList = (props) => {
     const [pass, setPass] = useState(props.route.params);
     const [userID, setUserID] = useState(useContext(CredentialsContext).storedCredentials._id)
     const [adminID, setAdminID] = useState(pass.eventData.admin._id)
-
-    // console.log(userID);
-    // console.log(adminID);
-
+    const [eventData, setEventData] = useState(pass.eventData);
 
     useEffect(() => {
         // console.log("!69~")
@@ -37,12 +34,11 @@ const EventTaskList = (props) => {
     }, [props.route.params])
 
     const dispatch = useDispatch();
+
     // Start of EditModal Logic
     const [showModal, setShowModal] = useState(false);
-    const initDate = new Date(pass.eventData.date);
-    const formatDateService = new NativeDateService('en', { format: 'MM-DD-YYYY' });
 
-    const [formData, setData] = useState({ name: "TBD", description: "TBD", assignees: pass.eventData.guests } );
+    const [formData, setData] = useState({ name: "TBD", description: "TBD", assignees: eventData.guests } );
     const [errors, setErrors] = useState({});
 
     const validate = ({ formData }) => {
@@ -57,9 +53,13 @@ const EventTaskList = (props) => {
             AddNewTask({ formData }, props.eventData._id, userID)
                 .then((res) => {
                     dispatch(eventTaskPOST({ eventID: res.retval._id, eventData: res.retval }))
-                    let findEvent = ReduxStore.getState().events.findIndex((obj) => obj._id === pass.eventData._id);
+                    let findEvent = ReduxStore.getState().events.findIndex((obj) => obj._id === eventData._id);
                     let eventArray = ReduxStore.getState().events[findEvent];
+
+                    console.log(eventArray);
+
                     setPass({eventData: eventArray} );
+                    setEventData(eventArray);
                 })
             return true;
         }
@@ -69,16 +69,15 @@ const EventTaskList = (props) => {
     // pass.eventData.guests === total list of guests to choose from
     const [selectedIndex, setSelectedIndex] = React.useState([]);
     const groupDisplayValues = selectedIndex.map(index => {
-        let name = pass.eventData.guests[index.row].firstName + ' ' + pass.eventData.guests[index.row].lastName;
+        let name = eventData.guests[index.row].firstName + ' ' + eventData.guests[index.row].lastName;
         return name;
     }).join(', ');
 
     // FormData === selected Data
     useEffect(() => {
-        console.log(selectedIndex);
         setData( {...formData,
             assignees: selectedIndex.map(index => {
-                    return pass.eventData.guests[index.row];
+                    return eventData.guests[index.row];
                 })
         })
 
@@ -91,7 +90,8 @@ const EventTaskList = (props) => {
         if (showModal) return; // If shown, do nothing
 
         // Else, clear form
-        setData({ name: "", description: "", assignees: pass.eventData.guests });
+        setData({ name: "", description: "", assignees: eventData.guests });
+        setSelectedIndex([]);
         setErrors({}); return () => {
             abortController.abort()
         }
@@ -147,7 +147,7 @@ const EventTaskList = (props) => {
                                 value={groupDisplayValues}
                                 // value={formData.assignees.map(obj => obj.firstName + obj.lastName).join(', ')}
                                 onSelect={index => setSelectedIndex(index)}>
-                                {pass.eventData.guests.map((person) =>
+                                {eventData.guests.map((person) =>
                                     <SelectItem title={person.firstName + " " + person.lastName} key={person._id} />
                                 )}
                             </Select>
@@ -184,11 +184,11 @@ const EventTaskList = (props) => {
             <VStack space={"2%"} flex={1}>
                 <>
                     <PageTitle>
-                        {pass.eventData.name}'s Task List
+                        {eventData.name}'s Task List
                     </PageTitle>
                     <EventHeading props={pass} />
                     {addModal}
-                    <TaskList props={pass} route={newRoute} isAdmin={(useContext(CredentialsContext).storedCredentials._id === pass.eventData.admin._id)} />
+                    <TaskList props={pass} route={newRoute} isAdmin={(useContext(CredentialsContext).storedCredentials._id === eventData.admin._id)} />
                 </>
             </VStack>
         </View>

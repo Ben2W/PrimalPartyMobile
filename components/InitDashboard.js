@@ -8,7 +8,7 @@ import { CredentialsContext } from "./CredentialsContext";
 import CustomCard from "./CustomCard";
 import { Datepicker, NativeDateService } from "@ui-kitten/components";
 import CreateNewEvent from "./API Calls/CreateNewEvent";
-import {PageTitle} from "./styles";
+import {PageTitle, StyledImageContainer} from "./styles";
 
 const InitDashboard = ({ navigation, route, newState }) => {
     const [eventData, setEventData] = useState(newState.events);
@@ -90,7 +90,7 @@ const InitDashboard = ({ navigation, route, newState }) => {
 
     return (
     loading ? (
-        <Center h="100%">
+        <Center h="100%" bg={'#272727'}>
             < Box >
                 <Heading color="#397367" fontSize="xl">
                     Welcome to PrimalParty, {username}!
@@ -99,14 +99,18 @@ const InitDashboard = ({ navigation, route, newState }) => {
             </Box >
         </Center >
     ) :(
-        <View style={{
+    <Center h="100%" bg={'#272727'}>
+        <View
+            style={{
             flex: 1,
             top: "5%",
             marginLeft: "2%",
             marginRight: "2%",
         }}>
             <>
-                    <PageTitle >
+                    <PageTitle style={{
+                        color: "#EBECEE",
+                    }}>
                         {username}'s
                         Upcoming Events!
                     </PageTitle>
@@ -207,6 +211,7 @@ const InitDashboard = ({ navigation, route, newState }) => {
                 </Box>
             </>
         </View>
+    </Center>
     )
     )
 }

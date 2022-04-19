@@ -16,19 +16,21 @@ const TaskList = (pass) => {
     const [tasks, setTasks] = useState(pass.props.eventData.tasks)
     const dispatch = useDispatch();
 
-
-
-    useEffect(() => {
-        setProps(pass.eventData);
-        setGuests(pass.props.eventData.guests);
-        setTasks(pass.props.eventData.tasks);
-    }, [ReduxStore.getState().events])
-    // let findEvent = ReduxStore.getState().events.findIndex((obj) => obj._id === props._id);
+    // let findEvent = ReduxStore.getState().events.findIndex((obj) => obj._id === id);
     // let eventArray = ReduxStore.getState().events[findEvent];
     // const [curState, setCurState] = useState(eventArray);
-    //
-    //
-    //
+
+    useEffect(() => {
+        let findEvent = ReduxStore.getState().events.findIndex((obj) => obj._id === id);
+        let eventArray = ReduxStore.getState().events[findEvent];
+
+        setProps(eventArray);
+        setGuests(eventArray.guests);
+        setTasks(eventArray.tasks);
+
+    }, [ReduxStore.getState()])
+
+
     //
     // useEffect(() => {
     //     setProps(pass.props.eventData)
@@ -36,7 +38,7 @@ const TaskList = (pass) => {
     //         abortController.abort()
     //     }
     // }, [pass.props.eventData])
-    let findEvent = ReduxStore.getState().events.findIndex((obj) => obj._id === id);
+    // let findEvent = ReduxStore.getState().events.findIndex((obj) => obj._id === id);
 
     // const [firstLoad, setFirstLoad] = useState(true);
     //
@@ -74,7 +76,7 @@ const TaskList = (pass) => {
                 <FlatList
                     data={tasks}
                     renderItem={({ item }) => (
-                        <EventTasksCard eventData={props} taskData={item}/>
+                        <EventTasksCard eventData={props} taskData={item} isAdmin={false}/>
                     )}
                     keyExtractor={item => item._id.toString()}
 
@@ -94,7 +96,7 @@ const TaskList = (pass) => {
                 <FlatList
                     data={tasks}
                     renderItem={({ item }) => (
-                        <EventTasksCard eventData={props} taskData={item} bruh = {item._id} />
+                        <EventTasksCard eventData={props} taskData={item} isAdmin={true} />
                     )}
                     keyExtractor={item => item._id}
 

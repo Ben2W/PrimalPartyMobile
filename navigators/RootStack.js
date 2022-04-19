@@ -38,11 +38,13 @@ import { useDispatch } from "react-redux";
 import ReduxStore from "../redux/ReduxStore";
 import InitDashboard from "../components/InitDashboard";
 import SearchFriendsPage from "../pages/SearchFriendsPage";
+import {useColorScheme} from "react-native";
+import {dark} from "@eva-design/eva";
 const { tertiary } = Colors
 
 const customTheme = {
     defaultTheme,
-    dark: false,
+    dark: true,
     roundness: 4,
     animation: {
         scale: 1.0,
