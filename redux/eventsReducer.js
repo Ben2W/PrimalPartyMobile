@@ -94,8 +94,6 @@ export const eventsSlice = createSlice({
             let findEvent = temp.findIndex((obj) => obj._id === action.payload.eventID);
             let findTask = temp[findEvent].tasks.findIndex((obj) => obj._id === action.payload.taskID);
             temp[findEvent].tasks[findTask] = action.payload.taskData;
-            console.log(temp[findEvent].tasks[findTask]);
-
             state = temp;
             return;
         },

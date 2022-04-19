@@ -60,9 +60,6 @@ const EventTaskList = (props) => {
                     dispatch(eventTaskPOST({ eventID: res.retval._id, eventData: res.retval }))
                     let findEvent = ReduxStore.getState().events.findIndex((obj) => obj._id === eventData._id);
                     let eventArray = ReduxStore.getState().events[findEvent];
-
-                    console.log(eventArray);
-
                     setPass({eventData: eventArray} );
                     setEventData(eventArray);
                 })

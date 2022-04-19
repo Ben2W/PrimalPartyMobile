@@ -28,7 +28,7 @@ const TaskList = (pass) => {
         setGuests(eventArray.guests);
         setTasks(eventArray.tasks);
 
-    }, [ReduxStore.getState()])
+    }, [ReduxStore.getState().events])
 
 
     //
@@ -76,7 +76,7 @@ const TaskList = (pass) => {
                 <FlatList
                     data={tasks}
                     renderItem={({ item }) => (
-                        <EventTasksCard eventData={props} taskData={item} isAdmin={false}/>
+                        <EventTasksCard eventData={props} taskData={item} isAdmin={false} listTasks={tasks} />
                     )}
                     keyExtractor={item => item._id.toString()}
 
@@ -96,7 +96,7 @@ const TaskList = (pass) => {
                 <FlatList
                     data={tasks}
                     renderItem={({ item }) => (
-                        <EventTasksCard eventData={props} taskData={item} isAdmin={true} />
+                        <EventTasksCard eventData={props} taskData={item} isAdmin={true}  listTasks={tasks} setlistTasks={setTasks} />
                     )}
                     keyExtractor={item => item._id}
 

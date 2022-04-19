@@ -27,7 +27,7 @@ const EditTask = async ({formData}, eventID, taskID) => {
         }
     }
     formBody = formBody.join("&");
-    console.log(formBody)
+    // console.log(formBody)
     try {
         const res = await fetch(url,
             {
@@ -40,7 +40,7 @@ const EditTask = async ({formData}, eventID, taskID) => {
             })
 
         let bread = await res.json();
-        console.log(bread);
+        // console.log(bread);
         return bread
     } catch (e) {
         return e
