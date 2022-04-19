@@ -1,7 +1,7 @@
 
 const EditEvent = async ({formData}, eventID) => {
     const url = 'https://primalpartybackend.azurewebsites.net/events/' + eventID;
-    console.log(url)
+
     const details = {
         name: formData.name,
         description: formData.description,

@@ -1,12 +1,14 @@
 
-const AddNewTask = async ({formData}, eventID, currentUserID) => {
-    const url = 'https://primalpartybackend.azurewebsites.net/events/' + eventID + '/tasks'
-    console.log(url);
+const EditTask = async ({formData}, eventID, taskID) => {
+    const url = 'https://primalpartybackend.azurewebsites.net/events2/' + eventID + '/tasks/' + taskID
+
+    // console.log(formData.assignees);
 
     const details = {
         name: formData.name,
         description: formData.description,
         assignees: formData.assignees.map(obj => obj._id),
+        done: formData.done,
     }
 
     let formBody = [];
@@ -17,7 +19,6 @@ const AddNewTask = async ({formData}, eventID, currentUserID) => {
                 let encodedValue = encodeURIComponent(details.assignees[i]);
                 formBody.push(encodedKey + "=" + encodedValue);
             }
-            break;
         }
         else {
             let encodedKey = encodeURIComponent(property);
@@ -26,19 +27,20 @@ const AddNewTask = async ({formData}, eventID, currentUserID) => {
         }
     }
     formBody = formBody.join("&");
-
+    // console.log(formBody)
     try {
         const res = await fetch(url,
             {
-                method: 'POST',
+                method: 'PUT',
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
                 },
                 credentials: 'include',
                 body: formBody
             })
+
         let bread = await res.json();
-        console.log(bread);
+        // console.log(bread);
         return bread
     } catch (e) {
         return e
@@ -46,4 +48,4 @@ const AddNewTask = async ({formData}, eventID, currentUserID) => {
 
 }
 
-export default AddNewTask;
+export default EditTask;
