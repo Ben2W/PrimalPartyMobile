@@ -94,7 +94,7 @@ const InitDashboard = ({ navigation, route, newState }) => {
             < Box >
                 <Spinner size="lg" />
                 <Heading color="#397367" fontSize="md">
-                    Welcome to PrimalParty {username}!
+                    Welcome to PrimalParty, {username}!
                 </Heading>
             </Box >
         </Center >
