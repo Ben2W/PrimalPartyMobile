@@ -11,7 +11,15 @@ import { CredentialsContext } from './components/CredentialsContext'
 
 // Redux
 import ReduxStore from "./redux/ReduxStore";
-import {Provider as ReduxProvider} from "react-redux";
+import { Provider as ReduxProvider } from "react-redux";
+
+import { LogBox } from 'react-native';
+
+// Ignore log notification by message
+LogBox.ignoreLogs(['Warning: ...']);
+
+//Ignore all log notifications
+LogBox.ignoreAllLogs();
 
 export default function App() {
 
