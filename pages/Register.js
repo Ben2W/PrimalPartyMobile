@@ -44,35 +44,42 @@ const Register = ({ navigation }) => {
                 body: formBody
             })
                 .then(res => {
+
                     if (res.status == 500) {
                         throw Error('Unexpected error happened on the server')
                     }
 
-                    if (res.status == 503) {
+                    if (res.status == 501) {
                         throw Error('Unable to send the verification email')
                     }
 
                     if (res.status == 410) {
-                        throw Error('Username and email already taken')
+                        throw Error('Username, phone, and email already taken')
                     }
 
                     if (res.status == 411) {
-                        throw Error('Username already taken')
-                    }
-
-                    if (res.status == 412) {
                         throw Error('Email already taken')
                     }
 
+                    if (res.status == 412) {
+                        throw Error('Username already taken')
+                    }
+
                     if (res.status == 413) {
-                        throw Error('Invalid phone number')
+                        throw Error('phone already taken')
                     }
 
                     if (res.status == 414) {
                         throw Error('Invalid email address')
                     }
 
-                    return res.json();
+                    if (res.status == 415) {
+                        throw Error('Invalid phone number')
+                    }
+
+                    else {
+                        return res.json();
+                    }
                 })
                 .then(data => {
                     setIsSubmitting(false)
@@ -81,6 +88,7 @@ const Register = ({ navigation }) => {
                 .catch(err => {
                     setIsSubmitting(false)
                     handleMessage(err.message)
+                    return
                 })
 
         }
