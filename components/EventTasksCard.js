@@ -78,21 +78,6 @@ const EventTasksCard = (props) => {
                         eventTaskPUT({eventID: eventData._id, taskID: taskData._id, taskData: res.updatedTask})
                     );
                     // Set State Call
-
-                    let findEvent = ReduxStore.getState().events.findIndex((obj) => obj._id === eventData._id);
-                    let eventArray = ReduxStore.getState().events[findEvent];
-
-                    // console.log(eventArray.tasks)
-
-                    let findTask = ReduxStore.getState().events[findEvent].tasks.findIndex((obj) => obj._id === taskData._id);
-
-
-                    // setEventData(eventArray);
-                    // setTaskData(eventArray.tasks[findTask]);
-                    //
-                    // console.log(eventArray.tasks[findTask]);
-
-                    //
                 }
             )
 
@@ -103,7 +88,7 @@ const EventTasksCard = (props) => {
 
     // MultiSelect Assignees
     // pass.eventData.guests === total list of guests to choose from
-    const [selectedIndex, setSelectedIndex] = React.useState([new IndexPath(0)]);
+    const [selectedIndex, setSelectedIndex] = React.useState([]);
     const groupDisplayValues = selectedIndex.map(index => {
         // console.log(eventData);
         let name = eventData.guests[index.row].firstName + ' ' + eventData.guests[index.row].lastName;
@@ -238,11 +223,24 @@ const EventTasksCard = (props) => {
     }
 
 
+    // Update Display
+    let displayAssignees = taskData.assignees.map((obj, index) => index + 1 + ': ' + obj.firstName + '\n')
 
+    const [oldState, setOldState] = useState(ReduxStore.getState().events)
 
+    useEffect(() => {
+        let findEvent = ReduxStore.getState().events.findIndex((obj) => obj._id === eventData._id);
+        let eventArray = ReduxStore.getState().events[findEvent];
+        setEventData(eventArray);
 
+        let findTask = -1;
+        findTask = eventArray.tasks.findIndex(obj => obj._id === taskData._id)
+        setTaskData(eventArray.tasks[findTask]);
 
+        displayAssignees = taskData.assignees.map((obj, index) => index + 1 + ': ' + obj.firstName + '\n')
 
+        setOldState(ReduxStore.getState().events)
+    }, [oldState])
 
 
 
@@ -270,7 +268,7 @@ const EventTasksCard = (props) => {
                     <Box w={'30%'} ml={'5%'}>
                         <Text >
                             Assignees: {'\n'}
-                            {taskData.assignees.map((obj, index) => index + 1 + ': ' + obj.firstName + '\n') }
+                            {displayAssignees}
                         </Text>
                     </Box>
                     {editModal}

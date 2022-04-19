@@ -24,6 +24,7 @@ const EventTaskList = (props) => {
     const [adminID, setAdminID] = useState(pass.eventData.admin._id)
     const [eventData, setEventData] = useState(pass.eventData);
 
+
     useEffect(() => {
         // console.log("!69~")
         setPass(props.route.params);
@@ -34,6 +35,10 @@ const EventTaskList = (props) => {
     }, [props.route.params])
 
     const dispatch = useDispatch();
+
+    // useEffect(()=>{
+    //
+    // }, [ReduxStore.getState().events])
 
     // Start of EditModal Logic
     const [showModal, setShowModal] = useState(false);
