@@ -110,7 +110,7 @@ const InitDashboard = ({ navigation, route, newState }) => {
             <>
                     <PageTitle>
                         {username}'s
-                        Upcoming Events!
+                        Upcoming Events
                     </PageTitle>
                 <Box maxH={"80%"} flexGrow={1} >
                 <FlatList
