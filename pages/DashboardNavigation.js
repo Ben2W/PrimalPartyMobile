@@ -36,7 +36,6 @@ const DashboardNavigation = ({ navigation, route }) => {
 
     const GetEvents = async () => {
         const url = 'https://primalpartybackend.azurewebsites.net/events'
-        console.log('im emin');
 
         try {
             const res = await fetch(url,
@@ -58,14 +57,8 @@ const DashboardNavigation = ({ navigation, route }) => {
     const [newState, setNewState] = useState(ReduxStore.getState());
 
     const init = async () => {
-        console.log('running')
-
         const events = await GetEvents();
-        console.log(events);
         dispatch(eventSET({ events }));
-
-        console.log('AFTER DISPATCH')
-        console.log(ReduxStore.getState());
         setNewState(ReduxStore.getState());
         // GetEvents()
         //     .then((res) => {

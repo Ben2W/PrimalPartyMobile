@@ -11,8 +11,6 @@ import CreateNewEvent from "./API Calls/CreateNewEvent";
 import {PageTitle} from "./styles";
 
 const InitDashboard = ({ navigation, route, newState }) => {
-    console.log('NEWWWWWW')
-    console.log(newState.events);
     const [eventData, setEventData] = useState(newState.events);
     const [username, setUsername] = useState(useContext(CredentialsContext).storedCredentials.firstName)
     const [showModal, setShowModal] = useState(false);
@@ -24,7 +22,6 @@ const InitDashboard = ({ navigation, route, newState }) => {
     const abortController = new AbortController()
 
     useEffect(() => {
-        console.log('init dashboard !!')
         if (newState.events !== null){
             setEventData(newState.events)
             setLoading(false);

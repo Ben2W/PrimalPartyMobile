@@ -1,6 +1,5 @@
 const GetEvents = async () => {
     const url = 'https://primalpartybackend.azurewebsites.net/events'
-    console.log('im emin');
 
     try {
         const res = await fetch(url,
