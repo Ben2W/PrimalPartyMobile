@@ -90,16 +90,16 @@ const InitDashboard = ({ navigation, route, newState }) => {
 
     return (
     loading ? (
-        <Center h="100%" bg={'#272727'}>
+        <Center h="100%">
             < Box >
-                <Heading color="#397367" fontSize="xl">
+                <Heading fontSize="xl">
                     Welcome to PrimalParty, {username}!
                 </Heading>
                 <Spinner size="lg" />
             </Box >
         </Center >
     ) :(
-    <Center h="100%" bg={'#272727'}>
+    <Center h="100%">
         <View
             style={{
             flex: 1,
@@ -108,11 +108,9 @@ const InitDashboard = ({ navigation, route, newState }) => {
             marginRight: "2%",
         }}>
             <>
-                    <PageTitle style={{
-                        color: "#EBECEE",
-                    }}>
+                    <PageTitle>
                         {username}'s
-                        Upcoming Events!
+                        Upcoming Events
                     </PageTitle>
                 <Box maxH={"80%"} flexGrow={1} >
                 <FlatList
@@ -143,7 +141,7 @@ const InitDashboard = ({ navigation, route, newState }) => {
                                         <FormControl.Label>Title</FormControl.Label>
                                         <Input
                                             size="md"
-                                            placeholder="Javascript Party"
+                                            placeholder="  Javascript Party"
                                             value={formData.name}
                                             onChangeText={value => setData({
                                                 ...formData,
@@ -173,7 +171,7 @@ const InitDashboard = ({ navigation, route, newState }) => {
                                         <FormControl.Label>Location</FormControl.Label>
                                         <Input
                                             size="md"
-                                            placeholder="VS Code"
+                                            placeholder="  VS Code"
                                             value={formData.location}
                                             onChangeText={value => setData({
                                                 ...formData,
@@ -185,7 +183,7 @@ const InitDashboard = ({ navigation, route, newState }) => {
                                         <FormControl.Label>Description</FormControl.Label>
                                         <Input
                                             size="md"
-                                            placeholder="Let's code collaboratively!"
+                                            placeholder="  Let's code collaboratively!"
                                             value={formData.description}
                                             onChangeText={value => setData({
                                                 ...formData,

@@ -1,15 +1,17 @@
 import {Platform, View} from "react-native";
-import { Avatar, Button, Card, Title, Paragraph, FAB } from 'react-native-paper';
+import { Avatar, Card, Title, Paragraph, FAB } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 import ListItem from "react-native-paper/src/components/List/ListItem";
 import {useCallback, useContext, useEffect, useState} from "react";
 import EventGuestNavigation from "../pages/EventGuestNavigation";
 import {CredentialsContext} from "./CredentialsContext";
 import Moment from "react-moment";
-import {Text} from "native-base";
+import {Box, Heading, Icon, Text, Button} from "native-base";
 import ReduxStore from "../redux/ReduxStore";
 import {find} from "styled-components/test-utils";
 import {useFocusEffect} from "@react-navigation/native";
+import {Entypo, MaterialCommunityIcons} from "@expo/vector-icons";
+import * as React from "react";
 
 const CustomCard = ({navigation, data, route}, props) => {
     const [title, setTitle] = useState(data.name);
@@ -65,10 +67,10 @@ const CustomCard = ({navigation, data, route}, props) => {
         }}
         >
             <FAB
-                label={"Edit/View More"}
+                label={"Edit Your Event"}
                 style={{
                     width: "100%",
-                    backgroundColor: '#721121',
+                    backgroundColor: '#800020',
                     borderRadius: '500'
                 }}
                 onPress={() => handleClick({navigation})}
@@ -85,12 +87,15 @@ const CustomCard = ({navigation, data, route}, props) => {
             >
                 <FAB
                     label={"View More"}
+                    labelStyle={{ color: "#334EEB", fontSize: 18 }}
                     style={{
                         width: "100%",
-                        backgroundColor:'#FFC07F',
-                        borderRadius: '500'
+                        backgroundColor:'#121212',
+                        borderRadius: '500',
+                        borderColor: '#121212'
                     }}
                     onPress={() => handleClick({navigation})}
+
                 />
             </View>
     }
@@ -104,23 +109,55 @@ const CustomCard = ({navigation, data, route}, props) => {
         paddingRight: "5%",
     }}>
         <Card
-            mode="outlined"
-            elevation = {20}
+            // mode="outlined"
+            elevation = {50}
             borderRadius={50}
         >
             {/*<Card.Title title={props.title} subtitle="Card Subtitle" left={(props) => <Avatar.Icon {...props} icon="party-popper" />} />*/}
             <LinearGradient
-                colors={['#4555F2', '#878af7']}
+                colors={['#4052F2', '#6A7FF0']}
             >
             <Card.Content style={{
-                alightItems : Platform.OS === 'ios' ? "left" : '',
-                
+                // alightItems : Platform.OS === 'ios' ? "left" : '',
+                marginTop: '2%',
                 justifyContent: 'center',
             }}>
-                <Title>{title}</Title>
-                <Paragraph>Date: {date.toLocaleDateString("en-US")}</Paragraph>
-                <Paragraph>Location: {address}</Paragraph>
-                <Paragraph>Desc: {desc}</Paragraph>
+                <Box flexGrow="1" flexDir={'column'} >
+                    <Box flexDir={'row'} width={'50%'}>
+                        <Icon as={MaterialCommunityIcons} name="party-popper" color="#121212" size={'md'} _dark={{
+                            color: "warmGray.50"
+                        }} />
+                        <Heading size={'lg'} color={'#FFFFFF'}>
+                            {"  " + title} {"\n"}
+                        </Heading>
+                    </Box>
+                    <Box flexDir={'row'} width={'50%'}>
+                        <Icon as={Entypo} name="calendar" color="#121212" size={'md'} _dark={{
+                            color: "warmGray.50"
+                        }} />
+                        <Heading size={'lg'} color={'#FFFFFF'}>
+                            {"  " + new Date(date).toLocaleDateString("en-US")} {"\n"}
+                        </Heading>
+                    </Box>
+                </Box>
+                <Box flexGrow="1" flexDir={'column'} >
+                <Box flexDir={'row'}>
+                    <Icon as={Entypo} name="location-pin" color="#121212" size={'md'} _dark={{
+                        color: "warmGray.50"
+                    }} />
+                    <Heading size={'lg'} color={'#FFFFFF'}>
+                        {"  " + address} {"\n"}
+                    </Heading>
+                </Box>
+                <Box flexDir={'row'}>
+                    <Icon as={Entypo} name="users" color="#121212" size={'md'} _dark={{
+                        color: "warmGray.50"
+                    }} />
+                    <Heading size={'lg'} color={'#FFFFFF'}>
+                            {"  " + curData.guests.length + " Guests"} {"\n"}
+                    </Heading>
+                </Box>
+            </Box>
             </Card.Content>
             {/*<Card.Cover source={{ uri: 'https://picsum.photos/700' }} />*/}
             <Card.Actions style={{

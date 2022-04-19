@@ -106,7 +106,7 @@ const EventTaskList = (props) => {
     if (userID === adminID) {
         addModal = <View>
             <Button onPress={() => setShowModal(true)}>
-                Add a task for your friend's poor souls!
+                Add a task for your friends!
             </Button>
             <Modal isOpen={showModal} onClose={() => setShowModal(false)} avoidKeyboard={true}>
                 <Modal.Content maxWidth="400px">
@@ -186,7 +186,7 @@ const EventTaskList = (props) => {
             <VStack space={"2%"} flex={1}>
                 <>
                     <PageTitle>
-                        {eventData.name}'s Task List
+                        {eventData.name}
                     </PageTitle>
                     <EventHeading props={pass} />
                     {addModal}

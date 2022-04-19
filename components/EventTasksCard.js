@@ -272,6 +272,19 @@ const EventTasksCard = (props) => {
     //     setOldState(ReduxStore.getState().events)
     // }, [oldState])
 
+    let trashButton =
+        <IconButton icon={<Icon as={Entypo} name="trash" />}
+                    w={'100%'}
+                    height={'40px'}
+                    size={'md'}
+                    onPress={() => handleDelete()}>
+            {"Edit This Task!"}
+        </IconButton>
+
+    if (!isAdmin)
+    {
+        trashButton = <></>
+    }
 
 
 
@@ -301,13 +314,7 @@ const EventTasksCard = (props) => {
                             {taskData.assignees.map((obj, index) => index + 1 + ': ' + obj.firstName + '\n')}
                         </Text>
                     </Box>
-                    <IconButton icon={<Icon as={Entypo} name="trash" />}
-                                w={'100%'}
-                                height={'40px'}
-                                size={'md'}
-                                onPress={() => handleDelete()}>
-                        {"Edit This Task!"}
-                    </IconButton>
+                    {trashButton}
                 </HStack>
             </Box>
         </Box>

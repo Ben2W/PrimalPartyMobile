@@ -124,11 +124,20 @@ const TaskList = (pass) => {
         flatList = insideStuff;
     }
 
+
+    let flatHeight = ''
+    if (!pass.isAdmin){
+        flatHeight = '60%'
+    }
+    else{
+        flatHeight = '55%'
+    }
+
     return (
-        <Box flexGrow={1} maxW="100%" maxH={"50%"} bg="violet.400" rounded="md" shadow={3}>
+        <Box flexGrow={1} maxW="100%" maxH={flatHeight} bg="violet.400" rounded="md" shadow={3}>
             <Box>
                 <Heading pb="3" size="lg" textAlign={"center"}>
-                    "TaskList"
+                    Task List
                 </Heading>
                 {flatList}
             </Box>

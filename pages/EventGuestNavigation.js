@@ -48,7 +48,7 @@ const EventGuestNavigation = ({ navigation, route }) => {
                             isAdmin={isAdmin}
                         />)}
                     options={{
-                        tabBarLabel: 'EventGuestList',
+                        tabBarLabel: 'Guest List',
                         tabBarColor: "#1F44EA",
                         tabBarIcon: ({ color }) => (
                             <MaterialCommunityIcons name="account-group" color={color} size={26} />
@@ -66,7 +66,7 @@ const EventGuestNavigation = ({ navigation, route }) => {
                             isAdmin={isAdmin}
                         />)}
                     options={{
-                        tabBarLabel: 'EventTasksList',
+                        tabBarLabel: 'Task List',
                         tabBarColor: "#397367",
                         tabBarIcon: ({ color }) => (
                             <MaterialCommunityIcons name="format-list-checks" color={color} size={26} />
