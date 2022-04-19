@@ -92,10 +92,10 @@ const InitDashboard = ({ navigation, route, newState }) => {
     loading ? (
         <Center h="100%">
             < Box >
-                <Spinner size="lg" />
-                <Heading color="#397367" fontSize="md">
+                <Heading color="#397367" fontSize="xl">
                     Welcome to PrimalParty, {username}!
                 </Heading>
+                <Spinner size="lg" />
             </Box >
         </Center >
     ) :(
