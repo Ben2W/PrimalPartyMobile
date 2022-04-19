@@ -153,7 +153,7 @@ const GuestList = (pass) => {
         flatHeight = '60%'
     }
     else{
-        flatHeight = '40%'
+        flatHeight = '50%'
     }
 
     return (
