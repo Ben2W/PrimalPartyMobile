@@ -138,7 +138,7 @@ const GuestList = (pass) => {
     if (guests.length === 0) {
         flatList =
             <Center>
-                <Image source={img} alt="PrimalParty" size='2xl' />
+                <Image source={img} alt="PrimalParty" size='xl' />
                 <Heading>{'\n'}Let's get this PrimalParty started!</Heading>
             </Center>
 
@@ -153,7 +153,7 @@ const GuestList = (pass) => {
         flatHeight = '60%'
     }
     else{
-        flatHeight = '50%'
+        flatHeight = '40%'
     }
 
     return (
