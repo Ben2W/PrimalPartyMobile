@@ -31,15 +31,17 @@ const EventHeading = (pass) => {
                             </Heading>
                     </Box>
 
-                    <Box flexDir={'row'}>
+                    <Box flexDir={'row'} width={'50%'}>
                     <Icon as={Entypo} name="location-pin" color="coolGray.800" size={'md'} _dark={{
                                 color: "warmGray.50"
                             }} />
-                            <Heading size={'md'}>
+                            <Heading size={'md'} >
                                 {" " + props.address} {"\n"}
                             </Heading>
                     </Box>
-                    <Box flexDir={'row'}>
+                </Box>
+                <Box flexGrow="1" flexDir={'column'} >
+                    <Box flexDir={'row'} width={'50%'}>
                         <Icon as={Entypo} name="users" color="coolGray.800" size={'md'} _dark={{
                             color: "warmGray.50"
                         }} />
@@ -47,13 +49,15 @@ const EventHeading = (pass) => {
                             {" " + props.guests.length} {"\n"}
                         </Heading>
                     </Box>
-                </Box>
-                    <Box flexDir={'column'} width={'45%'}>
-                        <Heading size={'md'}>
+                    <Box flexDir={'column'} width={'75%'}>
+                        <Heading size={'md'} mb={'-10%'}>
                             Description
                         </Heading>
-                        {'\n' + props.description}
+                        <Text overflow-wrap={'normal'} fontSize={'12'}>
+                            {'\n' + props.description}
+                        </Text>
                     </Box>
+                </Box>
                 </Box>
             </Container>
     );

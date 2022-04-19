@@ -38,7 +38,7 @@ const EventGuestList = (props) => {
     let delButton = {};
     if (useContext(CredentialsContext).storedCredentials._id === pass.eventData.admin._id) {
         delButton =
-            <Box>
+            <VStack space={'10%'}>
                 <FAB
                     label={"Search for Friend to Add"}
                     style={{
@@ -61,7 +61,7 @@ const EventGuestList = (props) => {
                     }
                     key="Delete"
                 />
-            </Box>
+            </VStack>
     }
     else
         delButton = <></>
@@ -257,7 +257,7 @@ const EventGuestList = (props) => {
         }}>
             <VStack space={"2%"} flex={1}>
                     <PageTitle>
-                        {pass.eventData.name}'s Guest List
+                        {pass.eventData.name}
                     </PageTitle>
                     <EventHeading props={pass} />
                     {editModal}

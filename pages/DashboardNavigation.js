@@ -112,7 +112,7 @@ const DashboardNavigation = ({ navigation, route }) => {
                         />)}
                     options={{
                         tabBarLabel: 'Account',
-                        tabBarColor: "#397367",
+                        tabBarColor: "#800020",
                         tabBarIcon: ({ color }) => (
                             <MaterialCommunityIcons name="account" color={color} size={26} />
                         ),
@@ -126,7 +126,7 @@ const DashboardNavigation = ({ navigation, route }) => {
                         />)}
                     options={{
                         tabBarLabel: 'Friends',
-                        tabBarColor: "#397367",
+                        tabBarColor: "#EE8434",
                         tabBarIcon: ({ color }) => (
                             <MaterialCommunityIcons name="account-group" color={color} size={26} />
                         ),

@@ -141,7 +141,7 @@ const InitDashboard = ({ navigation, route, newState }) => {
                                         <FormControl.Label>Title</FormControl.Label>
                                         <Input
                                             size="md"
-                                            placeholder="Javascript Party"
+                                            placeholder="  Javascript Party"
                                             value={formData.name}
                                             onChangeText={value => setData({
                                                 ...formData,
@@ -171,7 +171,7 @@ const InitDashboard = ({ navigation, route, newState }) => {
                                         <FormControl.Label>Location</FormControl.Label>
                                         <Input
                                             size="md"
-                                            placeholder="VS Code"
+                                            placeholder="  VS Code"
                                             value={formData.location}
                                             onChangeText={value => setData({
                                                 ...formData,
@@ -183,7 +183,7 @@ const InitDashboard = ({ navigation, route, newState }) => {
                                         <FormControl.Label>Description</FormControl.Label>
                                         <Input
                                             size="md"
-                                            placeholder="Let's code collaboratively!"
+                                            placeholder="  Let's code collaboratively!"
                                             value={formData.description}
                                             onChangeText={value => setData({
                                                 ...formData,
